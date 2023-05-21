@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Header from './components/Header';
 import './App.css';
 
 function App() {
@@ -6,9 +7,7 @@ function App() {
 
 	return (
 		<>
-			<header>
-				<h1>Fontry</h1>
-			</header>
+			<Header />
 		</>
 	);
 }

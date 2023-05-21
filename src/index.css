@@ -63,12 +63,17 @@
 }
 
 :root {
+  --global-font-color: #000;
+  --background-color: #fff;
+  --transition-speed: 200ms;
+
   font-family: Lotion, "Lucida Console", Courier, monospace;
   line-height: 1.2;
   font-weight: 400;
 
   /* color-scheme: light dark; */
-  background-color: #fff;
+  background-color: var(--background-color);
+  color: var(--global-font-color);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
