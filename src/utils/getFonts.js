@@ -33,16 +33,49 @@ async function fetchLatinExtendedGoogleFonts() {
 }
 
 /**
+ * Stores in localStorage the list of fonts as well as the date it is stored in.
+ * @param {Object[]} fontsList List of fonts to store.
+ */
+function storeFonts(fontsList) {
+	const fontsListToString = JSON.stringify(fontsList);
+	const currentDate = Date.now();
+
+	localStorage.setItem('fontsList', fontsListToString);
+	localStorage.setItem('fontsListDate', currentDate);
+}
+
+/**
  * Get every fonts available
  * @returns
  */
 export default async function getFonts() {
+	// Get the list of fonts from localStorage
+	let fontsList = localStorage.getItem('fontsList');
+	// If Fonts were indeed stored.
+	if (fontsList) {
+		const fontsListStorageDate = new Date(
+			localStorage.getItem('fontsListDate')
+		);
+		const differenceBetweenDates = Math.floor(
+			(Date - fontsListStorageDate) / 1000
+		);
+
+		// If the data is less than 10 hours long.
+		if (differenceBetweenDates < 36000) {
+			return JSON.parse(fontsList);
+		}
+		// Remove the items from localStorage if the data is too old
+		localStorage.removeItem('fontsList');
+		localStorage.removeItem('fontsListDate');
+	}
+
 	// Fetch the fonts
 	const data = await fetchLatinExtendedGoogleFonts();
 
 	// If data fetching is successful
 	if (data && data.items) {
 		fontsList = groupFontsByCategory(data.items);
+		storeFonts(fontsList);
 
 		return fontsList;
 	}
