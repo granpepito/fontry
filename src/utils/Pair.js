@@ -6,7 +6,7 @@ import Font from './Font';
 export default class Pair {
 	#font1;
 	#font2;
-	#colors;
+	#theme;
 
 	/**
 	 *  Creates a pair of fonts.
@@ -16,6 +16,7 @@ export default class Pair {
 	constructor(font1, font2) {
 		this.#font1 = font1;
 		this.#font2 = font2;
+		this.#theme = ['#FFF', '#000'];
 	}
 
 	get font1() {
@@ -26,6 +27,10 @@ export default class Pair {
 		return this.#font2;
 	}
 
+	get theme() {
+		return this.#theme;
+	}
+
 	set font1(font) {
 		this.#font1 = font;
 	}
@@ -34,12 +39,20 @@ export default class Pair {
 		this.#font2 = font;
 	}
 
+	set theme(arrayOfColors) {
+		this.#theme = [...arrayOfColors];
+	}
+
 	/**
 	 * Returns an object containing the first and second font of the pair.
 	 * @returns {PairObject}
 	 */
 	toObject() {
-		return { font1: this.#font1.toObject(), font2: this.#font2.toObject() };
+		return {
+			font1: this.#font1.toObject(),
+			font2: this.#font2.toObject(),
+			theme: this.#theme,
+		};
 	}
 
 	/**
@@ -56,4 +69,5 @@ export default class Pair {
  * @type {object}
  * @property {import("./Font").FontObject} font1 - First font of the pair.
  * @property {import("./Font").FontObject} font2 - Second font of the pair.
+ * @property {string[]} theme - Theme used to display the pair.
  */
