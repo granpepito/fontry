@@ -17,6 +17,11 @@
   width: 32px;
 }
 
+.header .hamburgerIcon:hover {
+  color: #555555;
+  transition: var(--transition-speed);
+}
+
 .header > .websiteName {
   margin: 0 auto 0 auto;
   letter-spacing: -1;

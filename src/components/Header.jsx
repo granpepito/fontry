@@ -1,4 +1,4 @@
-import hamburgerBars from '/src/assets/img/hamburger-bars.svg';
+import { Bars3Icon } from '@heroicons/react/24/outline';
 import styles from '/src/assets/styles/header.module.css';
 
 function openNavBar() {
@@ -10,11 +10,7 @@ export default function Header() {
 		<>
 			<header className={styles.header}>
 				<button onClick={openNavBar}>
-					<img
-						className={styles.hamburgerIcon}
-						alt='Menu Button'
-						src={hamburgerBars}
-					/>
+					<Bars3Icon className={styles.hamburgerIcon} />
 				</button>
 
 				<h1 className={styles.websiteName}>
