@@ -1,92 +1,99 @@
 @font-face {
-  font-family: "Lotion";
-  src: local("Lotion Regular"),
-    url("./assets/fonts/Lotion-Regular.woff2") format("woff2"), url("./assets/fonts/Lotion-Regular.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
+	font-family: 'Lotion';
+	src: local('Lotion Regular'),
+		url('./assets/fonts/Lotion-Regular.woff2') format('woff2'),
+		url('./assets/fonts/Lotion-Regular.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "Lotion";
-  src: local("Lotion Regular Italic"),
-    url("./assets/fonts/Lotion-RegularItalic.woff2") format("woff2"), url("./assets/fonts/Lotion-RegularItalic.woff") format("woff");
-  font-weight: 400;
-  font-style: italic;
+	font-family: 'Lotion';
+	src: local('Lotion Regular Italic'),
+		url('./assets/fonts/Lotion-RegularItalic.woff2') format('woff2'),
+		url('./assets/fonts/Lotion-RegularItalic.woff') format('woff');
+	font-weight: 400;
+	font-style: italic;
 }
 
 @font-face {
-  font-family: "Lotion";
-  src: local("Lotion SemiBold"),
-    url("./assets/fonts/Lotion-SemiBold.woff2") format("woff2"), url("./assets/fonts/Lotion-SemiBold.woff") format("woff");
-  font-weight: 600;
-  font-style: normal;
+	font-family: 'Lotion';
+	src: local('Lotion SemiBold'),
+		url('./assets/fonts/Lotion-SemiBold.woff2') format('woff2'),
+		url('./assets/fonts/Lotion-SemiBold.woff') format('woff');
+	font-weight: 600;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "Lotion";
-  src: local("Lotion SemiBold Italic"),
-    url("./assets/fonts/Lotion-SemiBoldItalic.woff2") format("woff2"), url("./assets/fonts/Lotion-SemiBoldItalic.woff") format("woff");
-  font-weight: 600;
-  font-style: italic;
+	font-family: 'Lotion';
+	src: local('Lotion SemiBold Italic'),
+		url('./assets/fonts/Lotion-SemiBoldItalic.woff2') format('woff2'),
+		url('./assets/fonts/Lotion-SemiBoldItalic.woff') format('woff');
+	font-weight: 600;
+	font-style: italic;
 }
 
 @font-face {
-  font-family: "Lotion";
-  src: local("Lotion Bold"),
-    url("./assets/fonts/Lotion-Bold.woff2") format("woff2"), url("./assets/fonts/Lotion-Bold.woff") format("woff");
-  font-weight: 700;
-  font-style: normal;
+	font-family: 'Lotion';
+	src: local('Lotion Bold'),
+		url('./assets/fonts/Lotion-Bold.woff2') format('woff2'),
+		url('./assets/fonts/Lotion-Bold.woff') format('woff');
+	font-weight: 700;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "Lotion";
-  src: local("Lotion Bold Italic"),
-    url("./assets/fonts/Lotion-BoldItalic.woff2") format("woff2"), url("./assets/fonts/Lotion-BoldItalic.woff") format("woff");
-  font-weight: 700;
-  font-style: italic;
+	font-family: 'Lotion';
+	src: local('Lotion Bold Italic'),
+		url('./assets/fonts/Lotion-BoldItalic.woff2') format('woff2'),
+		url('./assets/fonts/Lotion-BoldItalic.woff') format('woff');
+	font-weight: 700;
+	font-style: italic;
 }
 
 @font-face {
-  font-family: "Lotion";
-  src: local("Lotion Black"),
-    url("./assets/fonts/Lotion-Black.woff2") format("woff2"), url("./assets/fonts/Lotion-Black.woff") format("woff");
-  font-weight: 900;
-  font-style: normal;
+	font-family: 'Lotion';
+	src: local('Lotion Black'),
+		url('./assets/fonts/Lotion-Black.woff2') format('woff2'),
+		url('./assets/fonts/Lotion-Black.woff') format('woff');
+	font-weight: 900;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "Lotion";
-  src: local("Lotion Black Italic"),
-    url("./assets/fonts/Lotion-BlackItalic.woff2") format("woff2"), url("./assets/fonts/Lotion-BlackItalic.woff") format("woff");
-  font-weight: 900;
-  font-style: italic;
+	font-family: 'Lotion';
+	src: local('Lotion Black Italic'),
+		url('./assets/fonts/Lotion-BlackItalic.woff2') format('woff2'),
+		url('./assets/fonts/Lotion-BlackItalic.woff') format('woff');
+	font-weight: 900;
+	font-style: italic;
 }
 
 :root {
-  --global-font-color: #000;
-  --background-color: #fff;
-  --transition-speed: 200ms;
+	--global-font-color: #000;
+	--background-color: #fff;
+	--transition-speed: 200ms;
 
-  font-family: Lotion, "Lucida Console", Courier, monospace;
-  line-height: 1.2;
-  font-weight: 400;
+	font-family: Lotion, 'Lucida Console', Courier, monospace;
+	line-height: 1.2;
+	font-weight: 400;
 
-  /* color-scheme: light dark; */
-  background-color: var(--background-color);
-  color: var(--global-font-color);
+	/* color-scheme: light dark; */
+	background-color: var(--background-color);
+	color: var(--global-font-color);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
-
-
 body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
+	margin: 0;
+	min-width: 320px;
+	min-height: 100vh;
+	overflow: hidden;
 }
 
 /* 
