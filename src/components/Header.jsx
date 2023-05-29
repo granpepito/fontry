@@ -24,6 +24,7 @@ export default function Header() {
 
 	return (
 		<>
+			<SideBar handleClick={openNavBar} isOpen={isSideBarOpen} />
 			<header className={styles.header}>
 				<button
 					id='openSideBarBtn'
@@ -43,7 +44,6 @@ export default function Header() {
 					}}
 				></div>
 			</header>
-			<SideBar handleClick={openNavBar} isOpen={isSideBarOpen} />
 		</>
 	);
 }

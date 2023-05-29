@@ -22,31 +22,38 @@ export default function SideBar({ handleClick, isOpen }) {
 	const sideBarContainerOpen = isOpen ? styles.open : '';
 
 	return (
-		<div
-			className={[styles.sideBarContainer, sideBarContainerOpen].join(' ')}
-			{...(!isOpen ? 'disabled' : '')}
-		>
-			<div className={styles.sideBarTopContainer}>
-				<button
-					id='closeSideBarBtn'
-					className={inputStyles.buttonIcon}
-					onClick={handleClick}
-				>
-					<XMarkIcon className={iconStyles.icon} />
-				</button>
-				<div className={styles.themeSelectorContainer}></div>
+		<>
+			<div
+				className={[styles.sideBarContainer, sideBarContainerOpen].join(' ')}
+				hidden={!isOpen}
+			>
+				<div className={styles.sideBarTopContainer}>
+					<button
+						id='closeSideBarBtn'
+						className={inputStyles.buttonIcon}
+						onClick={handleClick}
+					>
+						<XMarkIcon className={iconStyles.icon} />
+					</button>
+					<div className={styles.themeSelectorContainer}></div>
+				</div>
+				<nav className={styles.sideBarMidContainer}>
+					<h2>Combinaisons Enregistrées</h2>
+					<ul className={styles.savedPairsList}>
+						<SavedPair />
+						<SavedPair />
+						<SavedPair />
+						<SavedPair />
+					</ul>
+				</nav>
+				<footer className={styles.sideBarBottomContainer}></footer>
 			</div>
-			<nav className={styles.sideBarMidContainer}>
-				<h2>Combinaisons Enregistrées</h2>
-				<ul className={styles.savedPairsList}>
-					<SavedPair />
-					<SavedPair />
-					<SavedPair />
-					<SavedPair />
-				</ul>
-			</nav>
-			<footer className={styles.sideBarBottomContainer}></footer>
-		</div>
+			<div
+				className={styles.sideBarBackground}
+				onClick={handleClick}
+				hidden={!isOpen}
+			></div>
+		</>
 	);
 }
 
