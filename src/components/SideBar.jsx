@@ -37,7 +37,7 @@ export default function SideBar({ handleClick, isOpen }) {
 					</button>
 					<div className={styles.themeSelectorContainer}></div>
 				</div>
-				<nav className={styles.sideBarMidContainer}>
+				<nav className={styles.sideBarBottomContainer}>
 					<h2>Combinaisons Enregistrées</h2>
 					<ul className={styles.savedPairsList}>
 						<SavedPair />
@@ -46,7 +46,6 @@ export default function SideBar({ handleClick, isOpen }) {
 						<SavedPair />
 					</ul>
 				</nav>
-				<footer className={styles.sideBarBottomContainer}></footer>
 			</div>
 			<div
 				className={styles.sideBarBackground}
