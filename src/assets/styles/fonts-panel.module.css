@@ -1,0 +1,77 @@
+.fontSelectorContainer {
+	display: flex;
+	justify-content: center;
+}
+
+.radioContainer {
+	display: inline-block;
+	padding: 1.5625rem;
+	width: 100%;
+	border-bottom: 2px solid black;
+	text-align: center;
+	transition: var(--transition-speed) step-start;
+}
+
+.radioContainer:first-of-type {
+	border-right: 2px solid black;
+	border-radius: 8px 0 0 0;
+}
+
+.radioContainer:last-of-type {
+	border-radius: 0 8px 0 0;
+}
+
+.radioContainer:hover,
+.radioContainer:focus-within {
+	/* font-weight: 700; */
+	font-style: italic;
+}
+
+.radioContainer.active {
+	border-bottom: none;
+	font-weight: 700;
+	font-style: italic;
+}
+
+.radioContainer > input[type='radio'] {
+	width: 0;
+	height: 0;
+	margin: 0;
+	opacity: 0;
+	/* visibility: hidden; */
+}
+
+.fontCategorySectionsContainer {
+	padding: 0.625rem 0.875rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.625rem;
+}
+
+.fontCategorySectionsContainer .categorySection {
+	width: 100%;
+	height: auto;
+}
+
+.categorySection .buttonOpenSection {
+	margin: 0;
+	padding: 0.25rem;
+	display: flex;
+	width: 100%;
+	justify-content: left;
+	align-content: center;
+}
+
+.categorySection .buttonOpenSection:focus {
+	background-color: transparent;
+}
+
+.categorySection .chevron {
+	margin-right: 0.5rem;
+	align-self: baseline;
+	transition: var(--transition-speed) cubic-bezier(0.39, 0.58, 0.57, 1);
+}
+
+.categorySection.open .chevron {
+	transform: rotate(90deg);
+}

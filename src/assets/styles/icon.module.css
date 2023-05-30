@@ -1,9 +1,14 @@
 .icon {
-  width: 32px;
-  height: 32px;
+	width: 32px;
+	height: 32px;
 }
 
 .moonIcon {
-  width: 28px;
-  height: 28px;
+	width: 28px;
+	height: 28px;
+}
+
+.smallIcon {
+	height: 24px;
+	width: 24px;
 }

@@ -3,6 +3,8 @@
 	border: none;
 	background-color: transparent;
 	cursor: pointer;
+	font-family: 'Lotion';
+	font-size: 1rem;
 }
 
 .buttonIcon:focus {
@@ -17,4 +19,13 @@
 .buttonIcon:active > svg {
 	scale: calc(0.75);
 	transition: var(--transition-speed) step-start;
+}
+
+.buttonIcon span,
+.buttonIcon svg {
+	pointer-events: none;
+}
+
+.radioGroupContainer {
+	border: none;
 }
