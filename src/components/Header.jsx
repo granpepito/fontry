@@ -6,10 +6,18 @@ import styles from '/src/assets/styles/header.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
 
+/**
+ * Header of the Website Page.
+ * @returns {import 'react'.ReactElement}
+ */
 export default function Header() {
 	const [isSideBarOpen, setSideBarState] = useState(false);
 
-	function openNavBar() {
+	/**
+	 * Opens the side bar.
+	 */
+	function openSideBar() {
+		// Add focus on the element that will be visible and then remove it.
 		if (isSideBarOpen) {
 			const openSideBarBtn = document.getElementById('openSideBarBtn');
 			openSideBarBtn.focus();
@@ -24,12 +32,12 @@ export default function Header() {
 
 	return (
 		<>
-			<SideBar handleClick={openNavBar} isOpen={isSideBarOpen} />
+			<SideBar handleClick={openSideBar} isOpen={isSideBarOpen} />
 			<header className={styles.header}>
 				<button
 					id='openSideBarBtn'
 					className={inputStyles.buttonIcon}
-					onClick={openNavBar}
+					onClick={openSideBar}
 				>
 					<Bars3Icon className={iconStyles.icon} />
 				</button>
