@@ -1,20 +1,20 @@
 .buttonIcon {
-  padding-bottom: 0;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
+	padding-bottom: 0;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
 }
 
 .buttonIcon:focus {
-  background-color:  hsl(0, 0%, 95%);
-  border-radius: 8px;
+	background-color: hsl(0, 0%, 95%);
+	border-radius: 8px;
 }
 
 .buttonIcon > svg:hover {
-  color: #555555
+	color: #555555;
 }
 
-.buttonIcon > svg:active {
-  scale: calc(.75);
-  transition: var(--transition-speed) step-start;
+.buttonIcon:active > svg {
+	scale: calc(0.75);
+	transition: var(--transition-speed) step-start;
 }
