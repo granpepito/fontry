@@ -1,3 +1,6 @@
+import { AlphaComparison } from './AlphaComparison';
+import { TextualExampleComparison } from './TextualExampleComparison';
+
 export function ComparisonPanel({ currentSection }) {
 	switch (currentSection) {
 		case 'alphanum': {
@@ -8,20 +11,4 @@ export function ComparisonPanel({ currentSection }) {
 			return <TextualExampleComparison />;
 		}
 	}
-}
-
-function AlphaComparison() {
-	return (
-		<section>
-			<h2>Comparaison Alphanumérique</h2>
-		</section>
-	);
-}
-
-function TextualExampleComparison() {
-	return (
-		<section>
-			<h2>Comparaison Textuelle</h2>
-		</section>
-	);
 }

@@ -1,0 +1,10 @@
+.comparisonPanel {
+	grid-column: 7/-1;
+	border-left: 2px solid black;
+}
+
+.comparisonPanel > h2 {
+	text-align: center;
+	letter-spacing: 2px;
+	text-decoration: underline;
+}
