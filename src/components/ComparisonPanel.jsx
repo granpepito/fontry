@@ -1,4 +1,4 @@
-import { AlphaNumComparison } from './AlphaComparison';
+import { AlphaNumComparison } from './AlphaNumComparison';
 import { TextualExampleComparison } from './TextualExampleComparison';
 
 export function ComparisonPanel({ currentSection }) {
