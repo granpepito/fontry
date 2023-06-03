@@ -10,6 +10,35 @@ import iconStyles from '/src/assets/styles/icon.module.css';
 export function FontsPanel() {
 	const [currentPolice, setCurrentPolice] = useState('1');
 	const [openFontCategory, setOpenFontCategory] = useState('');
+	const [fonts, setFonts] = useState({});
+
+	useEffect(() => {
+		if (Object.keys(fonts).length === 0) {
+			(async () => {
+				let data = await getFonts();
+
+				if (data.error) {
+					data = await getFonts();
+				}
+				const fontCategories = Object.keys(data);
+
+				const fontsGroupedByCategories = fontCategories.reduce(
+					(fontCategories, currentFontCategory) => {
+						const fontsData = data[currentFontCategory];
+						const fontButtons = fontsData.map((fontData, index) => (
+							<FontButton key={index} {...fontData} />
+						));
+						fontCategories[currentFontCategory] = fontButtons;
+
+						return fontCategories;
+					},
+					{}
+				);
+				console.log('fonts', fontsGroupedByCategories);
+				setFonts(fontsGroupedByCategories);
+			})();
+		}
+	});
 
 	function handlePoliceSelectorChange(e) {
 		setCurrentPolice(e.target.value);
@@ -22,11 +51,10 @@ export function FontsPanel() {
 		} else {
 			setOpenFontCategory(value);
 		}
-		console.log('value', value);
 	}
 
 	return (
-		<aside>
+		<aside id={styles.fontsPanel}>
 			<FontSelector
 				currentPolice={currentPolice}
 				setCurrentPolice={handlePoliceSelectorChange}
@@ -36,27 +64,37 @@ export function FontsPanel() {
 					fontCategoryName='serif'
 					openCategory={openFontCategory}
 					handleClick={handleFontCategoryButtonClick}
-				></FontCategorySection>
+				>
+					{fonts.serif ?? null}
+				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='sans-serif'
 					openCategory={openFontCategory}
 					handleClick={handleFontCategoryButtonClick}
-				></FontCategorySection>
+				>
+					{fonts['sans-serif'] ?? null}
+				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='display'
 					openCategory={openFontCategory}
 					handleClick={handleFontCategoryButtonClick}
-				></FontCategorySection>
+				>
+					{fonts.display ?? null}
+				</FontCategorySection>
 				<FontCategorySection
-					fontCategoryName='handriwriting'
+					fontCategoryName='handwriting'
 					openCategory={openFontCategory}
 					handleClick={handleFontCategoryButtonClick}
-				></FontCategorySection>
+				>
+					{fonts.handwriting ?? null}
+				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='monospace'
 					openCategory={openFontCategory}
 					handleClick={handleFontCategoryButtonClick}
-				></FontCategorySection>
+				>
+					{fonts.monospace ?? null}
+				</FontCategorySection>
 			</div>
 		</aside>
 	);
@@ -106,12 +144,21 @@ function FontSelector({ currentPolice, setCurrentPolice }) {
 	);
 }
 
-function FontCategorySection({ fontCategoryName, openCategory, handleClick }) {
+function FontCategorySection({
+	fontCategoryName,
+	openCategory,
+	handleClick,
+	children,
+}) {
 	const isOpen = openCategory === fontCategoryName;
 	const formattedFontCategoryName =
 		fontCategoryName[0].toUpperCase() + fontCategoryName.substring(1);
 
 	const openSectionClassName = isOpen ? styles.open : '';
+	const fonts = isOpen ? (
+		<div className={styles.fontsContainer}>{children}</div>
+	) : null;
+	// console.log(children);
 	return (
 		<section
 			className={[styles.categorySection, openSectionClassName].join(' ')}
@@ -130,11 +177,12 @@ function FontCategorySection({ fontCategoryName, openCategory, handleClick }) {
 				/>
 				<span>{formattedFontCategoryName}</span>
 			</button>
-			<div className={styles.fontsContainer}></div>
+			{fonts}
 		</section>
 	);
 }
 
-function fontButton() {
-	return <button></button>;
+function FontButton({ family: fontFamily }) {
+	// console.log(fontFamily);
+	return <button>{fontFamily}</button>;
 }
