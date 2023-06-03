@@ -1,21 +1,23 @@
 .header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 1.75rem 1.875rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 1.75rem 1.875rem;
 }
 
 .header > .websiteName {
-  margin: 0 auto 0 auto;
-  letter-spacing: 2px;
+	font-size: 36px;
+	font-weight: 900;
+	margin: 0 auto 0 auto;
+	letter-spacing: -0.01rem;
 }
 
 .websiteName > a {
-  text-decoration: none;
-  color: var(--global-font-color);
+	text-decoration: none;
+	color: var(--global-font-color);
 }
 
 .websiteName > a:hover {
-  color: #555555;
-  transition: var(--transition-speed);
+	color: #555555;
+	transition: var(--transition-speed);
 }
