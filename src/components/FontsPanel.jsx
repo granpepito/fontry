@@ -40,7 +40,7 @@ export function FontsPanel() {
 		}
 	});
 
-	function handlePoliceSelectorChange(e) {
+	function handleFontSelectorChange(e) {
 		setCurrentPolice(e.target.value);
 	}
 
@@ -57,7 +57,7 @@ export function FontsPanel() {
 		<aside id={styles.fontsPanel}>
 			<FontSelector
 				currentPolice={currentPolice}
-				setCurrentPolice={handlePoliceSelectorChange}
+				setCurrentPolice={handleFontSelectorChange}
 			/>
 			<div className={styles.fontCategorySectionsContainer}>
 				<FontCategorySection
