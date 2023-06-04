@@ -1,8 +1,7 @@
 @font-face {
 	font-family: 'Lotion';
 	src: local('Lotion Regular'),
-		url('./assets/fonts/Lotion-Regular.woff2') format('woff2'),
-		url('./assets/fonts/Lotion-Regular.woff') format('woff');
+		url('./assets/fonts/Lotion-Regular.woff2') format('woff2');
 	font-weight: 400;
 	font-style: normal;
 }
@@ -10,8 +9,7 @@
 @font-face {
 	font-family: 'Lotion';
 	src: local('Lotion Regular Italic'),
-		url('./assets/fonts/Lotion-RegularItalic.woff2') format('woff2'),
-		url('./assets/fonts/Lotion-RegularItalic.woff') format('woff');
+		url('./assets/fonts/Lotion-RegularItalic.woff2') format('woff2');
 	font-weight: 400;
 	font-style: italic;
 }
@@ -19,8 +17,7 @@
 @font-face {
 	font-family: 'Lotion';
 	src: local('Lotion SemiBold'),
-		url('./assets/fonts/Lotion-SemiBold.woff2') format('woff2'),
-		url('./assets/fonts/Lotion-SemiBold.woff') format('woff');
+		url('./assets/fonts/Lotion-SemiBold.woff2') format('woff2');
 	font-weight: 600;
 	font-style: normal;
 }
@@ -28,8 +25,7 @@
 @font-face {
 	font-family: 'Lotion';
 	src: local('Lotion SemiBold Italic'),
-		url('./assets/fonts/Lotion-SemiBoldItalic.woff2') format('woff2'),
-		url('./assets/fonts/Lotion-SemiBoldItalic.woff') format('woff');
+		url('./assets/fonts/Lotion-SemiBoldItalic.woff2') format('woff2');
 	font-weight: 600;
 	font-style: italic;
 }
@@ -37,8 +33,7 @@
 @font-face {
 	font-family: 'Lotion';
 	src: local('Lotion Bold'),
-		url('./assets/fonts/Lotion-Bold.woff2') format('woff2'),
-		url('./assets/fonts/Lotion-Bold.woff') format('woff');
+		url('./assets/fonts/Lotion-Bold.woff2') format('woff2');
 	font-weight: 700;
 	font-style: normal;
 }
@@ -46,8 +41,7 @@
 @font-face {
 	font-family: 'Lotion';
 	src: local('Lotion Bold Italic'),
-		url('./assets/fonts/Lotion-BoldItalic.woff2') format('woff2'),
-		url('./assets/fonts/Lotion-BoldItalic.woff') format('woff');
+		url('./assets/fonts/Lotion-BoldItalic.woff2') format('woff2');
 	font-weight: 700;
 	font-style: italic;
 }
@@ -55,8 +49,7 @@
 @font-face {
 	font-family: 'Lotion';
 	src: local('Lotion Black'),
-		url('./assets/fonts/Lotion-Black.woff2') format('woff2'),
-		url('./assets/fonts/Lotion-Black.woff') format('woff');
+		url('./assets/fonts/Lotion-Black.woff2') format('woff2');
 	font-weight: 900;
 	font-style: normal;
 }
@@ -64,8 +57,7 @@
 @font-face {
 	font-family: 'Lotion';
 	src: local('Lotion Black Italic'),
-		url('./assets/fonts/Lotion-BlackItalic.woff2') format('woff2'),
-		url('./assets/fonts/Lotion-BlackItalic.woff') format('woff');
+		url('./assets/fonts/Lotion-BlackItalic.woff2') format('woff2');
 	font-weight: 900;
 	font-style: italic;
 }
