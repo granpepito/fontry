@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Bars3Icon } from '@heroicons/react/24/outline';
-import SideBar from './SideBar';
+import { SideBar } from './SideBar';
 
 import styles from '/src/assets/styles/header.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
@@ -10,7 +10,7 @@ import iconStyles from '/src/assets/styles/icon.module.css';
  * Header of the Website Page.
  * @returns {import 'react'.ReactElement}
  */
-export default function Header() {
+export function Header() {
 	const [isSideBarOpen, setSideBarState] = useState(false);
 
 	/**

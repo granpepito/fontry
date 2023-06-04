@@ -18,7 +18,7 @@ import iconStyles from '/src/assets/styles/icon.module.css';
  * @
  * @returns
  */
-export default function SideBar({ handleClick, isOpen }) {
+export function SideBar({ handleClick, isOpen }) {
 	const sideBarContainerOpen = isOpen ? styles.open : '';
 
 	return (
