@@ -155,9 +155,7 @@ function FontCategorySection({
 		fontCategoryName[0].toUpperCase() + fontCategoryName.substring(1);
 
 	const openSectionClassName = isOpen ? styles.open : '';
-	const fonts = isOpen ? (
-		<div className={styles.fontsContainer}>{children}</div>
-	) : null;
+
 	// console.log(children);
 	return (
 		<section
@@ -177,7 +175,9 @@ function FontCategorySection({
 				/>
 				<span>{formattedFontCategoryName}</span>
 			</button>
-			{fonts}
+			<div className={[styles.fontsContainer, openSectionClassName].join(' ')}>
+				{isOpen ? children : null}
+			</div>
 		</section>
 	);
 }
