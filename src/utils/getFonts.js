@@ -23,7 +23,7 @@ async function fetchLatinExtendedGoogleFonts() {
 	const { VITE_GOOGLE_FONTS_API_KEY } = import.meta.env;
 
 	const response = await fetch(
-		`https://www.googleapis.com/webfonts/v1/webfonts?sort=alpha&subset=latin-ext&key=${VITE_GOOGLE_FONTS_API_KEY}`
+		`https://www.googleapis.com/webfonts/v1/webfonts?sort=alpha&subset=latin&key=${VITE_GOOGLE_FONTS_API_KEY}`
 	);
 
 	if (!response.ok) {
