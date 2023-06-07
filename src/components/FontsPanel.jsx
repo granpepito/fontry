@@ -8,7 +8,7 @@ import inputStyles from '/src/assets/styles/input.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
 
 export function FontsPanel() {
-	const [currentPolice, setCurrentPolice] = useState('1');
+	const [currentFontNumber, setCurrentFontNumber] = useState('1');
 	const [openFontCategory, setOpenFontCategory] = useState('');
 	const [fonts, setFonts] = useState({});
 
@@ -41,7 +41,7 @@ export function FontsPanel() {
 	});
 
 	function handleFontSelectorChange(e) {
-		setCurrentPolice(e.target.value);
+		setCurrentFontNumber(e.target.value);
 	}
 
 	function handleFontCategoryButtonClick(e) {
@@ -56,8 +56,8 @@ export function FontsPanel() {
 	return (
 		<aside id={styles.fontsPanel}>
 			<FontSelector
-				currentPolice={currentPolice}
-				setCurrentPolice={handleFontSelectorChange}
+				currentFontNumber={currentFontNumber}
+				handleChange={handleFontSelectorChange}
 			/>
 			<div className={styles.fontCategorySectionsContainer}>
 				<FontCategorySection
@@ -100,7 +100,7 @@ export function FontsPanel() {
 	);
 }
 
-function FontSelector({ currentPolice, setCurrentPolice }) {
+function FontSelector({ currentFontNumber, handleChange }) {
 	return (
 		<fieldset
 			className={[
@@ -111,7 +111,7 @@ function FontSelector({ currentPolice, setCurrentPolice }) {
 			<label
 				className={[
 					styles.radioContainer,
-					(() => (currentPolice === '1' ? styles.active : ''))(),
+					(() => (currentFontNumber === '1' ? styles.active : ''))(),
 				].join(' ')}
 			>
 				Police 1
@@ -120,14 +120,15 @@ function FontSelector({ currentPolice, setCurrentPolice }) {
 					type='radio'
 					id='police1'
 					value='1'
-					checked={currentPolice === '1'}
-					onChange={setCurrentPolice}
+					name='font-number'
+					checked={currentFontNumber === '1'}
+					onChange={handleChange}
 				/>
 			</label>
 			<label
 				className={[
 					styles.radioContainer,
-					(() => (currentPolice === '2' ? styles.active : ''))(),
+					(() => (currentFontNumber === '2' ? styles.active : ''))(),
 				].join(' ')}
 			>
 				Police 2
@@ -136,8 +137,9 @@ function FontSelector({ currentPolice, setCurrentPolice }) {
 					type='radio'
 					id='police2'
 					value='2'
-					checked={currentPolice === '2'}
-					onChange={setCurrentPolice}
+					name='font-number'
+					checked={currentFontNumber === '2'}
+					onChange={handleChange}
 				/>
 			</label>
 		</fieldset>
