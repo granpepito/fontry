@@ -54,12 +54,14 @@ function pairReducer(pair, action) {
 	switch (action.type) {
 		case 'updateFont': {
 			const fontData = JSON.parse(action.font);
-			if (action.fontN === '1') {
+			const fontNumber = action.fontN;
+			console.log(fontNumber);
+			if (fontNumber === '1') {
 				return {
 					...pair,
 					font1: fontData,
 				};
-			} else if (action.fontN === '2') {
+			} else if (fontNumber === '2') {
 				return {
 					...pair,
 					font2: fontData,
