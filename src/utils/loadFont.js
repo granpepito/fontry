@@ -1,3 +1,5 @@
+import WebFont from 'webfontloader';
+
 export async function loadFont(fontFamily, variants, isLimited) {
 	try {
 		function formatVariants(variants) {
@@ -14,7 +16,8 @@ export async function loadFont(fontFamily, variants, isLimited) {
 		}
 
 		const promise = new Promise((resolve, reject) => {
-			if (Object.keys(font).length > 0) {
+			if (fontFamily) {
+				// console.log(fontFamily);
 				const fontVariants = formatVariants(variants);
 				const text = isLimited ? fontFamily : '';
 				WebFont.load({
@@ -22,13 +25,14 @@ export async function loadFont(fontFamily, variants, isLimited) {
 						families: [`${fontFamily}:${fontVariants}:latin`],
 						text,
 					},
-					active: () => resolve('true'),
+					active: () => resolve('200'),
 					inactive: () => reject('404'),
 				});
+			} else {
+				reject('Font is not defined.');
 			}
-			reject('Font object is empty.');
 		});
-		await promise;
+		return promise;
 	} catch (err) {
 		console.log('HAS ERR', err);
 	}
