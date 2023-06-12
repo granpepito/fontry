@@ -1,5 +1,6 @@
 #fontsPanel {
 	grid-column: 1/7;
+	height: 100%;
 }
 
 .fontSelectorContainer {
@@ -24,14 +25,13 @@
 }
 
 .radioContainer:last-of-type {
-	border-radius: 0 8px 0 0;
+	/* border-radius: 0 8px 0 0; */
 }
 
 .radioContainer:hover,
 .radioContainer:focus-within {
-	background-color: rgba(255, 253, 253, 0.8);
+	background-color: rgb(230, 230, 230);
 	/* box-shadow: inset 4px 4px 4px 0px rgba(0, 0, 0, 0.021); */
-	/* font-weight: 700; */
 	font-style: italic;
 }
 
@@ -52,10 +52,11 @@
 }
 
 .fontCategorySectionsContainer {
-	padding: 0.625rem 0.875rem;
 	display: flex;
 	flex-direction: column;
 	gap: 0.625rem;
+	padding: 0.625rem 0.875rem;
+	height: 100%;
 }
 
 .fontCategorySectionsContainer .categorySection {
@@ -84,4 +85,28 @@
 
 .categorySection.open .chevron {
 	transform: rotate(90deg);
+}
+
+.fontsContainer {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-content: start;
+	align-items: start;
+	justify-content: space-between;
+	margin: 0;
+	height: 0;
+	padding: 0;
+	/* width: 100%; */
+	gap: 8px 10px;
+	overflow-y: scroll;
+	transition: var(--transition-speed) cubic-bezier(0.39, 0.58, 0.57, 1);
+}
+
+.fontsContainer.open {
+	padding: 0.875rem;
+	height: 100px;
+	width: auto;
+	/* transition: var(--transition-speed) cubic-bezier(0.39, 0.58, 0.57, 1); */
 }

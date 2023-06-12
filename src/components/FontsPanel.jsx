@@ -1,5 +1,6 @@
 import { useReducer, useState, useEffect } from 'react';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
+import { usePair, usePairDispatch } from '../hooks/PairContext';
 
 import getFonts from '../utils/getFonts';
 
@@ -11,6 +12,9 @@ export function FontsPanel() {
 	const [currentFontNumber, setCurrentFontNumber] = useState('1');
 	const [openFontCategory, setOpenFontCategory] = useState('');
 	const [fonts, setFonts] = useState({});
+	const [searchFonts, setSearchFonts] = useState({});
+	const pair = usePair();
+	const pairDispatch = usePairDispatch();
 
 	useEffect(() => {
 		if (Object.keys(fonts).length === 0) {
@@ -20,25 +24,12 @@ export function FontsPanel() {
 				if (data.error) {
 					data = await getFonts();
 				}
-				const fontCategories = Object.keys(data);
 
-				const fontsGroupedByCategories = fontCategories.reduce(
-					(fontCategories, currentFontCategory) => {
-						const fontsData = data[currentFontCategory];
-						const fontButtons = fontsData.map((fontData, index) => (
-							<FontButton key={index} {...fontData} />
-						));
-						fontCategories[currentFontCategory] = fontButtons;
-
-						return fontCategories;
-					},
-					{}
-				);
-				console.log('fonts', fontsGroupedByCategories);
-				setFonts(fontsGroupedByCategories);
+				setFonts(data);
 			})();
 		}
-	});
+		return;
+	}, [fonts]);
 
 	function handleFontSelectorChange(e) {
 		setCurrentFontNumber(e.target.value);
@@ -54,6 +45,17 @@ export function FontsPanel() {
 		}
 	}
 
+	function handleFontButtonClick(e) {
+		// console.log(e.target.value);
+		const fontData = e.target.value;
+		console.log('police', currentFontNumber);
+		pairDispatch({
+			type: 'updateFont',
+			fontN: currentFontNumber,
+			font: fontData,
+		});
+	}
+
 	return (
 		<aside id={styles.fontsPanel}>
 			<FontSelector
@@ -64,35 +66,45 @@ export function FontsPanel() {
 				<FontCategorySection
 					fontCategoryName='serif'
 					openCategory={openFontCategory}
+					currentFontNumber={currentFontNumber}
 					handleClick={handleFontCategoryButtonClick}
+					handleFontButtonClick={handleFontButtonClick}
 				>
 					{fonts.serif ?? null}
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='sans-serif'
 					openCategory={openFontCategory}
+					currentFontNumber={currentFontNumber}
 					handleClick={handleFontCategoryButtonClick}
+					handleFontButtonClick={handleFontButtonClick}
 				>
 					{fonts['sans-serif'] ?? null}
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='display'
 					openCategory={openFontCategory}
+					currentFontNumber={currentFontNumber}
 					handleClick={handleFontCategoryButtonClick}
+					handleFontButtonClick={handleFontButtonClick}
 				>
 					{fonts.display ?? null}
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='handwriting'
 					openCategory={openFontCategory}
+					currentFontNumber={currentFontNumber}
 					handleClick={handleFontCategoryButtonClick}
+					handleFontButtonClick={handleFontButtonClick}
 				>
 					{fonts.handwriting ?? null}
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='monospace'
 					openCategory={openFontCategory}
+					currentFontNumber={currentFontNumber}
 					handleClick={handleFontCategoryButtonClick}
+					handleFontButtonClick={handleFontButtonClick}
 				>
 					{fonts.monospace ?? null}
 				</FontCategorySection>
@@ -151,6 +163,8 @@ function FontCategorySection({
 	fontCategoryName,
 	openCategory,
 	handleClick,
+	handleFontButtonClick,
+	currentFontNumber,
 	children,
 }) {
 	const isOpen = openCategory === fontCategoryName;
@@ -159,7 +173,6 @@ function FontCategorySection({
 
 	const openSectionClassName = isOpen ? styles.open : '';
 
-	// console.log(children);
 	return (
 		<section
 			className={[styles.categorySection, openSectionClassName].join(' ')}
@@ -179,13 +192,56 @@ function FontCategorySection({
 				<span>{formattedFontCategoryName}</span>
 			</button>
 			<div className={[styles.fontsContainer, openSectionClassName].join(' ')}>
-				{isOpen ? children : null}
+				{children
+					? children.map((fontData, index) => (
+							<FontButton
+								key={index}
+								fontData={fontData}
+								handleClick={handleFontButtonClick}
+								currentFontNumber={currentFontNumber}
+								isCategoryOpen={isOpen}
+							/>
+					  ))
+					: null}
 			</div>
 		</section>
 	);
 }
 
-function FontButton({ family: fontFamily }) {
-	// console.log(fontFamily);
-	return <button>{fontFamily}</button>;
+function FontButton({
+	fontData,
+	handleClick,
+	currentFontNumber,
+	isCategoryOpen,
+}) {
+	const pair = usePair();
+	const fontFamily = fontData.family;
+	const { category } = fontData;
+	const currentFont =
+		currentFontNumber === '1'
+			? pair.font1.family
+			: currentFontNumber === '2'
+			? pair.font2.family
+			: null;
+
+	const className = [
+		inputStyles.button,
+		(() => (fontFamily === currentFont ? inputStyles.active : ''))(),
+	].join(' ');
+
+	return (
+		<button
+			className={className}
+			name={fontFamily}
+			type='button'
+			value={JSON.stringify(fontData)}
+			onClick={handleClick}
+			disabled={!isCategoryOpen}
+			style={{
+				fontFamily: `${fontFamily}, ${category}, Lotion`,
+			}}
+		>
+			{fontFamily}
+		</button>
+	);
 }
