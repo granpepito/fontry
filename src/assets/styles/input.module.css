@@ -31,3 +31,37 @@
 	margin: 0;
 	border: none;
 }
+
+.button {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
+	align-self: center;
+	gap: 0px;
+	padding: 8px 10px;
+	height: 40px;
+	width: fit-content;
+	border: 1px solid #000;
+	border-radius: 8px;
+	background: transparent;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: var(--transition-speed) cubic-bezier(0.39, 0.58, 0.57, 1);
+}
+
+.button:hover,
+.button:focus,
+.button.active {
+	background-color: rgb(99, 99, 99);
+	color: #fff;
+	outline: 1px solid grey;
+	border-color: rgb(99, 99, 99);
+}
+
+.button:active {
+	background-color: hsl(33, 30%, 41%);
+	outline: 1px solid grey;
+	border-color: hsl(33, 36%, 42%);
+}
