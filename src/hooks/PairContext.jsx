@@ -1,4 +1,5 @@
 import { createContext, useContext, useReducer } from 'react';
+import { loadFont } from '../utils/loadFont';
 
 function getLastSavedPair() {
 	const pairs = JSON.parse(localStorage.getItem('savedPairs'));
@@ -56,6 +57,7 @@ function pairReducer(pair, action) {
 			const fontData = JSON.parse(action.font);
 			const fontNumber = action.fontN;
 			console.log(fontNumber);
+			loadFont(fontData.family, fontData.variants);
 			if (fontNumber === '1') {
 				return {
 					...pair,
