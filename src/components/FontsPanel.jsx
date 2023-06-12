@@ -49,6 +49,7 @@ export function FontsPanel() {
 		if (value === openFontCategory) {
 			setOpenFontCategory('');
 		} else {
+			import(`../assets/styles/${value}-fonts.css`, { query: '?inline' });
 			setOpenFontCategory(value);
 		}
 	}
