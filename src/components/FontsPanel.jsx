@@ -119,9 +119,9 @@ function FontSelector({ currentFontNumber, handleChange }) {
 				<input
 					className={styles.radioInput}
 					type='radio'
-					id='police1'
+					id='font1'
 					value='1'
-					name='font-number'
+					name='font1'
 					checked={currentFontNumber === '1'}
 					onChange={handleChange}
 				/>
@@ -136,9 +136,9 @@ function FontSelector({ currentFontNumber, handleChange }) {
 				<input
 					className={styles.radioInput}
 					type='radio'
-					id='police2'
+					id='font2'
 					value='2'
-					name='font-number'
+					name='font2'
 					checked={currentFontNumber === '2'}
 					onChange={handleChange}
 				/>
