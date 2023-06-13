@@ -2,11 +2,11 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	padding: 1.75rem 1.875rem;
+	padding: var(--header-padding-top-bottom) var(--header-padding-left-right);
 }
 
 .header > .websiteName {
-	font-size: 36px;
+	font-size: var(--website-font-size);
 	font-weight: 900;
 	margin: 0 auto 0 auto;
 	letter-spacing: -0.01rem;

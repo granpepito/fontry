@@ -1,6 +1,7 @@
 .comparisonPanel {
 	grid-column: 7/-1;
 	border-left: 2px solid black;
+	height: var(--comparison-panel-height);
 }
 
 .comparisonPanel > h2 {

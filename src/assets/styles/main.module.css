@@ -1,5 +1,6 @@
 main#mainContent {
-	margin: 0.875rem 3rem 1rem;
+	margin: var(--main-content-margin-top) var(--main-content-margin-left-right)
+		var(--main-content-margin-bottom);
 	height: 100%;
 	width: auto;
 }

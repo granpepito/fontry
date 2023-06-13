@@ -65,7 +65,43 @@
 :root {
 	--global-font-color: #000;
 	--background-color: #fff;
+	--website-font-size: 36px;
+
+	--header-padding-top-bottom: 1.75rem;
+	--header-padding-left-right: 1.875rem;
+
+	--main-content-margin-top: 0.875rem;
+	--main-content-margin-left-right: 3rem;
+	--main-content-margin-bottom: 1.75rem;
+
+	--comparison-panel-height: calc(
+		100vh - (2 * var(--header-padding-top-bottom) + var(--website-font-size)) -
+			(1.75rem + 0.875rem)
+	);
+
+	--fonts-panel-height: calc(
+		100vh - (2 * var(--header-padding-top-bottom) + var(--website-font-size)) -
+			(1.75rem + 0.875rem)
+	);
+	--font-selector-radio-container-padding: 1.5625rem;
+	--font-category-section-container-flex-gap: 0.625rem;
+	--font-category-section-container-padding-vertical: 0.625rem;
+	--font-category-section-container-padding-horizontal: 0.875rem;
+	--button-open-section-padding: 0.25rem;
+	--open-fonts-container-padding: 0.875rem;
+	--closed-fonts-container-padding: 0 0.875rem;
+	--fonts-container-height: calc(
+		var(--fonts-panel-height) -
+			(
+				2 * var(--font-selector-radio-container-padding) + 18px +
+					(2 * var(--font-category-section-container-padding-vertical)) + 5 *
+					2rem + 5 * var(--font-category-section-container-flex-gap) + 2 *
+					var(--open-fonts-container-padding)
+			)
+	);
+
 	--transition-speed: 200ms;
+	--transition-timing-function: cubic-bezier(0.39, 0.58, 0.57, 1);
 
 	font-family: Lotion, 'Lucida Console', Courier, monospace;
 	line-height: 1.2;

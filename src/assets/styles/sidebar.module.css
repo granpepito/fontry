@@ -11,7 +11,7 @@
 	background-color: var(--background-color);
 	border-right: 2px solid black;
 	z-index: 100;
-	transition: var(--transition-speed) cubic-bezier(0.39, 0.58, 0.57, 1);
+	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
 .sideBarContainer.open {

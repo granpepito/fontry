@@ -1,6 +1,6 @@
 #fontsPanel {
 	grid-column: 1/7;
-	height: 100%;
+	height: var(--fonts-panel-height);
 }
 
 .fontSelectorContainer {
@@ -10,11 +10,11 @@
 
 .radioContainer {
 	display: inline-block;
-	padding: 1.5625rem;
+	padding: var(--font-selector-radio-container-padding);
 	width: 100%;
 	border-bottom: 2px solid black;
 	text-align: center;
-	background-color: rgba(240, 240, 240, 0.075);
+	background-color: transparent;
 	box-shadow: inset 4px 4px 4px 0px rgba(0, 0, 0, 0.075);
 	transition: var(--transition-speed) step-start;
 }
@@ -24,9 +24,10 @@
 	border-radius: 8px 0 0 0;
 }
 
-.radioContainer:last-of-type {
-	/* border-radius: 0 8px 0 0; */
-}
+/* .radioContainer:last-of-type {
+	border-radius: 0 8px 0 0; 
+} 
+*/
 
 .radioContainer:hover,
 .radioContainer:focus-within {
@@ -48,25 +49,24 @@
 	height: 0;
 	margin: 0;
 	opacity: 0;
-	/* visibility: hidden; */
 }
 
 .fontCategorySectionsContainer {
 	display: flex;
 	flex-direction: column;
-	gap: 0.625rem;
-	padding: 0.625rem 0.875rem;
-	height: 100%;
+	justify-content: flex-start;
+	gap: var(--font-category-section-container-flex-gap);
+	padding: var(--font-category-section-container-padding-vertical)
+		var(--font-category-section-container-padding-horizontal);
 }
 
 .fontCategorySectionsContainer .categorySection {
 	width: 100%;
-	height: auto;
 }
 
 .categorySection .buttonOpenSection {
 	margin: 0;
-	padding: 0.25rem;
+	padding: var(--button-open-section-padding);
 	display: flex;
 	width: 100%;
 	justify-content: left;
@@ -80,7 +80,7 @@
 .categorySection .chevron {
 	margin-right: 0.5rem;
 	align-self: baseline;
-	transition: var(--transition-speed) cubic-bezier(0.39, 0.58, 0.57, 1);
+	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
 .categorySection.open .chevron {
@@ -88,7 +88,6 @@
 }
 
 .fontsContainer {
-	position: relative;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -97,16 +96,14 @@
 	justify-content: space-between;
 	margin: 0;
 	height: 0;
-	padding: 0;
-	/* width: 100%; */
+	padding: var(--closed-fonts-container-padding);
 	gap: 8px 10px;
 	overflow-y: scroll;
-	transition: var(--transition-speed) cubic-bezier(0.39, 0.58, 0.57, 1);
+	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
 .fontsContainer.open {
-	padding: 0.875rem;
-	height: 100px;
+	padding: var(--open-fonts-container-padding);
+	height: var(--fonts-container-height);
 	width: auto;
-	/* transition: var(--transition-speed) cubic-bezier(0.39, 0.58, 0.57, 1); */
 }
