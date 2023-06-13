@@ -56,7 +56,11 @@ function pairReducer(pair, action) {
 		case 'updateFont': {
 			const fontData = JSON.parse(action.font);
 			const fontNumber = action.fontN;
-			console.log(fontNumber);
+
+			if (pair[`font${fontNumber}`].family === fontData.family) {
+				return pair;
+			}
+
 			loadFont(fontData.family, fontData.variants);
 			if (fontNumber === '1') {
 				return {
