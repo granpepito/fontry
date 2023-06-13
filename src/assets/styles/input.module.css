@@ -54,14 +54,19 @@
 .button:hover,
 .button:focus,
 .button.active {
-	background-color: rgb(99, 99, 99);
-	color: #fff;
-	outline: 1px solid grey;
-	border-color: rgb(99, 99, 99);
+	color: black;
+	background-color: hsl(0, 0%, 95%);
+	outline: 1px solid hsl(0, 0%, 95%);
+}
+
+.button.active {
+	border-color: hsl(0, 0%, 95%);
 }
 
 .button:active {
-	background-color: hsl(33, 30%, 41%);
-	outline: 1px solid grey;
-	border-color: hsl(33, 36%, 42%);
+	color: black;
+	background-color: hsl(0, 0%, 95%);
+	outline: 1px solid hsl(0, 0%, 75%);
+	border-color: hsl(0, 0%, 95%);
+	/* transform: scale(0.95); */
 }
