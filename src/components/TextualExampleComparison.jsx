@@ -6,8 +6,8 @@ export function TextualExampleComparison({ firstFont, secondFont }) {
 		<section className={styles.comparisonPanel}>
 			<h2>Comparaison Textuelle</h2>
 			<div className={styles.fontFamilies}>
-				<p>Police 1 - {firstFont.family}</p>
-				<p>Police 2 - {secondFont.family}</p>
+				<p>Police 1 - {firstFont.family ?? 'Lotion'}</p>
+				<p>Police 2 - {secondFont.family ?? 'Lotion'}</p>
 			</div>
 			<div className={styles.textualElementsContainer}>
 				<TextualElement type='title' fontFamily={firstFont.family} />
