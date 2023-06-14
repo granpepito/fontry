@@ -87,6 +87,32 @@
 	transform: rotate(90deg);
 }
 
+.categorySection .buttonOpenSection .circleIndicator {
+	align-self: center;
+	height: 16px;
+	width: 16px;
+	margin-left: 0.875rem;
+	border-radius: 100%;
+	transition: var(--transition-speed) var(--transition-timing-function);
+}
+.categorySection .buttonOpenSection .circleIndicator.hasCurrentFont {
+	height: 8px;
+	width: 8px;
+	background-color: rgb(0, 0, 0);
+	/* animation-duration: 2s;
+	animation-name: circle-fade-animation;
+	animation-iteration-count: infinite; */
+}
+
+/* @keyframes circle-fade-animation { 
+	0% {
+		background-color: rgba(100, 100, 100, 0.315);
+	}
+	75% {
+		background-color: rgb(0, 0, 0);
+	}
+} */
+
 .fontsContainer {
 	display: flex;
 	flex-direction: row;

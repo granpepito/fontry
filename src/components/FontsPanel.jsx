@@ -50,6 +50,7 @@ export function FontsPanel() {
 				<FontCategorySection
 					fontCategoryName='serif'
 					openCategory={openFontCategory}
+					pair={pair}
 					currentFontNumber={currentFontNumber}
 					handleClick={handleFontCategoryButtonClick}
 					handleFontButtonClick={handleFontButtonClick}
@@ -59,6 +60,7 @@ export function FontsPanel() {
 				<FontCategorySection
 					fontCategoryName='sans-serif'
 					openCategory={openFontCategory}
+					pair={pair}
 					currentFontNumber={currentFontNumber}
 					handleClick={handleFontCategoryButtonClick}
 					handleFontButtonClick={handleFontButtonClick}
@@ -68,6 +70,7 @@ export function FontsPanel() {
 				<FontCategorySection
 					fontCategoryName='display'
 					openCategory={openFontCategory}
+					pair={pair}
 					currentFontNumber={currentFontNumber}
 					handleClick={handleFontCategoryButtonClick}
 					handleFontButtonClick={handleFontButtonClick}
@@ -77,6 +80,7 @@ export function FontsPanel() {
 				<FontCategorySection
 					fontCategoryName='handwriting'
 					openCategory={openFontCategory}
+					pair={pair}
 					currentFontNumber={currentFontNumber}
 					handleClick={handleFontCategoryButtonClick}
 					handleFontButtonClick={handleFontButtonClick}
@@ -86,6 +90,7 @@ export function FontsPanel() {
 				<FontCategorySection
 					fontCategoryName='monospace'
 					openCategory={openFontCategory}
+					pair={pair}
 					currentFontNumber={currentFontNumber}
 					handleClick={handleFontCategoryButtonClick}
 					handleFontButtonClick={handleFontButtonClick}
@@ -146,6 +151,7 @@ function FontSelector({ currentFontNumber, handleChange }) {
 function FontCategorySection({
 	fontCategoryName,
 	openCategory,
+	pair,
 	handleClick,
 	handleFontButtonClick,
 	currentFontNumber,
@@ -156,6 +162,8 @@ function FontCategorySection({
 		fontCategoryName[0].toUpperCase() + fontCategoryName.substring(1);
 
 	const openSectionClassName = isOpen ? styles.open : '';
+	const { category: currentCategory } = pair[`font${currentFontNumber}`];
+	const isCurrentFontInCategory = currentCategory === fontCategoryName;
 
 	return (
 		<section
@@ -174,12 +182,19 @@ function FontCategorySection({
 					className={[iconStyles.smallIcon, styles.chevron].join(' ')}
 				/>
 				<span>{formattedFontCategoryName}</span>
+				<span
+					className={[
+						styles.circleIndicator,
+						(() => (isCurrentFontInCategory ? styles.hasCurrentFont : ''))(),
+					].join(' ')}
+				></span>
 			</button>
 			<div className={[styles.fontsContainer, openSectionClassName].join(' ')}>
 				{children
 					? children.map((fontData, index) => (
 							<FontButton
 								key={index}
+								pair={pair}
 								fontData={fontData}
 								handleClick={handleFontButtonClick}
 								currentFontNumber={currentFontNumber}
@@ -197,6 +212,7 @@ function FontButton({
 	handleClick,
 	currentFontNumber,
 	isCategoryOpen,
+	pair,
 }) {
 	const pair = usePair();
 	const fontFamily = fontData.family;
