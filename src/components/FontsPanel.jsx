@@ -1,8 +1,7 @@
-import { useReducer, useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { usePair, usePairDispatch } from '../hooks/PairContext';
-
-import getFonts from '../utils/getFonts';
+import { useFontsReducer } from '../hooks/fontsReducer';
 
 import styles from '/src/assets/styles/fonts-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
@@ -11,25 +10,11 @@ import iconStyles from '/src/assets/styles/icon.module.css';
 export function FontsPanel() {
 	const [currentFontNumber, setCurrentFontNumber] = useState('1');
 	const [openFontCategory, setOpenFontCategory] = useState('');
-	const [fonts, setFonts] = useState({});
-	const [searchFonts, setSearchFonts] = useState({});
+	const [fontsState, dispatch] = useFontsReducer({});
+
+	const { searchedFonts: fonts } = fontsState;
 	const pair = usePair();
 	const pairDispatch = usePairDispatch();
-
-	useEffect(() => {
-		if (Object.keys(fonts).length === 0) {
-			(async () => {
-				let data = await getFonts();
-
-				if (data.error) {
-					data = await getFonts();
-				}
-
-				setFonts(data);
-			})();
-		}
-		return;
-	}, [fonts]);
 
 	function handleFontSelectorChange(e) {
 		setCurrentFontNumber(e.target.value);
@@ -46,9 +31,8 @@ export function FontsPanel() {
 	}
 
 	function handleFontButtonClick(e) {
-		// console.log(e.target.value);
 		const fontData = e.target.value;
-		console.log('police', currentFontNumber);
+
 		pairDispatch({
 			type: 'updateFont',
 			fontN: currentFontNumber,
@@ -70,7 +54,7 @@ export function FontsPanel() {
 					handleClick={handleFontCategoryButtonClick}
 					handleFontButtonClick={handleFontButtonClick}
 				>
-					{fonts.serif ?? null}
+					{fonts ? fonts.serif : null}
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='sans-serif'
@@ -79,7 +63,7 @@ export function FontsPanel() {
 					handleClick={handleFontCategoryButtonClick}
 					handleFontButtonClick={handleFontButtonClick}
 				>
-					{fonts['sans-serif'] ?? null}
+					{fonts ? fonts['sans-serif'] : null}
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='display'
@@ -88,7 +72,7 @@ export function FontsPanel() {
 					handleClick={handleFontCategoryButtonClick}
 					handleFontButtonClick={handleFontButtonClick}
 				>
-					{fonts.display ?? null}
+					{fonts ? fonts.display : null}
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='handwriting'
@@ -97,7 +81,7 @@ export function FontsPanel() {
 					handleClick={handleFontCategoryButtonClick}
 					handleFontButtonClick={handleFontButtonClick}
 				>
-					{fonts.handwriting ?? null}
+					{fonts ? fonts.handwriting : null}
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='monospace'
@@ -106,7 +90,7 @@ export function FontsPanel() {
 					handleClick={handleFontCategoryButtonClick}
 					handleFontButtonClick={handleFontButtonClick}
 				>
-					{fonts.monospace ?? null}
+					{fonts ? fonts.monospace : null}
 				</FontCategorySection>
 			</div>
 		</aside>
