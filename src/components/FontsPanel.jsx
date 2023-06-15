@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { usePair, usePairDispatch } from '../hooks/PairContext';
-import { useFontsReducer } from '../hooks/fontsReducer';
+import { useFontsReducer } from '../hooks/useFontsReducer';
 
 import styles from '/src/assets/styles/fonts-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
@@ -10,7 +10,7 @@ import iconStyles from '/src/assets/styles/icon.module.css';
 export function FontsPanel() {
 	const [currentFontNumber, setCurrentFontNumber] = useState('1');
 	const [openFontCategory, setOpenFontCategory] = useState('');
-	const [fontsState, dispatch] = useFontsReducer({});
+	const [fontsState, fontsDispatch] = useFontsReducer({});
 
 	const { searchedFonts: fonts } = fontsState;
 	const pair = usePair();
@@ -214,7 +214,6 @@ function FontButton({
 	isCategoryOpen,
 	pair,
 }) {
-	const pair = usePair();
 	const fontFamily = fontData.family;
 	const { category } = fontData;
 	const currentFont =
