@@ -59,9 +59,9 @@
 }
 
 .categorySection .buttonOpenSection {
+	display: flex;
 	margin: 0;
 	padding: var(--button-open-section-padding);
-	display: flex;
 	width: 100%;
 	justify-content: left;
 	align-content: center;
@@ -91,9 +91,9 @@
 
 .categorySection .buttonOpenSection .circleIndicator {
 	align-self: center;
+	margin-left: 0.875rem;
 	height: 16px;
 	width: 16px;
-	margin-left: 0.875rem;
 	border-radius: 100%;
 	transition: var(--transition-speed) var(--transition-timing-function);
 }
@@ -109,7 +109,7 @@
 	flex-wrap: wrap;
 	align-content: start;
 	align-items: start;
-	justify-content: space-between;
+	/* justify-content: space-between; */
 	margin: 0;
 	max-height: 0;
 	padding: var(--closed-fonts-container-padding);
