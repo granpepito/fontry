@@ -44,7 +44,7 @@ export function FontsPanel() {
 		<aside id={styles.fontsPanel}>
 			<FontSelector
 				currentFontNumber={currentFontNumber}
-				handleChange={handleFontSelectorChange}
+				onChange={handleFontSelectorChange}
 			/>
 			<div className={styles.fontCategorySectionsContainer}>
 				<FontCategorySection
@@ -52,8 +52,8 @@ export function FontsPanel() {
 					openCategory={openFontCategory}
 					pair={pair}
 					currentFontNumber={currentFontNumber}
-					handleClick={handleFontCategoryButtonClick}
-					handleFontButtonClick={handleFontButtonClick}
+					onClick={handleFontCategoryButtonClick}
+					onFontButtonClick={handleFontButtonClick}
 				>
 					{fonts ? fonts.serif : null}
 				</FontCategorySection>
@@ -62,8 +62,8 @@ export function FontsPanel() {
 					openCategory={openFontCategory}
 					pair={pair}
 					currentFontNumber={currentFontNumber}
-					handleClick={handleFontCategoryButtonClick}
-					handleFontButtonClick={handleFontButtonClick}
+					onClick={handleFontCategoryButtonClick}
+					onFontButtonClick={handleFontButtonClick}
 				>
 					{fonts ? fonts['sans-serif'] : null}
 				</FontCategorySection>
@@ -72,8 +72,8 @@ export function FontsPanel() {
 					openCategory={openFontCategory}
 					pair={pair}
 					currentFontNumber={currentFontNumber}
-					handleClick={handleFontCategoryButtonClick}
-					handleFontButtonClick={handleFontButtonClick}
+					onClick={handleFontCategoryButtonClick}
+					onFontButtonClick={handleFontButtonClick}
 				>
 					{fonts ? fonts.display : null}
 				</FontCategorySection>
@@ -82,8 +82,8 @@ export function FontsPanel() {
 					openCategory={openFontCategory}
 					pair={pair}
 					currentFontNumber={currentFontNumber}
-					handleClick={handleFontCategoryButtonClick}
-					handleFontButtonClick={handleFontButtonClick}
+					onClick={handleFontCategoryButtonClick}
+					onFontButtonClick={handleFontButtonClick}
 				>
 					{fonts ? fonts.handwriting : null}
 				</FontCategorySection>
@@ -92,8 +92,8 @@ export function FontsPanel() {
 					openCategory={openFontCategory}
 					pair={pair}
 					currentFontNumber={currentFontNumber}
-					handleClick={handleFontCategoryButtonClick}
-					handleFontButtonClick={handleFontButtonClick}
+					onClick={handleFontCategoryButtonClick}
+					onFontButtonClick={handleFontButtonClick}
 				>
 					{fonts ? fonts.monospace : null}
 				</FontCategorySection>
@@ -102,7 +102,7 @@ export function FontsPanel() {
 	);
 }
 
-function FontSelector({ currentFontNumber, handleChange }) {
+function FontSelector({ currentFontNumber, onChange }) {
 	return (
 		<fieldset
 			className={[
@@ -124,7 +124,7 @@ function FontSelector({ currentFontNumber, handleChange }) {
 					value='1'
 					name='font1'
 					checked={currentFontNumber === '1'}
-					onChange={handleChange}
+					onChange={onChange}
 				/>
 			</label>
 			<label
@@ -141,7 +141,7 @@ function FontSelector({ currentFontNumber, handleChange }) {
 					value='2'
 					name='font2'
 					checked={currentFontNumber === '2'}
-					onChange={handleChange}
+					onChange={onChange}
 				/>
 			</label>
 		</fieldset>
@@ -152,8 +152,8 @@ function FontCategorySection({
 	fontCategoryName,
 	openCategory,
 	pair,
-	handleClick,
-	handleFontButtonClick,
+	onClick,
+	onFontButtonClick,
 	currentFontNumber,
 	children,
 }) {
@@ -176,7 +176,7 @@ function FontCategorySection({
 					openSectionClassName,
 				].join(' ')}
 				value={fontCategoryName}
-				onClick={handleClick}
+				onClick={onClick}
 			>
 				<ChevronRightIcon
 					className={[iconStyles.smallIcon, styles.chevron].join(' ')}
@@ -196,7 +196,7 @@ function FontCategorySection({
 								key={index}
 								pair={pair}
 								fontData={fontData}
-								handleClick={handleFontButtonClick}
+								onClick={onFontButtonClick}
 								currentFontNumber={currentFontNumber}
 								isCategoryOpen={isOpen}
 							/>
@@ -209,7 +209,7 @@ function FontCategorySection({
 
 function FontButton({
 	fontData,
-	handleClick,
+	onClick,
 	currentFontNumber,
 	isCategoryOpen,
 	pair,
@@ -235,7 +235,7 @@ function FontButton({
 			name={fontFamily}
 			type='button'
 			value={JSON.stringify(fontData)}
-			onClick={handleClick}
+			onClick={onClick}
 			disabled={!isCategoryOpen}
 			style={{
 				fontFamily: `${fontFamily}, ${category}, Lotion`,
