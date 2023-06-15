@@ -68,7 +68,6 @@
 	background-color: hsl(0, 0%, 95%);
 	outline: 1px solid hsl(0, 0%, 75%);
 	border-color: hsl(0, 0%, 95%);
-	/* transform: scale(0.95); */
 }
 
 .searchBarLabel {
@@ -76,11 +75,9 @@
 }
 
 .searchBarLabel::after {
-	content: '';
 	position: absolute;
 	right: 0.625rem;
 	top: 0.45rem;
-	/* bottom: 0.4375rem; */
 	width: 20px;
 	height: 20px;
 	content: url('/src/assets/img/magnifying-glass.svg');
