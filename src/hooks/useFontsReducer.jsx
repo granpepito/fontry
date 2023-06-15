@@ -50,7 +50,7 @@ export function fontsReducer(fontsState, action) {
 						return isMatch;
 					});
 					searchedFonts[category] = filteredFonts;
-				}, {});
+					});
 
 				return {
 					...fontsState,
