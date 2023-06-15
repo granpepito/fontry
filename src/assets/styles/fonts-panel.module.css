@@ -65,7 +65,6 @@
 }
 
 .categorySection .buttonOpenSection {
-	font-size: 1rem;
 	margin: 0;
 	padding: var(--button-open-section-padding);
 	display: flex;
