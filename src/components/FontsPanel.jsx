@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import debounce from 'lodash.debounce';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { usePair, usePairDispatch } from '../hooks/PairContext';
 import { useFontsReducer } from '../hooks/useFontsReducer';
 
@@ -18,6 +20,13 @@ export function FontsPanel() {
 
 	function handleFontSelectorChange(e) {
 		setCurrentFontNumber(e.target.value);
+	}
+
+	function handleSearch(e) {
+		fontsDispatch({
+			type: 'searchFonts',
+			toMatch: e.target.value,
+		});
 	}
 
 	function handleFontCategoryButtonClick(e) {
@@ -145,6 +154,40 @@ function FontSelector({ currentFontNumber, onChange }) {
 				/>
 			</label>
 		</fieldset>
+	);
+}
+
+function SearchBar({ onChange }) {
+	const debouncedOnChangeHandler = useMemo(() => debounce(onChange, 300), []);
+
+	// Stop the invocation of the debounced function
+	// after unmounting
+	useEffect(() => {
+		return () => {
+			debouncedOnChangeHandler.cancel();
+		};
+	}, []);
+
+	return (
+		<>
+			<input
+				type='search'
+				id={inputStyles.searchBar}
+				name='search'
+				placeholder='Rechercher une police'
+				maxLength='50'
+				autoCorrect='off'
+				spellCheck='false'
+				aria-label='Rechercher une police'
+				autoComplete='off'
+				onChange={debouncedOnChangeHandler}
+			/>
+			<button
+				className={[inputStyles.buttonIcon, styles.searchBarButton].join(' ')}
+			>
+				<MagnifyingGlassIcon className={iconStyles.icon} />
+			</button>
+		</>
 	);
 }
 
