@@ -70,3 +70,27 @@
 	border-color: hsl(0, 0%, 95%);
 	/* transform: scale(0.95); */
 }
+
+.searchBarLabel {
+	position: relative;
+}
+
+.searchBarLabel::after {
+	content: '';
+	position: absolute;
+	right: 0.625rem;
+	top: 0.45rem;
+	/* bottom: 0.4375rem; */
+	width: 20px;
+	height: 20px;
+	content: url('/src/assets/img/magnifying-glass.svg');
+}
+
+.searchBarLabel .searchBar {
+	font-size: 1rem;
+	font-family: 'Lotion';
+	padding: 0.4375rem 1.875rem 0.4375rem 1rem;
+	width: 100%;
+	border: 1px solid black;
+	border-radius: 20px;
+}

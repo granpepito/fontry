@@ -94,8 +94,8 @@
 		var(--fonts-panel-height) -
 			(
 				2 * var(--font-selector-radio-container-padding) + 18px +
-					(2 * var(--font-category-section-container-padding-vertical)) + 5 *
-					2rem + 5 * var(--font-category-section-container-flex-gap) + 2 *
+					(2 * var(--font-category-section-container-padding-vertical)) + 6 *
+					2rem + 6 * var(--font-category-section-container-flex-gap) + 2 *
 					var(--open-fonts-container-padding)
 			)
 	);

@@ -60,11 +60,12 @@
 		var(--font-category-section-container-padding-horizontal);
 }
 
-.fontCategorySectionsContainer .categorySection {
+.fontCategorySectionsContainer .fontCategorySectionsContainer .categorySection {
 	width: 100%;
 }
 
 .categorySection .buttonOpenSection {
+	font-size: 1rem;
 	margin: 0;
 	padding: var(--button-open-section-padding);
 	display: flex;
@@ -85,6 +86,10 @@
 
 .categorySection.open .chevron {
 	transform: rotate(90deg);
+}
+
+.categorySection .buttonOpenSection span:first-of-type {
+	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
 .categorySection.empty .buttonOpenSection span:first-of-type {

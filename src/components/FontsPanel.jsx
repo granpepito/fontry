@@ -1,7 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import debounce from 'lodash.debounce';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { usePair, usePairDispatch } from '../hooks/PairContext';
 import { useFontsReducer } from '../hooks/useFontsReducer';
 
@@ -56,6 +55,7 @@ export function FontsPanel() {
 				onChange={handleFontSelectorChange}
 			/>
 			<div className={styles.fontCategorySectionsContainer}>
+				<SearchBar onChange={handleSearch} />
 				<FontCategorySection
 					fontCategoryName='serif'
 					openCategory={openFontCategory}
@@ -169,10 +169,10 @@ function SearchBar({ onChange }) {
 	}, []);
 
 	return (
-		<>
+		<label className={inputStyles.searchBarLabel}>
 			<input
 				type='search'
-				id={inputStyles.searchBar}
+				className={inputStyles.searchBar}
 				name='search'
 				placeholder='Rechercher une police'
 				maxLength='50'
@@ -182,12 +182,7 @@ function SearchBar({ onChange }) {
 				autoComplete='off'
 				onChange={debouncedOnChangeHandler}
 			/>
-			<button
-				className={[inputStyles.buttonIcon, styles.searchBarButton].join(' ')}
-			>
-				<MagnifyingGlassIcon className={iconStyles.icon} />
-			</button>
-		</>
+		</label>
 	);
 }
 
