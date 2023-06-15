@@ -41,21 +41,30 @@ export function fontsReducer(fontsState, action) {
 			const { fonts } = fontsState;
 			const categories = Object.keys(fonts);
 			if (categories.length > 0) {
-				const searchedFonts = {};
+				if (toMatch.length > 0) {
+					const searchedFonts = {};
 
-				categories.forEach((category) => {
-					const filteredFonts = fonts[category].filter((font) => {
-						const { family } = font;
-						const isMatch = new RegExp(`\S?${toMatch}\S?`, 'iu').test(family);
-						return isMatch;
-					});
-					searchedFonts[category] = filteredFonts;
+					categories.forEach((category) => {
+						const filteredFonts = fonts[category].filter((font) => {
+							const { family } = font;
+							const isMatch = new RegExp(`\S?${toMatch}\S?`, 'iu').test(family);
+							return isMatch;
+						});
+						searchedFonts[category] = filteredFonts;
 					});
 
-				return {
-					...fontsState,
-					searchedFonts,
-				};
+					return {
+						...fontsState,
+						searchedFonts,
+					};
+				} else {
+					const { fonts } = fontsState;
+
+					return {
+						fonts: fonts,
+						searchedFonts: fonts,
+					};
+				}
 			}
 			return {
 				...fontsState,
