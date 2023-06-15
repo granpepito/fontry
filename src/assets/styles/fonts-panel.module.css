@@ -87,6 +87,10 @@
 	transform: rotate(90deg);
 }
 
+.categorySection.empty .buttonOpenSection span:first-of-type {
+	text-decoration: line-through;
+}
+
 .categorySection .buttonOpenSection .circleIndicator {
 	align-self: center;
 	height: 16px;

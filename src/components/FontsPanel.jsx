@@ -55,7 +55,7 @@ export function FontsPanel() {
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
-					{fonts ? fonts.serif : null}
+					{fonts ? fonts.serif : []}
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='sans-serif'
@@ -65,7 +65,7 @@ export function FontsPanel() {
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
-					{fonts ? fonts['sans-serif'] : null}
+					{fonts ? fonts['sans-serif'] : []}
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='display'
@@ -75,7 +75,7 @@ export function FontsPanel() {
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
-					{fonts ? fonts.display : null}
+					{fonts ? fonts.display : []}
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='handwriting'
@@ -85,7 +85,7 @@ export function FontsPanel() {
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
-					{fonts ? fonts.handwriting : null}
+					{fonts ? fonts.handwriting : []}
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='monospace'
@@ -95,7 +95,7 @@ export function FontsPanel() {
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
-					{fonts ? fonts.monospace : null}
+					{fonts ? fonts.monospace : []}
 				</FontCategorySection>
 			</div>
 		</aside>
@@ -162,12 +162,18 @@ function FontCategorySection({
 		fontCategoryName[0].toUpperCase() + fontCategoryName.substring(1);
 
 	const openSectionClassName = isOpen ? styles.open : '';
+	const isEmptyClassName = children.length === 0 ? styles.empty : '';
+
 	const { category: currentCategory } = pair[`font${currentFontNumber}`];
 	const isCurrentFontInCategory = currentCategory === fontCategoryName;
 
 	return (
 		<section
-			className={[styles.categorySection, openSectionClassName].join(' ')}
+			className={[
+				styles.categorySection,
+				openSectionClassName,
+				isEmptyClassName,
+			].join(' ')}
 		>
 			<button
 				className={[
