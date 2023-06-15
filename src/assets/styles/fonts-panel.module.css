@@ -121,7 +121,7 @@
 	align-items: start;
 	justify-content: space-between;
 	margin: 0;
-	height: 0;
+	max-height: 0;
 	padding: var(--closed-fonts-container-padding);
 	gap: 8px 10px;
 	overflow-y: scroll;
@@ -130,6 +130,6 @@
 
 .fontsContainer.open {
 	padding: var(--open-fonts-container-padding);
-	height: var(--fonts-container-height);
+	max-height: var(--fonts-container-height);
 	width: auto;
 }
