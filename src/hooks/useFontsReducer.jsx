@@ -47,7 +47,8 @@ export function fontsReducer(fontsState, action) {
 					categories.forEach((category) => {
 						const filteredFonts = fonts[category].filter((font) => {
 							const { family } = font;
-							const isMatch = new RegExp(`\S?${toMatch}\S?`, 'iu').test(family);
+							// const isMatch = new RegExp(`\S?${toMatch}\S?`, 'iu').test(family);
+							const isMatch = family.includes(toMatch);
 							return isMatch;
 						});
 						searchedFonts[category] = filteredFonts;
