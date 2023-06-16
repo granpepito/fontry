@@ -1,11 +1,132 @@
 .comparisonPanel {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	gap: 30px;
 	grid-column: 7/-1;
 	border-left: 2px solid black;
 	height: var(--comparison-panel-height);
+	padding: var(--comparison-panel-padding-vertical)
+		var(--comparison-panel-padding-horizontal);
 }
 
-.comparisonPanel > h2 {
+.comparisonPanel .comparisonPanelTitle {
+	align-items: center;
+	/* align-self: start; */
+}
+
+.comparisonPanel .comparisonPanelTitle > h2 {
 	text-align: center;
 	letter-spacing: 2px;
 	text-decoration: underline;
 }
+
+.comparisonPanel .fontFamilies {
+	text-align: center;
+	font-style: italic;
+}
+
+.comparisonPanel .alphaNumFontContainer > div {
+	display: flex;
+	flex-grow: 1;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-evenly;
+	text-align: center;
+}
+
+.comparisonPanel .alphaNumFontContainer .alphaNumElementContainer:first-child {
+	margin-right: 0.5rem;
+}
+
+.comparisonPanel .alphaNumFontContainer .alphaNumElementContainer:nth-child(2) {
+	margin-left: 0.5rem;
+}
+
+.comparisonPanel .textualElementsContainer {
+	display: flex;
+	flex-direction: column;
+	/* justify-content: end; */
+	align-self: baseline;
+	gap: 1.875rem;
+}
+
+.comparisonPanel .textualElementsContainer .textualElement {
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+}
+
+.comparisonPanel .textualElement .typesettingFontNumber {
+	font-style: italic;
+	grid-column: 1/2;
+	/* transform: rotate(270deg); */
+}
+.comparisonPanel .textualElementsContainer .textualElement .example {
+	grid-column: 2/-1;
+}
+
+.comparisonPanel .textualElementsContainer .textualElement .example h1,
+.comparisonPanel .textualElementsContainer .textualElement .example h3 {
+	margin: 0;
+}
+
+.comparisonPanel
+	.textualElementsContainer
+	.textualElement.titleElement
+	.example {
+	font-size: 2.25rem;
+}
+
+.comparisonPanel
+	.textualElementsContainer
+	.textualElement.leadElement
+	.example {
+	font-size: 1.625rem;
+}
+
+.comparisonPanel
+	.textualElementsContainer
+	.textualElement.paragraphElement
+	.example,
+.comparisonPanel .textualElement.actionsElement .example {
+	font-size: 1rem;
+}
+
+.comparisonPanel .textualElement.actionsElement .example {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 0.875rem;
+	width: 100%;
+}
+
+.comparisonPanel .textualElement.actionsElement .example .button {
+	font-size: 1rem;
+}
+
+.comparisonPanel .textualElement.actionsElement .example span a {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+	transition: var(--transition-speed) var(--transition-timing-function);
+}
+
+.comparisonPanel .textualElement.actionsElement .example span a:hover {
+	color: #555;
+	text-decoration: underline;
+}
+
+.comparisonPanel .textualElement.actionsElement .example span a .icon {
+	margin-right: 0.875rem;
+}
+
+/* .comparisonPanel .textualElement.actionsElement .example span {
+	display: inline-block;
+} */
+
+/* .comparisonPanel .textualElement.actionsElement .example::before {
+	height: 24px;
+	width: 24px;
+	content: url('/src/assets/img/arrow-long-right.svg');
+} */

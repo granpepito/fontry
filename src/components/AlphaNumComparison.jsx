@@ -3,9 +3,11 @@ import styles from '/src/assets/styles/comparison-panel.module.css';
 export function AlphaNumComparison({ firstFont, secondFont }) {
 	return (
 		<section className={styles.comparisonPanel}>
-			<h2>Comparaison Alphanumérique</h2>
+			<div className={styles.comparisonPanelTitle}>
+				<h2>Comparaison Alphanumérique</h2>
+			</div>
 			<div className={styles.alphaNumFontContainer}>
-				<p className={styles.fontName1}>
+				<p className={styles.fontFamilies}>
 					Police 1 - {firstFont.family ?? 'Lotion'}
 				</p>
 				<div>
@@ -14,7 +16,7 @@ export function AlphaNumComparison({ firstFont, secondFont }) {
 				</div>
 			</div>
 			<div className={styles.alphaNumFontContainer}>
-				<p className={styles.fontName2}>
+				<p className={styles.fontFamilies}>
 					Police 2 - {secondFont.family ?? 'Lotion'}
 				</p>
 				<div>
@@ -40,11 +42,11 @@ function AlphaNumElement({ fontFamily, weightName }) {
 				<br />
 				0123456789
 				<br />
-				'" ‘’ “” ‚„′″‹› «» ()[]&#123;&#125;/|\
+				@#$%^&amp; *
 				<br />
 				.,:;… ¡!¿?
 				<br />
-				@#$%^&amp; *
+				'" ‘’ “” ‚„′″‹› «» ()[]&#123;&#125;/|\
 			</p>
 		</div>
 	);

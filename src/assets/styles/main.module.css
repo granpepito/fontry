@@ -1,4 +1,7 @@
 main#mainContent {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	margin: var(--main-content-margin-top) var(--main-content-margin-left-right)
 		var(--main-content-margin-bottom);
 	height: 100%;
@@ -10,6 +13,7 @@ main#mainContent > .panelsContainer {
 	grid-template-columns: repeat(15, 1fr);
 	padding: 0;
 	margin: 0;
+	max-width: var(--panels-container-max-width);
 	border: 2px solid #000;
 	border-radius: 8px;
 }

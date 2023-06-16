@@ -1,13 +1,17 @@
 import styles from '/src/assets/styles/comparison-panel.module.css';
-import inputStyle from '/src/assets/styles/input.module.css';
+import inputStyles from '/src/assets/styles/input.module.css';
+import iconStyles from '/src/assets/styles/icon.module.css';
+import { ArrowLongRightIcon } from '@heroicons/react/20/solid';
 
 export function TextualExampleComparison({ firstFont, secondFont }) {
 	return (
 		<section className={styles.comparisonPanel}>
-			<h2>Comparaison Textuelle</h2>
-			<div className={styles.fontFamilies}>
-				<p>Police 1 - {firstFont.family ?? 'Lotion'}</p>
-				<p>Police 2 - {secondFont.family ?? 'Lotion'}</p>
+			<div className={styles.comparisonPanelTitle}>
+				<h2>Comparaison Textuelle</h2>
+				<div className={styles.fontFamilies}>
+					<p>Police 1 - {firstFont.family ?? 'Lotion'}</p>
+					<p>Police 2 - {secondFont.family ?? 'Lotion'}</p>
+				</div>
 			</div>
 			<div className={styles.textualElementsContainer}>
 				<TextualElement type='title' fontFamily={firstFont.family} />
@@ -28,9 +32,11 @@ function TextualElement({ fontFamily, type }) {
 			return (
 				<div className={[styles.textualElement, styles.titleElement].join(' ')}>
 					{typesettingFontNumber('Police 1')}
-					<h1 style={{ fontFamily }}>
-						<span>TITRE</span>&nbsp; Article
-					</h1>
+					<div className={styles.example} style={{ fontFamily }}>
+						<h1>
+							<span>TITRE</span> Article
+						</h1>
+					</div>
 				</div>
 			);
 		}
@@ -38,9 +44,11 @@ function TextualElement({ fontFamily, type }) {
 			return (
 				<div className={[styles.textualElement, styles.leadElement].join(' ')}>
 					{typesettingFontNumber('Police 1')}
-					<h3 style={{ fontFamily }}>
-						<span>SOUS-TITRE</span>&nbsp; Article
-					</h3>
+					<div className={styles.example} style={{ fontFamily }}>
+						<h3>
+							<span>SOUS-TITRE</span> Article
+						</h3>
+					</div>
 				</div>
 			);
 		}
@@ -50,15 +58,17 @@ function TextualElement({ fontFamily, type }) {
 					className={[styles.textualElement, styles.paragraphElement].join(' ')}
 				>
 					{typesettingFontNumber('Police 2')}
-					<p style={{ fontFamily }}>PARAGRAPHE</p>
-					<p style={{ fontFamily }}>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-						eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus
-						metus aliquam eleifend mi in nulla posuere sollicitudin. Commodo
-						viverra maecenas accumsan lacus vel facilisis. Natoque penatibus et
-						magnis dis parturient montes nascetur ridiculus. Neque laoreet
-						suspendisse interdum consectetur libero id.
-					</p>
+					<div className={styles.example} style={{ fontFamily }}>
+						<p>PARAGRAPHE</p>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+							eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus
+							metus aliquam eleifend mi in nulla posuere sollicitudin. Commodo
+							viverra maecenas accumsan lacus vel facilisis. Natoque penatibus
+							et magnis dis parturient montes nascetur ridiculus. Neque laoreet
+							suspendisse interdum consectetur libero id.
+						</p>
+					</div>
 				</div>
 			);
 		}
@@ -69,17 +79,30 @@ function TextualElement({ fontFamily, type }) {
 				>
 					{typesettingFontNumber('Police 2')}
 
-					<p style={{ fontFamily }}>
-						<button className={inputStyle.button} style={{ fontFamily }}>
+					<div className={styles.example} style={{ fontFamily }}>
+						<button
+							className={[inputStyles.button, styles.button].join(' ')}
+							style={{ fontFamily }}
+						>
 							Bouton
 						</button>
 						<span>
-							<a href='#'>URL 1</a>
+							<a>
+								<ArrowLongRightIcon
+									className={[iconStyles.smallIcon, styles.icon].join(' ')}
+								/>
+								URL 1
+							</a>
 						</span>
 						<span>
-							<a href='#'>URL 2</a>
+							<a>
+								<ArrowLongRightIcon
+									className={[iconStyles.smallIcon, styles.icon].join(' ')}
+								/>
+								URL 2
+							</a>
 						</span>
-					</p>
+					</div>
 				</div>
 			);
 		}
