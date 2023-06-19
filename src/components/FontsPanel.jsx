@@ -243,7 +243,7 @@ function FontCategorySection({
 				pair={pair}
 				fontData={fontData}
 				onClick={onFontButtonClick}
-				currentFontNumber={currentFontTab}
+				currentFontTab={currentFontTab}
 				isCategoryOpen={isOpen}
 			/>
 		));
@@ -287,16 +287,16 @@ function FontCategorySection({
 function FontButton({
 	fontData,
 	onClick,
-	currentFontNumber,
+	currentFontTab,
 	isCategoryOpen,
 	pair,
 }) {
 	const fontFamily = fontData.family;
 	const { category } = fontData;
 	const currentFont =
-		currentFontNumber === '1'
+		currentFontTab === '1'
 			? pair.font1.family
-			: currentFontNumber === '2'
+			: currentFontTab === '2'
 			? pair.font2.family
 			: null;
 
