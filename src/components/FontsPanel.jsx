@@ -223,6 +223,11 @@ function FontTabSelector({ currentFontTab, onChange }) {
 function SearchBar({ onSearch, onChange, value }) {
 	const debouncedOnChangeHandler = useMemo(() => debounce(onSearch, 300), []);
 
+	function handleChange(e) {
+		onChange(e);
+		debouncedOnChangeHandler(e);
+	}
+
 	// Stop the invocation of the debounced function after unmounting
 	useEffect(() => {
 		return () => {
@@ -243,10 +248,7 @@ function SearchBar({ onSearch, onChange, value }) {
 				aria-label='Rechercher une police'
 				autoComplete='off'
 				value={value}
-				onChange={(e) => {
-					onChange(e);
-					debouncedOnChangeHandler(e);
-				}}
+				onChange={handleChange}
 			/>
 		</label>
 	);
