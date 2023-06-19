@@ -43,7 +43,7 @@ export function FontsPanel() {
 
 		pairDispatch({
 			type: 'updateFont',
-			fontN: currentFontNumber,
+			fontNumber: currentFontTab,
 			font: fontData,
 		});
 	}

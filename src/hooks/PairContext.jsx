@@ -54,24 +54,28 @@ export function PairProvider({ children }) {
 function pairReducer(pair, action) {
 	switch (action.type) {
 		case 'updateFont': {
-			const fontData = JSON.parse(action.font);
-			const fontNumber = action.fontN;
+			try {
+				const fontData = JSON.parse(action.font);
+				const { fontNumber } = action;
 
-			if (pair[`font${fontNumber}`].family === fontData.family) {
-				return pair;
-			}
+				if (pair[`font${fontNumber}`].family === fontData.family) {
+					return pair;
+				}
 
-			loadFont(fontData.family, fontData.variants);
-			if (fontNumber === '1') {
-				return {
-					...pair,
-					font1: fontData,
-				};
-			} else if (fontNumber === '2') {
-				return {
-					...pair,
-					font2: fontData,
-				};
+				loadFont(fontData.family, fontData.variants);
+				if (fontNumber === '1') {
+					return {
+						...pair,
+						font1: fontData,
+					};
+				} else if (fontNumber === '2') {
+					return {
+						...pair,
+						font2: fontData,
+					};
+				}
+			} catch (error) {
+				console.error(error);
 			}
 		}
 		case 'updateTheme': {
