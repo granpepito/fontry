@@ -1,8 +1,7 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useMemo, useEffect } from 'react';
 import debounce from 'lodash.debounce';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { usePair, usePairDispatch } from '../hooks/PairContext';
-import { useFontsReducer } from '../hooks/useFontsReducer';
 import { useFontsPanel } from '../hooks/useFontsPanel';
 
 import styles from '/src/assets/styles/fonts-panel.module.css';
