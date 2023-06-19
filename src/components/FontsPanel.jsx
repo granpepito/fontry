@@ -8,6 +8,9 @@ import styles from '/src/assets/styles/fonts-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
 
+/**
+ * Component where the user can find fonts and choose them.
+ */
 export function FontsPanel() {
 	const [fontsPanelState, dispatch] = useFontsPanel({
 		1: {
@@ -33,14 +36,21 @@ export function FontsPanel() {
 	const pair = usePair();
 	const pairDispatch = usePairDispatch();
 
+	/**
+	 * @callback handleFontTabSelector - Sets the tab of the FontsPanel component. Changes the state of the FontsPanel component.
+	 * @param {Event} e - Event
+	 */
 	function handleFontTabSelectorChange(e) {
-		// setCurrentFontTabNumber(e.target.value);
 		dispatch({
 			type: 'setFontTab',
 			fontTab: e.target.value,
 		});
 	}
 
+	/**
+	 * @callback handleSearch - Sets the fonts that are going to be displayed based on "match" variable. Changes the state of the FontsPanel component.
+	 * @param {Event} e - Event
+	 */
 	function handleSearch(e) {
 		dispatch({
 			type: 'searchFonts',
@@ -48,6 +58,10 @@ export function FontsPanel() {
 		});
 	}
 
+	/**
+	 * @callback setMatch - Sets the match property of the current font panel tab. Changes the state of the FontsPanel component.
+	 * @param {Event} e - Event
+	 */
 	function setMatch(e) {
 		const match = e.target.value;
 		dispatch({
@@ -56,6 +70,10 @@ export function FontsPanel() {
 		});
 	}
 
+	/**
+	 * @callback handleFontCategoryButtonClick - Sets the category to be opened for the current font panel tab. Changes the state of the FontsPanel component.
+	 * @param {Event} e - Event
+	 */
 	function handleFontCategoryButtonClick(e) {
 		const value = e.target.value;
 
@@ -66,6 +84,10 @@ export function FontsPanel() {
 		});
 	}
 
+	/**
+	 * @callback handleFontButtonClick - Sets the font of the pair of fonts based on the current font panel tab.
+	 * @param {Event} e - Event
+	 */
 	function handleFontButtonClick(e) {
 		const fontData = e.target.dataset.font;
 
@@ -139,6 +161,12 @@ export function FontsPanel() {
 	);
 }
 
+/**
+ * Allows to change the selector font panel tab. It uses radio buttons.
+ * @param {Object} props
+ * @param {string} props.currentFontTab - Current opened tab.
+ * @param {handleFontTabSelectorChange} props.onChange - onchange event handler.
+ */
 function FontTabSelector({ currentFontTab, onChange }) {
 	return (
 		<fieldset
@@ -185,6 +213,13 @@ function FontTabSelector({ currentFontTab, onChange }) {
 	);
 }
 
+/**
+ * Allows to search for a font. It is an input of type=search.
+ * @param {Object} props
+ * @param {handleSearch} props.onSearch - Search function for the onchange event handler.
+ * @param {setMatch} props.onChange - Function to update the value of the input for the onchange event handler.
+ * @param {string} value - Value of the input
+ */
 function SearchBar({ onSearch, onChange, value }) {
 	const debouncedOnChangeHandler = useMemo(() => debounce(onSearch, 300), []);
 
@@ -217,6 +252,16 @@ function SearchBar({ onSearch, onChange, value }) {
 	);
 }
 
+/**
+ * Displays a button with the name of the category and if open the available fonts.
+ * @param {Object} props
+ * @param {string} props.fontCategoryName - Name of the current category.
+ * @param {string} props.openCategory - Name of the currently open category.
+ * @param {import('..utils/Pair').Pair} props.pair - The current pair of fonts displayed.
+ * @param {handleFontCategoryButtonClick} props.onClick - Event handler for the onclick event.
+ * @param {handleFontButtonClick} props.onFontButtonClick - Event handler the FontButton component.
+ * @param {import('../utils/Font').FontFamily[]} props.children - Children components.
+ */
 function FontCategorySection({
 	fontCategoryName,
 	openCategory,
@@ -284,6 +329,15 @@ function FontCategorySection({
 	);
 }
 
+/**
+ * Button displaying the fonts name and containing its data.
+ * @param {Object} props
+ * @param {import("../utils/Font").FontFamily} props.fontData - Data of the font.
+ * @param {handleFontButtonClick} props.onClick - Event handler for the onclick event.
+ * @param {string} props.currentFontTab - Currently opened font panel tab.
+ * @param {boolean} props.isCategoryOpen - Boolean value stating if the FontButton's category is opened.
+ * @param {pair} props.pair - The current pair of fonts displayed.
+ */
 function FontButton({
 	fontData,
 	onClick,
