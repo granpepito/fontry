@@ -3,43 +3,72 @@ import debounce from 'lodash.debounce';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { usePair, usePairDispatch } from '../hooks/PairContext';
 import { useFontsReducer } from '../hooks/useFontsReducer';
+import { useFontsPanel } from '../hooks/useFontsPanel';
 
 import styles from '/src/assets/styles/fonts-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
 
 export function FontsPanel() {
-	const [currentFontNumber, setCurrentFontNumber] = useState('1');
-	const [openFontCategory, setOpenFontCategory] = useState('');
-	const [fontsState, fontsDispatch] = useFontsReducer({});
+	const [fontsPanelState, dispatch] = useFontsPanel({
+		1: {
+			category: '',
+			match: '',
+			fonts: {},
+		},
+		2: {
+			category: '',
+			match: '',
+			fonts: {},
+		},
+		currentFontTab: '1',
+	});
 
-	const { searchedFonts: fonts } = fontsState;
+	const { currentFontTab } = fontsPanelState;
+	const { category, match } = fontsPanelState[currentFontTab];
+	const fonts =
+		Object.keys(fontsPanelState[currentFontTab].fonts).length > 0
+			? fontsPanelState[currentFontTab].fonts
+			: fontsPanelState.fonts;
+
 	const pair = usePair();
 	const pairDispatch = usePairDispatch();
 
-	function handleFontSelectorChange(e) {
-		setCurrentFontNumber(e.target.value);
+	function handleFontTabSelectorChange(e) {
+		// setCurrentFontTabNumber(e.target.value);
+		dispatch({
+			type: 'setFontTab',
+			fontTab: e.target.value,
+		});
 	}
 
 	function handleSearch(e) {
-		fontsDispatch({
+		dispatch({
 			type: 'searchFonts',
-			toMatch: e.target.value,
+			match: e.target.value,
+		});
+	}
+
+	function setMatch(e) {
+		const match = e.target.value;
+		dispatch({
+			type: 'setMatch',
+			match,
 		});
 	}
 
 	function handleFontCategoryButtonClick(e) {
 		const value = e.target.value;
-		if (value === openFontCategory) {
-			setOpenFontCategory('');
-		} else {
-			import(`../assets/styles/${value}-fonts.css`, { query: '?inline' });
-			setOpenFontCategory(value);
-		}
+
+		import(`../assets/styles/${value}-fonts.css`);
+		dispatch({
+			type: 'setCategory',
+			category: value,
+		});
 	}
 
 	function handleFontButtonClick(e) {
-		const fontData = e.target.value;
+		const fontData = e.target.dataset.font;
 
 		pairDispatch({
 			type: 'updateFont',
@@ -50,17 +79,17 @@ export function FontsPanel() {
 
 	return (
 		<aside id={styles.fontsPanel}>
-			<FontSelector
-				currentFontNumber={currentFontNumber}
-				onChange={handleFontSelectorChange}
+			<FontTabSelector
+				currentFontTab={currentFontTab}
+				onChange={handleFontTabSelectorChange}
 			/>
 			<div className={styles.fontCategorySectionsContainer}>
-				<SearchBar onChange={handleSearch} />
+				<SearchBar onSearch={handleSearch} onChange={setMatch} value={match} />
 				<FontCategorySection
 					fontCategoryName='serif'
-					openCategory={openFontCategory}
+					openCategory={category}
 					pair={pair}
-					currentFontNumber={currentFontNumber}
+					currentFontTab={currentFontTab}
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
@@ -68,9 +97,9 @@ export function FontsPanel() {
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='sans-serif'
-					openCategory={openFontCategory}
+					openCategory={category}
 					pair={pair}
-					currentFontNumber={currentFontNumber}
+					currentFontTab={currentFontTab}
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
@@ -78,9 +107,9 @@ export function FontsPanel() {
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='display'
-					openCategory={openFontCategory}
+					openCategory={category}
 					pair={pair}
-					currentFontNumber={currentFontNumber}
+					currentFontTab={currentFontTab}
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
@@ -88,9 +117,9 @@ export function FontsPanel() {
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='handwriting'
-					openCategory={openFontCategory}
+					openCategory={category}
 					pair={pair}
-					currentFontNumber={currentFontNumber}
+					currentFontTab={currentFontTab}
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
@@ -98,9 +127,9 @@ export function FontsPanel() {
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='monospace'
-					openCategory={openFontCategory}
+					openCategory={category}
 					pair={pair}
-					currentFontNumber={currentFontNumber}
+					currentFontTab={currentFontTab}
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
@@ -111,7 +140,7 @@ export function FontsPanel() {
 	);
 }
 
-function FontSelector({ currentFontNumber, onChange }) {
+function FontTabSelector({ currentFontTab, onChange }) {
 	return (
 		<fieldset
 			className={[
@@ -122,7 +151,7 @@ function FontSelector({ currentFontNumber, onChange }) {
 			<label
 				className={[
 					styles.radioContainer,
-					(() => (currentFontNumber === '1' ? styles.active : ''))(),
+					(() => (currentFontTab === '1' ? styles.active : ''))(),
 				].join(' ')}
 			>
 				Police 1
@@ -132,14 +161,14 @@ function FontSelector({ currentFontNumber, onChange }) {
 					id='font1'
 					value='1'
 					name='font1'
-					checked={currentFontNumber === '1'}
+					checked={currentFontTab === '1'}
 					onChange={onChange}
 				/>
 			</label>
 			<label
 				className={[
 					styles.radioContainer,
-					(() => (currentFontNumber === '2' ? styles.active : ''))(),
+					(() => (currentFontTab === '2' ? styles.active : ''))(),
 				].join(' ')}
 			>
 				Police 2
@@ -149,7 +178,7 @@ function FontSelector({ currentFontNumber, onChange }) {
 					id='font2'
 					value='2'
 					name='font2'
-					checked={currentFontNumber === '2'}
+					checked={currentFontTab === '2'}
 					onChange={onChange}
 				/>
 			</label>
@@ -157,11 +186,10 @@ function FontSelector({ currentFontNumber, onChange }) {
 	);
 }
 
-function SearchBar({ onChange }) {
-	const debouncedOnChangeHandler = useMemo(() => debounce(onChange, 300), []);
+function SearchBar({ onSearch, onChange, value }) {
+	const debouncedOnChangeHandler = useMemo(() => debounce(onSearch, 300), []);
 
-	// Stop the invocation of the debounced function
-	// after unmounting
+	// Stop the invocation of the debounced function after unmounting
 	useEffect(() => {
 		return () => {
 			debouncedOnChangeHandler.cancel();
@@ -180,7 +208,11 @@ function SearchBar({ onChange }) {
 				spellCheck='false'
 				aria-label='Rechercher une police'
 				autoComplete='off'
-				onChange={debouncedOnChangeHandler}
+				value={value}
+				onChange={(e) => {
+					onChange(e);
+					debouncedOnChangeHandler(e);
+				}}
 			/>
 		</label>
 	);
@@ -192,7 +224,7 @@ function FontCategorySection({
 	pair,
 	onClick,
 	onFontButtonClick,
-	currentFontNumber,
+	currentFontTab,
 	children,
 }) {
 	const isOpen = openCategory === fontCategoryName;
@@ -202,8 +234,21 @@ function FontCategorySection({
 	const openSectionClassName = isOpen ? styles.open : '';
 	const isEmptyClassName = children.length === 0 ? styles.empty : '';
 
-	const { category: currentCategory } = pair[`font${currentFontNumber}`];
+	const { category: currentCategory } = pair[`font${currentFontTab}`];
 	const isCurrentFontInCategory = currentCategory === fontCategoryName;
+
+	const fontList = useMemo(() => {
+		return children.map((fontData, index) => (
+			<FontButton
+				key={index}
+				pair={pair}
+				fontData={fontData}
+				onClick={onFontButtonClick}
+				currentFontNumber={currentFontTab}
+				isCategoryOpen={isOpen}
+			/>
+		));
+	}, [children, onFontButtonClick, currentFontTab, isOpen]);
 
 	return (
 		<section
@@ -234,18 +279,7 @@ function FontCategorySection({
 				></span>
 			</button>
 			<div className={[styles.fontsContainer, openSectionClassName].join(' ')}>
-				{children
-					? children.map((fontData, index) => (
-							<FontButton
-								key={index}
-								pair={pair}
-								fontData={fontData}
-								onClick={onFontButtonClick}
-								currentFontNumber={currentFontNumber}
-								isCategoryOpen={isOpen}
-							/>
-					  ))
-					: null}
+				{fontList}
 			</div>
 		</section>
 	);
@@ -276,8 +310,10 @@ function FontButton({
 		<button
 			className={className}
 			name={fontFamily}
+			title={fontFamily}
 			type='button'
-			value={JSON.stringify(fontData)}
+			value={fontFamily}
+			data-font={JSON.stringify(fontData)}
 			onClick={onClick}
 			disabled={!isCategoryOpen}
 			style={{
