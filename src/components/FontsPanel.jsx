@@ -1,66 +1,116 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useMemo, useEffect } from 'react';
 import debounce from 'lodash.debounce';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { usePair, usePairDispatch } from '../hooks/PairContext';
-import { useFontsReducer } from '../hooks/useFontsReducer';
+import { useFontsPanel } from '../hooks/useFontsPanel';
 
 import styles from '/src/assets/styles/fonts-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
 
+/**
+ * Component where the user can find fonts and choose them.
+ */
 export function FontsPanel() {
-	const [currentFontNumber, setCurrentFontNumber] = useState('1');
-	const [openFontCategory, setOpenFontCategory] = useState('');
-	const [fontsState, fontsDispatch] = useFontsReducer({});
+	const [fontsPanelState, dispatch] = useFontsPanel({
+		1: {
+			category: '',
+			match: '',
+			fonts: {},
+		},
+		2: {
+			category: '',
+			match: '',
+			fonts: {},
+		},
+		currentFontTab: '1',
+	});
 
-	const { searchedFonts: fonts } = fontsState;
+	const { currentFontTab } = fontsPanelState;
+	const { category, match } = fontsPanelState[currentFontTab];
+	const fonts =
+		Object.keys(fontsPanelState[currentFontTab].fonts).length > 0
+			? fontsPanelState[currentFontTab].fonts
+			: fontsPanelState.fonts;
+
 	const pair = usePair();
 	const pairDispatch = usePairDispatch();
 
-	function handleFontSelectorChange(e) {
-		setCurrentFontNumber(e.target.value);
-	}
-
-	function handleSearch(e) {
-		fontsDispatch({
-			type: 'searchFonts',
-			toMatch: e.target.value,
+	/**
+	 * @callback handleFontTabSelector - Sets the tab of the FontsPanel component. Changes the state of the FontsPanel component.
+	 * @param {Event} e - Event
+	 */
+	function handleFontTabSelectorChange(e) {
+		dispatch({
+			type: 'setFontTab',
+			fontTab: e.target.value,
 		});
 	}
 
-	function handleFontCategoryButtonClick(e) {
-		const value = e.target.value;
-		if (value === openFontCategory) {
-			setOpenFontCategory('');
-		} else {
-			import(`../assets/styles/${value}-fonts.css`, { query: '?inline' });
-			setOpenFontCategory(value);
-		}
+	/**
+	 * @callback handleSearch - Sets the fonts that are going to be displayed based on "match" variable. Changes the state of the FontsPanel component.
+	 * @param {Event} e - Event
+	 */
+	function handleSearch(e) {
+		dispatch({
+			type: 'searchFonts',
+			match: e.target.value,
+		});
 	}
 
+	/**
+	 * @callback setMatch - Sets the match property of the current font panel tab. Changes the state of the FontsPanel component.
+	 * @param {Event} e - Event
+	 */
+	function setMatch(e) {
+		const match = e.target.value;
+		dispatch({
+			type: 'setMatch',
+			match,
+		});
+	}
+
+	/**
+	 * @callback handleFontCategoryButtonClick - Sets the category to be opened for the current font panel tab. Changes the state of the FontsPanel component.
+	 * @param {Event} e - Event
+	 */
+	function handleFontCategoryButtonClick(e) {
+		const value = e.target.value;
+
+		import(`../assets/styles/${value}-fonts.css`);
+		dispatch({
+			type: 'setCategory',
+			category: value,
+		});
+	}
+
+	/**
+	 * @callback handleFontButtonClick - Sets the font of the pair of fonts based on the current font panel tab.
+	 * @param {Event} e - Event
+	 */
 	function handleFontButtonClick(e) {
-		const fontData = e.target.value;
+		const fontData = e.target.dataset.font;
 
 		pairDispatch({
 			type: 'updateFont',
-			fontN: currentFontNumber,
+			fontNumber: currentFontTab,
 			font: fontData,
 		});
 	}
 
 	return (
 		<aside id={styles.fontsPanel}>
-			<FontSelector
-				currentFontNumber={currentFontNumber}
-				onChange={handleFontSelectorChange}
+			<FontTabSelector
+				currentFontTab={currentFontTab}
+				onChange={handleFontTabSelectorChange}
 			/>
 			<div className={styles.fontCategorySectionsContainer}>
-				<SearchBar onChange={handleSearch} />
+				<SearchBar onSearch={handleSearch} onChange={setMatch} value={match} />
 				<FontCategorySection
 					fontCategoryName='serif'
-					openCategory={openFontCategory}
+					openCategory={category}
 					pair={pair}
-					currentFontNumber={currentFontNumber}
+					currentFontTab={currentFontTab}
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
@@ -68,9 +118,9 @@ export function FontsPanel() {
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='sans-serif'
-					openCategory={openFontCategory}
+					openCategory={category}
 					pair={pair}
-					currentFontNumber={currentFontNumber}
+					currentFontTab={currentFontTab}
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
@@ -78,9 +128,9 @@ export function FontsPanel() {
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='display'
-					openCategory={openFontCategory}
+					openCategory={category}
 					pair={pair}
-					currentFontNumber={currentFontNumber}
+					currentFontTab={currentFontTab}
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
@@ -88,9 +138,9 @@ export function FontsPanel() {
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='handwriting'
-					openCategory={openFontCategory}
+					openCategory={category}
 					pair={pair}
-					currentFontNumber={currentFontNumber}
+					currentFontTab={currentFontTab}
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
@@ -98,9 +148,9 @@ export function FontsPanel() {
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='monospace'
-					openCategory={openFontCategory}
+					openCategory={category}
 					pair={pair}
-					currentFontNumber={currentFontNumber}
+					currentFontTab={currentFontTab}
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
@@ -111,7 +161,13 @@ export function FontsPanel() {
 	);
 }
 
-function FontSelector({ currentFontNumber, onChange }) {
+/**
+ * Allows to change the selector font panel tab. It uses radio buttons.
+ * @param {Object} props
+ * @param {string} props.currentFontTab - Current opened tab.
+ * @param {handleFontTabSelectorChange} props.onChange - onchange event handler.
+ */
+function FontTabSelector({ currentFontTab, onChange }) {
 	return (
 		<fieldset
 			className={[
@@ -122,7 +178,7 @@ function FontSelector({ currentFontNumber, onChange }) {
 			<label
 				className={[
 					styles.radioContainer,
-					(() => (currentFontNumber === '1' ? styles.active : ''))(),
+					(() => (currentFontTab === '1' ? styles.active : ''))(),
 				].join(' ')}
 			>
 				Police 1
@@ -132,14 +188,14 @@ function FontSelector({ currentFontNumber, onChange }) {
 					id='font1'
 					value='1'
 					name='font1'
-					checked={currentFontNumber === '1'}
+					checked={currentFontTab === '1'}
 					onChange={onChange}
 				/>
 			</label>
 			<label
 				className={[
 					styles.radioContainer,
-					(() => (currentFontNumber === '2' ? styles.active : ''))(),
+					(() => (currentFontTab === '2' ? styles.active : ''))(),
 				].join(' ')}
 			>
 				Police 2
@@ -149,7 +205,7 @@ function FontSelector({ currentFontNumber, onChange }) {
 					id='font2'
 					value='2'
 					name='font2'
-					checked={currentFontNumber === '2'}
+					checked={currentFontTab === '2'}
 					onChange={onChange}
 				/>
 			</label>
@@ -157,11 +213,22 @@ function FontSelector({ currentFontNumber, onChange }) {
 	);
 }
 
-function SearchBar({ onChange }) {
-	const debouncedOnChangeHandler = useMemo(() => debounce(onChange, 300), []);
+/**
+ * Allows to search for a font. It is an input of type=search.
+ * @param {Object} props
+ * @param {handleSearch} props.onSearch - Search function for the onchange event handler.
+ * @param {setMatch} props.onChange - Function to update the value of the input for the onchange event handler.
+ * @param {string} value - Value of the input
+ */
+function SearchBar({ onSearch, onChange, value }) {
+	const debouncedOnChangeHandler = useMemo(() => debounce(onSearch, 300), []);
 
-	// Stop the invocation of the debounced function
-	// after unmounting
+	function handleChange(e) {
+		onChange(e);
+		debouncedOnChangeHandler(e);
+	}
+
+	// Stop the invocation of the debounced function after unmounting
 	useEffect(() => {
 		return () => {
 			debouncedOnChangeHandler.cancel();
@@ -180,19 +247,30 @@ function SearchBar({ onChange }) {
 				spellCheck='false'
 				aria-label='Rechercher une police'
 				autoComplete='off'
-				onChange={debouncedOnChangeHandler}
+				value={value}
+				onChange={handleChange}
 			/>
 		</label>
 	);
 }
 
+/**
+ * Displays a button with the name of the category and if open the available fonts.
+ * @param {Object} props
+ * @param {string} props.fontCategoryName - Name of the current category.
+ * @param {string} props.openCategory - Name of the currently open category.
+ * @param {import('..utils/Pair').Pair} props.pair - The current pair of fonts displayed.
+ * @param {handleFontCategoryButtonClick} props.onClick - Event handler for the onclick event.
+ * @param {handleFontButtonClick} props.onFontButtonClick - Event handler the FontButton component.
+ * @param {import('../utils/Font').FontFamily[]} props.children - Children components.
+ */
 function FontCategorySection({
 	fontCategoryName,
 	openCategory,
 	pair,
 	onClick,
 	onFontButtonClick,
-	currentFontNumber,
+	currentFontTab,
 	children,
 }) {
 	const isOpen = openCategory === fontCategoryName;
@@ -202,8 +280,21 @@ function FontCategorySection({
 	const openSectionClassName = isOpen ? styles.open : '';
 	const isEmptyClassName = children.length === 0 ? styles.empty : '';
 
-	const { category: currentCategory } = pair[`font${currentFontNumber}`];
+	const { category: currentCategory } = pair[`font${currentFontTab}`];
 	const isCurrentFontInCategory = currentCategory === fontCategoryName;
+
+	const fontList = useMemo(() => {
+		return children.map((fontData, index) => (
+			<FontButton
+				key={index}
+				pair={pair}
+				fontData={fontData}
+				onClick={onFontButtonClick}
+				currentFontTab={currentFontTab}
+				isCategoryOpen={isOpen}
+			/>
+		));
+	}, [children, onFontButtonClick, currentFontTab, isOpen]);
 
 	return (
 		<section
@@ -234,36 +325,34 @@ function FontCategorySection({
 				></span>
 			</button>
 			<div className={[styles.fontsContainer, openSectionClassName].join(' ')}>
-				{children
-					? children.map((fontData, index) => (
-							<FontButton
-								key={index}
-								pair={pair}
-								fontData={fontData}
-								onClick={onFontButtonClick}
-								currentFontNumber={currentFontNumber}
-								isCategoryOpen={isOpen}
-							/>
-					  ))
-					: null}
+				{fontList}
 			</div>
 		</section>
 	);
 }
 
+/**
+ * Button displaying the fonts name and containing its data.
+ * @param {Object} props
+ * @param {import("../utils/Font").FontFamily} props.fontData - Data of the font.
+ * @param {handleFontButtonClick} props.onClick - Event handler for the onclick event.
+ * @param {string} props.currentFontTab - Currently opened font panel tab.
+ * @param {boolean} props.isCategoryOpen - Boolean value stating if the FontButton's category is opened.
+ * @param {pair} props.pair - The current pair of fonts displayed.
+ */
 function FontButton({
 	fontData,
 	onClick,
-	currentFontNumber,
+	currentFontTab,
 	isCategoryOpen,
 	pair,
 }) {
 	const fontFamily = fontData.family;
 	const { category } = fontData;
 	const currentFont =
-		currentFontNumber === '1'
+		currentFontTab === '1'
 			? pair.font1.family
-			: currentFontNumber === '2'
+			: currentFontTab === '2'
 			? pair.font2.family
 			: null;
 
@@ -276,8 +365,10 @@ function FontButton({
 		<button
 			className={className}
 			name={fontFamily}
+			title={fontFamily}
 			type='button'
-			value={JSON.stringify(fontData)}
+			value={fontFamily}
+			data-font={JSON.stringify(fontData)}
 			onClick={onClick}
 			disabled={!isCategoryOpen}
 			style={{
