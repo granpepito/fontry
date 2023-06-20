@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from 'react';
-import { loadFont } from '../utils/loadFont';
+import { loadFont } from '../functions/loadFont';
 
 function getLastSavedPair() {
 	const pairs = JSON.parse(localStorage.getItem('savedPairs'));

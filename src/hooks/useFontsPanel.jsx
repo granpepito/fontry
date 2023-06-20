@@ -1,6 +1,6 @@
 import { useReducer, useEffect } from 'react';
 
-import getFonts from '../utils/getFonts';
+import getFonts from '../functions/getFonts';
 
 /**
  * Hook for the state of the FontsPanel component.
