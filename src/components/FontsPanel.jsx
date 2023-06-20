@@ -221,7 +221,7 @@ function FontTabSelector({ currentFontTab, onChange }) {
  * @param {string} value - Value of the input
  */
 function SearchBar({ onSearch, onChange, value }) {
-	const debouncedOnChangeHandler = useMemo(() => debounce(onSearch, 300), []);
+	const debouncedOnChangeHandler = useMemo(() => debounce(onSearch, 400), []);
 
 	function handleChange(e) {
 		onChange(e);
@@ -259,7 +259,6 @@ function SearchBar({ onSearch, onChange, value }) {
  * @param {Object} props
  * @param {string} props.fontCategoryName - Name of the current category.
  * @param {string} props.openCategory - Name of the currently open category.
- * @param {import('..utils/Pair').Pair} props.pair - The current pair of fonts displayed.
  * @param {handleFontCategoryButtonClick} props.onClick - Event handler for the onclick event.
  * @param {handleFontButtonClick} props.onFontButtonClick - Event handler the FontButton component.
  * @param {import('../utils/Font').FontFamily[]} props.children - Children components.
@@ -267,12 +266,12 @@ function SearchBar({ onSearch, onChange, value }) {
 function FontCategorySection({
 	fontCategoryName,
 	openCategory,
-	pair,
 	onClick,
 	onFontButtonClick,
 	currentFontTab,
 	children,
 }) {
+	const pair = usePair();
 	const isOpen = openCategory === fontCategoryName;
 	const formattedFontCategoryName =
 		fontCategoryName[0].toUpperCase() + fontCategoryName.substring(1);
@@ -287,14 +286,12 @@ function FontCategorySection({
 		return children.map((fontData, index) => (
 			<FontButton
 				key={index}
-				pair={pair}
 				fontData={fontData}
 				onClick={onFontButtonClick}
 				currentFontTab={currentFontTab}
-				isCategoryOpen={isOpen}
 			/>
 		));
-	}, [children, onFontButtonClick, currentFontTab, isOpen]);
+	}, [children, onFontButtonClick, currentFontTab]);
 
 	return (
 		<section
@@ -324,8 +321,13 @@ function FontCategorySection({
 					].join(' ')}
 				></span>
 			</button>
-			<div className={[styles.fontsContainer, openSectionClassName].join(' ')}>
-				{fontList}
+			<div className={[styles.fontsContainer].join(' ')}>
+				<fieldset
+					className={[styles.fieldset, openSectionClassName].join(' ')}
+					disabled={!isOpen}
+				>
+					{fontList}
+				</fieldset>
 			</div>
 		</section>
 	);
@@ -338,15 +340,9 @@ function FontCategorySection({
  * @param {handleFontButtonClick} props.onClick - Event handler for the onclick event.
  * @param {string} props.currentFontTab - Currently opened font panel tab.
  * @param {boolean} props.isCategoryOpen - Boolean value stating if the FontButton's category is opened.
- * @param {pair} props.pair - The current pair of fonts displayed.
  */
-function FontButton({
-	fontData,
-	onClick,
-	currentFontTab,
-	isCategoryOpen,
-	pair,
-}) {
+function FontButton({ fontData, onClick, currentFontTab, isCategoryOpen }) {
+	const pair = usePair();
 	const fontFamily = fontData.family;
 	const { category } = fontData;
 	const currentFont =
@@ -370,7 +366,6 @@ function FontButton({
 			value={fontFamily}
 			data-font={JSON.stringify(fontData)}
 			onClick={onClick}
-			disabled={!isCategoryOpen}
 			style={{
 				fontFamily: `${fontFamily}, ${category}, Lotion`,
 			}}
