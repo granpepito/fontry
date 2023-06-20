@@ -221,7 +221,7 @@ function FontTabSelector({ currentFontTab, onChange }) {
  * @param {string} value - Value of the input
  */
 function SearchBar({ onSearch, onChange, value }) {
-	const debouncedOnChangeHandler = useMemo(() => debounce(onSearch, 300), []);
+	const debouncedOnChangeHandler = useMemo(() => debounce(onSearch, 400), []);
 
 	function handleChange(e) {
 		onChange(e);
