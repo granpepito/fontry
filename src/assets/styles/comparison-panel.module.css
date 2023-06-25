@@ -59,7 +59,9 @@
 .comparisonPanel .textualElement .typesettingFontNumber {
 	font-style: italic;
 	grid-column: 1/2;
-	/* transform: rotate(270deg); */
+	align-self: center;
+	writing-mode: vertical-lr;
+	writing-mode: sideways-lr;
 }
 .comparisonPanel .textualElementsContainer .textualElement .example {
 	grid-column: 2/-1;
