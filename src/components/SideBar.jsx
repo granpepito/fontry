@@ -14,7 +14,7 @@ import iconStyles from '/src/assets/styles/icon.module.css';
 
 /**
  *
- * @param {{ handleClick: Function, isOpen: boolean}} param0
+ * @param {{ handleClick: Function, isOpen: boolean}} props
  * @
  * @returns
  */
