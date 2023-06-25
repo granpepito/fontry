@@ -282,7 +282,7 @@ function FontCategorySection({
 	const { category: currentCategory } = pair[`font${currentFontTab}`];
 	const isCurrentFontInCategory = currentCategory === fontCategoryName;
 
-	const fontList = useMemo(() => {
+	const fonts = useMemo(() => {
 		return children.map((fontData, index) => (
 			<FontButton
 				key={index}
@@ -326,7 +326,7 @@ function FontCategorySection({
 					className={[styles.fieldset, openSectionClassName].join(' ')}
 					disabled={!isOpen}
 				>
-					{fontList}
+					{fonts}
 				</fieldset>
 			</div>
 		</section>
