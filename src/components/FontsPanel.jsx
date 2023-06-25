@@ -291,7 +291,7 @@ function FontCategorySection({
 				currentFontTab={currentFontTab}
 			/>
 		));
-	}, [children, onFontButtonClick, currentFontTab]);
+	}, [children, currentFontTab]);
 
 	return (
 		<section
