@@ -98,6 +98,18 @@ export function FontsPanel() {
 		});
 	}
 
+	const debouncedOnChangeHandler = useMemo(
+		() => debounce(handleSearch, 400),
+		[]
+	);
+
+	// Stop the invocation of the debounced function after unmounting
+	useEffect(() => {
+		return () => {
+			debouncedOnChangeHandler.cancel();
+		};
+	}, []);
+
 	return (
 		<aside id={styles.fontsPanel}>
 			<FontTabSelector
@@ -105,7 +117,11 @@ export function FontsPanel() {
 				onChange={handleFontTabSelectorChange}
 			/>
 			<div className={styles.fontCategorySectionsContainer}>
-				<SearchBar onSearch={handleSearch} onChange={setMatch} value={match} />
+				<SearchBar
+					onSearch={debouncedOnChangeHandler}
+					onChange={setMatch}
+					value={match}
+				/>
 				<FontCategorySection
 					fontCategoryName='serif'
 					openCategory={category}
@@ -221,19 +237,10 @@ function FontTabSelector({ currentFontTab, onChange }) {
  * @param {string} value - Value of the input
  */
 function SearchBar({ onSearch, onChange, value }) {
-	const debouncedOnChangeHandler = useMemo(() => debounce(onSearch, 400), []);
-
 	function handleChange(e) {
 		onChange(e);
-		debouncedOnChangeHandler(e);
+		onSearch(e);
 	}
-
-	// Stop the invocation of the debounced function after unmounting
-	useEffect(() => {
-		return () => {
-			debouncedOnChangeHandler.cancel();
-		};
-	}, []);
 
 	return (
 		<label className={inputStyles.searchBarLabel}>
