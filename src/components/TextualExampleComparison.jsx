@@ -84,7 +84,7 @@ function TextualElement({ fontFamily, type }) {
 							className={[inputStyles.button, styles.button].join(' ')}
 							style={{ fontFamily }}
 						>
-							Bouton
+							Call to Action
 						</button>
 						<span>
 							<a>
