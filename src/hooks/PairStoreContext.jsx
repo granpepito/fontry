@@ -49,7 +49,7 @@ export function PairStoreProvider({ children }) {
 
 	const pairStoreIncludes = useCallback(
 		(pair) => {
-			pairStore.find((pairFromStore) => {
+			return pairStore.find((pairFromStore) => {
 				const font1Equals = pairFromStore.font1?.family === pair.font1?.family;
 				const font2Equals = pairFromStore.font2?.family === pair.font2?.family;
 
