@@ -1,6 +1,8 @@
-import { AlphaNumComparison } from './AlphaNumComparison';
-import { TextualExampleComparison } from './TextualExampleComparison';
-import { usePair } from '../hooks/PairContext';
+import { AlphaNumComparisonSection } from './AlphaNumComparisonSection';
+import { TextualExampleComparisonSection } from './TextualExampleComparisonSection';
+import { CodeSection } from './CodeSection';
+
+import styles from '/src/assets/styles/comparison-panel.module.css';
 
 export function ComparisonPanel({ currentSection }) {
 	return (
