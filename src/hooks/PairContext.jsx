@@ -2,14 +2,19 @@ import { createContext, useContext, useReducer } from 'react';
 import { loadFont } from '../functions/loadFont';
 
 function getLastSavedPair() {
-	const pairs = JSON.parse(localStorage.getItem('savedPairs'));
+	try {
+		const pairs = JSON.parse(localStorage.getItem('pairStore'));
 
-	if (pairs) {
-		const latestPair = pairs[pairs.length - 1];
+		if (Array.isArray(pairs) && pairs.length > 0) {
+			const latestPair = pairs[pairs.length - 1];
 
-		return latestPair;
+			return latestPair;
+		}
+		return null;
+	} catch (error) {
+		console.error(error);
+		return null;
 	}
-	return null;
 }
 
 /**
