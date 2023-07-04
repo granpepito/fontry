@@ -1,32 +1,63 @@
 .comparisonPanel {
+	grid-column: 7/-1;
+	width: auto;
+	/* height: var(--panels-container-height); */
+	padding: var(--comparison-panel-padding-vertical)
+		var(--comparison-panel-padding-horizontal);
+	overflow-y: hidden;
+	border-left: 2px solid black;
+}
+
+.comparisonPanel .comparisonPanelContent {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
 	gap: 30px;
-	grid-column: 7/-1;
-	border-left: 2px solid black;
-	height: var(--comparison-panel-height);
-	padding: var(--comparison-panel-padding-vertical)
-		var(--comparison-panel-padding-horizontal);
+	height: calc(
+		var(--panels-container-height) - 2 *
+			var(--comparison-panel-padding-vertical)
+	);
+	overflow-y: scroll;
+	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
-.comparisonPanel .comparisonPanelTitle {
+.comparisonPanel .comparisonPanelContent.alphaNumSection {
+	translate: 0% calc(-100% - var(--comparison-panel-padding-vertical));
+}
+.comparisonPanel .comparisonPanelContent.textualSection {
+	translate: 0% calc(-200% - var(--comparison-panel-padding-vertical));
+}
+.comparisonPanel .comparisonPanelContent.codeSection {
+	translate: 0% calc(-300% - var(--comparison-panel-padding-vertical));
+}
+.comparisonPanel .comparisonPanelContent.alphaNumSection.active {
+	translate: 0% 0%;
+}
+.comparisonPanel .comparisonPanelContent.textualSection.active {
+	translate: 0% -100%;
+}
+.comparisonPanel .comparisonPanelContent.codeSection.active {
+	translate: 0% -200%;
+}
+
+.comparisonPanelContent .comparisonPanelTitle {
 	align-items: center;
 	/* align-self: start; */
 }
 
-.comparisonPanel .comparisonPanelTitle > h2 {
+.comparisonPanelContent .comparisonPanelTitle > h2 {
 	text-align: center;
 	letter-spacing: 2px;
 	text-decoration: underline;
 }
 
-.comparisonPanel .fontFamilies {
+.comparisonPanelContent .fontFamilies {
 	text-align: center;
 	font-style: italic;
 }
 
-.comparisonPanel .alphaNumFontContainer > div {
+.comparisonPanelContent .alphaNumFontContainer > div {
 	display: flex;
 	flex-grow: 1;
 	flex-wrap: wrap;
@@ -35,15 +66,19 @@
 	text-align: center;
 }
 
-.comparisonPanel .alphaNumFontContainer .alphaNumElementContainer:first-child {
+.comparisonPanelContent
+	.alphaNumFontContainer
+	.alphaNumElementContainer:first-child {
 	margin-right: 0.5rem;
 }
 
-.comparisonPanel .alphaNumFontContainer .alphaNumElementContainer:nth-child(2) {
+.comparisonPanelContent
+	.alphaNumFontContainer
+	.alphaNumElementContainer:nth-child(2) {
 	margin-left: 0.5rem;
 }
 
-.comparisonPanel .textualElementsContainer {
+.comparisonPanelContent .textualElementsContainer {
 	display: flex;
 	flex-direction: column;
 	/* justify-content: end; */
@@ -51,50 +86,50 @@
 	gap: 1.875rem;
 }
 
-.comparisonPanel .textualElementsContainer .textualElement {
+.comparisonPanelContent .textualElementsContainer .textualElement {
 	display: grid;
-	grid-template-columns: repeat(6, 1fr);
+	grid-template-columns: repeat(12, 1fr);
 }
 
-.comparisonPanel .textualElement .typesettingFontNumber {
+.comparisonPanelContent .textualElement .typesettingFontNumber {
 	font-style: italic;
 	grid-column: 1/2;
 	align-self: center;
 	writing-mode: vertical-lr;
 	writing-mode: sideways-lr;
 }
-.comparisonPanel .textualElementsContainer .textualElement .example {
+.comparisonPanelContent .textualElementsContainer .textualElement .example {
 	grid-column: 2/-1;
 }
 
-.comparisonPanel .textualElementsContainer .textualElement .example h1,
-.comparisonPanel .textualElementsContainer .textualElement .example h3 {
+.comparisonPanelContent .textualElementsContainer .textualElement .example h1,
+.comparisonPanelContent .textualElementsContainer .textualElement .example h3 {
 	margin: 0;
 }
 
-.comparisonPanel
+.comparisonPanelContent
 	.textualElementsContainer
 	.textualElement.titleElement
 	.example {
 	font-size: 2.25rem;
 }
 
-.comparisonPanel
+.comparisonPanelContent
 	.textualElementsContainer
 	.textualElement.leadElement
 	.example {
 	font-size: 1.625rem;
 }
 
-.comparisonPanel
+.comparisonPanelContent
 	.textualElementsContainer
 	.textualElement.paragraphElement
 	.example,
-.comparisonPanel .textualElement.actionsElement .example {
+.comparisonPanelContent .textualElement.actionsElement .example {
 	font-size: 1rem;
 }
 
-.comparisonPanel .textualElement.actionsElement .example {
+.comparisonPanelContent .textualElement.actionsElement .example {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: flex-start;
@@ -103,23 +138,23 @@
 	width: 100%;
 }
 
-.comparisonPanel .textualElement.actionsElement .example .button {
+.comparisonPanelContent .textualElement.actionsElement .example .button {
 	font-size: 1rem;
 }
 
-.comparisonPanel .textualElement.actionsElement .example span a {
+.comparisonPanelContent .textualElement.actionsElement .example span a {
 	color: #000;
 	text-decoration: none;
 	cursor: pointer;
 	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
-.comparisonPanel .textualElement.actionsElement .example span a:hover {
+.comparisonPanelContent .textualElement.actionsElement .example span a:hover {
 	color: #555;
 	text-decoration: underline;
 }
 
-.comparisonPanel .textualElement.actionsElement .example span a .icon {
+.comparisonPanelContent .textualElement.actionsElement .example span a .icon {
 	margin-right: 0.875rem;
 }
 
