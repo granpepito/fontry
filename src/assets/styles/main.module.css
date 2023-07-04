@@ -69,22 +69,9 @@ main#mainContent .comparisonSectionSelector label.alphaNumRadioLabel {
 	border-radius: 0 0.5rem 0 0;
 }
 
-main#mainContent .comparisonSectionSelector label.alphaNumRadioLabel span {
-	display: block;
-	font-size: 0.875rem;
-	font-family: Lotion;
-	font-style: italic;
-	line-height: 80%;
-	letter-spacing: -0.04375rem;
-}
-
 main#mainContent .comparisonSectionSelector label.textualRadioLabel {
 	font-size: 1.125rem;
 	font-style: italic;
-}
-
-main#mainContent .comparisonSectionSelector label.textualRadioLabel span {
-	/* vertical-align: text-top; */
 }
 
 main#mainContent
