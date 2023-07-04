@@ -24,6 +24,9 @@ function getLastSavedPair() {
 function getPair() {
 	const latestPair = getLastSavedPair();
 	if (latestPair) {
+		const { font1, font2 } = latestPair;
+		loadFont(font1.family, font1.variants);
+		loadFont(font2.family, font2.variants);
 		return latestPair;
 	}
 	return {
