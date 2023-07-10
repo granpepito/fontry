@@ -110,7 +110,11 @@ main#mainContent .savePairButton {
 	z-index: 0;
 }
 
-main#mainContent .savePairButton:hover {
+/* main#mainContent .savePairButton:hover {
 	justify-content: center;
 	right: -38px;
+} */
+
+main#mainContent .savePairButton:active {
+	background-color: #fff;
 }
