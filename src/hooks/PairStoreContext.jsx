@@ -49,12 +49,20 @@ export function PairStoreProvider({ children }) {
 
 	const pairStoreIncludes = useCallback(
 		(pair) => {
-			return pairStore.find((pairFromStore) => {
-				const font1Equals = pairFromStore.font1?.family === pair.font1?.family;
-				const font2Equals = pairFromStore.font2?.family === pair.font2?.family;
+			// console.log(pairStore)
+			if (Array.isArray(pairStore)) {
+				const pairFound = pairStore.find((pairFromStore) => {
+					const font1Equals =
+						pairFromStore?.font1?.family === pair?.font1?.family;
+					const font2Equals =
+						pairFromStore?.font2?.family === pair?.font2?.family;
 
-				return font1Equals && font2Equals;
-			});
+					return font1Equals && font2Equals;
+				});
+
+				return !!pairFound;
+			}
+			return false;
 		},
 		[pairStore]
 	);
@@ -96,16 +104,27 @@ function pairStoreReducer(pairStore, action) {
 				} catch (error) {
 					console.error(error);
 				}
-				return updatedPairStore;
 			}
 			return [...pairStore];
 		}
 		case 'delete': {
-			const { id } = action;
+			const { pair } = action;
 
-			if (Array.isArray(pairStore) && id) {
-				const updatedPairStore = pairStore.splice(id, 1);
+			if (Array.isArray(pairStore) && pair) {
+				const index = pairStore.findIndex((pairFromStore) => {
+					const font1Equals =
+						pairFromStore?.font1?.family === pair?.font1?.family;
+					const font2Equals =
+						pairFromStore?.font2?.family === pair?.font2?.family;
 
+					return font1Equals && font2Equals;
+				});
+
+				if (index < 0) {
+					return [...pairStore];
+				}
+
+				const updatedPairStore = pairStore.splice(index, 1);
 				try {
 					localStorage.setItem('pairStore', JSON.stringify(updatedPairStore));
 				} catch (error) {
