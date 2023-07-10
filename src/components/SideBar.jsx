@@ -1,12 +1,11 @@
+import { useMemo } from 'react';
+import { usePairStore, usePairStoreDispatch } from '../hooks/PairStoreContext';
 import { XMarkIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline';
 import {
 	SunIcon as SunIconSolid,
 	MoonIcon as MoonIconSolid,
 } from '@heroicons/react/24/solid';
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid';
-
-// import Pair from '/src/utils/Pair';
-// import Font from '/src/utils/Font';
 
 import styles from '/src/assets/styles/sidebar.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
@@ -20,6 +19,21 @@ import iconStyles from '/src/assets/styles/icon.module.css';
  */
 export function SideBar({ handleClick, isOpen }) {
 	const sideBarContainerOpen = isOpen ? styles.open : '';
+	const pairStore = usePairStore();
+	const { deleteFromPairStore, pairStoreIncludes } = usePairStoreDispatch();
+
+	const savedPairs = useMemo(() => {
+		return pairStore.map((pair, index) => {
+			return (
+				<SavedPair
+					key={index}
+					id={index}
+					firstFontFamily={pair?.font1?.family}
+					secondFontFamily={pair?.font2?.family}
+				/>
+			);
+		});
+	}, [pairStore]);
 
 	return (
 		<>
@@ -39,12 +53,7 @@ export function SideBar({ handleClick, isOpen }) {
 				</div>
 				<nav className={styles.sideBarBottomContainer}>
 					<h2>Combinaisons Enregistrées</h2>
-					<ul className={styles.savedPairsList}>
-						<SavedPair />
-						<SavedPair />
-						<SavedPair />
-						<SavedPair />
-					</ul>
+					<ul className={styles.savedPairsList}>{savedPairs}</ul>
 				</nav>
 			</div>
 			<div
@@ -75,14 +84,14 @@ function ThemeSelector() {
  * @param {} param0
  * @returns
  */
-function SavedPair({}) {
+function SavedPair({ firstFontFamily, secondFontFamily }) {
 	return (
 		<li className={styles.savedPair}>
 			<p>
-				1. <span>Police 1</span>
+				1. <span>{firstFontFamily}</span>
 			</p>
 			<p>
-				2. <span>Police 2</span>
+				2. <span>{secondFontFamily}</span>
 			</p>
 			<button className={inputStyles.buttonIcon}>
 				<EllipsisVerticalIcon
