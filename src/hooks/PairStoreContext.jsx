@@ -34,8 +34,8 @@ export function PairStoreProvider({ children }) {
 	const [pairStore, dispatch] = useReducer(pairStoreReducer, initPairStore());
 
 	const addToPairStore = useCallback(
-		(pair) => {
-			dispatch({ type: 'add', pair });
+		(newPair) => {
+			dispatch({ type: 'add', newPair });
 		},
 		[dispatch]
 	);
@@ -87,10 +87,12 @@ function pairStoreReducer(pairStore, action) {
 		case 'add': {
 			const { newPair } = action;
 
-			if (Array.isArray(pairStore)) {
-				const updatedPairStore = pairStore.concat([newPair]);
+			if (Array.isArray(pairStore) && newPair) {
 				try {
+					const updatedPairStore = pairStore.concat([newPair]);
+
 					localStorage.setItem('pairStore', JSON.stringify(updatedPairStore));
+					return updatedPairStore;
 				} catch (error) {
 					console.error(error);
 				}
