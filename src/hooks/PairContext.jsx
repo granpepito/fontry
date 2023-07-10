@@ -86,6 +86,21 @@ function pairReducer(pair, action) {
 				console.error(error);
 			}
 		}
+		case 'changePair': {
+			try {
+				const { pairToUpdate } = action;
+
+				if (pairToUpdate) {
+					loadFont(font1.family, font1.variants);
+					loadFont(font2.family, font2.variants);
+
+					return pairToUpdate;
+				}
+				return { ...pair };
+			} catch (error) {
+				console.error(error);
+			}
+		}
 		case 'updateTheme': {
 			return { ...pair, theme: action.theme };
 		}
