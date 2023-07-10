@@ -124,13 +124,13 @@ function pairStoreReducer(pairStore, action) {
 					return [...pairStore];
 				}
 
-				pairStore.splice(index, 1);
+				const updatedPairStore = pairStore.splice(index, 1);
 				try {
-					localStorage.setItem('pairStore', JSON.stringify([...pairStore]));
+					localStorage.setItem('pairStore', JSON.stringify(updatedPairStore));
 				} catch (error) {
 					console.error(error);
 				}
-				return [...pairStore];
+				return updatedPairStore;
 			}
 			return [...pairStore];
 		}
