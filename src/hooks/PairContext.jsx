@@ -1,4 +1,5 @@
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useCallback, useContext, useReducer } from 'react';
+import { usePairStore } from './PairStoreContext';
 import { loadFont } from '../functions/loadFont';
 import { SpaceGrotesk } from '../utils/SpaceGrotesk';
 import { Arvo } from '../utils/Arvo';
@@ -59,10 +60,40 @@ export function usePairDispatch() {
 
 export function PairProvider({ children }) {
 	const [pair, dispatch] = useReducer(pairReducer, getPair());
+	const pairStore = usePairStore();
+
+	const updateFont = useCallback((font, fontNumber) => {
+		dispatch({
+			type: 'updateFont',
+			font,
+			fontNumber,
+		});
+	});
+
+	const changePair = useCallback(
+		(id) => {
+			if (Array.isArray(pairStore) && pairStore.length > id + 1) {
+				const nextPair = pairStore[id];
+
+				if (nextPair) {
+					dispatch({
+						type: 'changePair',
+						pairToUpdate: nextPair,
+					});
+				}
+			}
+		},
+		[pair, pairStore]
+	);
+
+	const dispatchContext = {
+		updateFont,
+		changePair,
+	};
 
 	return (
 		<PairContext.Provider value={pair}>
-			<PairDispatchContext.Provider value={dispatch}>
+			<PairDispatchContext.Provider value={dispatchContext}>
 				{children}
 			</PairDispatchContext.Provider>
 		</PairContext.Provider>
