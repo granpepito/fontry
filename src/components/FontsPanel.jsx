@@ -34,7 +34,7 @@ export function FontsPanel() {
 			: fontsPanelState.fonts;
 
 	const pair = usePair();
-	const pairDispatch = usePairDispatch();
+	const { updateFont } = usePairDispatch();
 
 	/**
 	 * @callback handleFontTabSelector - Sets the tab of the FontsPanel component. Changes the state of the FontsPanel component.
@@ -91,11 +91,7 @@ export function FontsPanel() {
 	function handleFontButtonClick(e) {
 		const fontData = e.target.dataset.font;
 
-		pairDispatch({
-			type: 'updateFont',
-			fontNumber: currentFontTab,
-			font: fontData,
-		});
+		updateFont(fontData, currentFontTab);
 	}
 
 	const debouncedOnChangeHandler = useMemo(
