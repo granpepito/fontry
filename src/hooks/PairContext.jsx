@@ -1,5 +1,7 @@
 import { createContext, useContext, useReducer } from 'react';
 import { loadFont } from '../functions/loadFont';
+import { SpaceGrotesk } from '../utils/SpaceGrotesk';
+import { Arvo } from '../utils/Arvo';
 
 function getLastSavedPair() {
 	try {
@@ -33,9 +35,13 @@ function getPair() {
 		}
 		return latestPair;
 	}
+	const font1 = Arvo;
+	const font2 = SpaceGrotesk;
+	loadFont(font1.family, font1.variants);
+	loadFont(font2.family, font2.variants);
 	return {
-		font1: {},
-		font2: {},
+		font1,
+		font2,
 		theme: '',
 	};
 }
