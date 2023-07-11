@@ -1,4 +1,7 @@
 .buttonIcon {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	padding-bottom: 0;
 	border: none;
 	background-color: transparent;
