@@ -1,17 +1,52 @@
-import { useReducer, useEffect } from 'react';
+import { useCallback, useReducer, useEffect } from 'react';
 
-import getFonts from '../utils/getFonts';
+import getFonts from '../functions/getFonts';
 
 /**
  * Hook for the state of the FontsPanel component.
  * @param {FontsPanelState} initialState Initial State of the FontsPanel component.
- * @returns {array} Returns an array containing the current state of the FontsPanel component and a dispatch function.
+ * @returns {[FontsPanelState, { setFonts: Function, setFontTab: Function, setCategory: Function, setMatch: Function, searchFonts: Function }]} Returns an array containing the current state of the FontsPanel component and a dispatch function.
  */
 export function useFontsPanel(initialState) {
 	const [fontsPanelState, dispatch] = useReducer(
 		fontsPanelReducer,
 		initialState
 	);
+
+	const setFonts = useCallback(function setFonts(fonts) {
+		dispatch({
+			type: 'setFonts',
+			fonts,
+		});
+	}, []);
+
+	const setFontTab = useCallback(function setFontTab(fontTab) {
+		dispatch({
+			type: 'setFontTab',
+			fontTab,
+		});
+	}, []);
+
+	const setCategory = useCallback(function setCategory(category) {
+		dispatch({
+			type: 'setCategory',
+			category,
+		});
+	}, []);
+
+	const setMatch = useCallback(function setMatch(match) {
+		dispatch({
+			type: 'setMatch',
+			match,
+		});
+	}, []);
+
+	const searchFonts = useCallback(function searchFonts(match) {
+		dispatch({
+			type: 'searchFonts',
+			match,
+		});
+	}, []);
 
 	useEffect(() => {
 		if (!fontsPanelState.fonts) {
@@ -22,16 +57,13 @@ export function useFontsPanel(initialState) {
 					data = await getFonts();
 				}
 
-				dispatch({
-					type: 'setFonts',
-					fonts: data,
-				});
+				setFonts(data);
 			})();
 		}
 		// return () => {};
 	}, [fontsPanelState.fonts]);
 
-	return [fontsPanelState, dispatch];
+	return [fontsPanelState, { setFontTab, setCategory, setMatch, searchFonts }];
 }
 
 /**
@@ -109,82 +141,94 @@ function fontsPanelReducer(fontsPanelState, action) {
 		}
 		case 'searchFonts': {
 			const { match } = action;
-			const categoriesAndFonts = Object.entries(fontsPanelState.fonts);
 
-			if (categoriesAndFonts.length > 0) {
-				const { currentFontTab } = fontsPanelState;
-				const searchedFonts = {};
+			if (fontsPanelState.fonts) {
+				const categoriesAndFonts = Object.entries(fontsPanelState.fonts);
 
-				if (match.length > 0) {
-					function escapeRegExp(string) {
-						return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+				if (categoriesAndFonts.length > 0) {
+					const { currentFontTab } = fontsPanelState;
+					const searchedFonts = {};
+
+					if (typeof match === 'string' && match.length > 0) {
+						categoriesAndFonts.forEach(([category, fonts]) => {
+							const filteredFonts = fonts.filter((font) => {
+								const { family } = font;
+								const isMatch = new RegExp(
+									`\S?${escapeRegExp(match)}\S?`,
+									'iu'
+								).test(family);
+								// const isMatch = family.includes(match);
+								return isMatch;
+							});
+							searchedFonts[category] = filteredFonts;
+						});
 					}
 
-					categoriesAndFonts.forEach(([category, fonts]) => {
-						const filteredFonts = fonts.filter((font) => {
-							const { family } = font;
-							const isMatch = new RegExp(
-								`\S?${escapeRegExp(match)}\S?`,
-								'iu'
-							).test(family);
-							// const isMatch = family.includes(match);
-							return isMatch;
-						});
-						searchedFonts[category] = filteredFonts;
-					});
-				}
-
-				if (currentFontTab === '1') {
-					const fontTab1State = fontsPanelState['1'];
-					return {
-						...fontsPanelState,
-						1: {
-							...fontTab1State,
-							fonts: searchedFonts,
-							match,
-						},
-					};
-				} else if (currentFontTab === '2') {
-					const fontTab2State = fontsPanelState['2'];
-					return {
-						...fontsPanelState,
-						2: {
-							...fontTab2State,
-							fonts: searchedFonts,
-							match,
-						},
-					};
+					if (currentFontTab === '1') {
+						const fontTab1State = fontsPanelState['1'];
+						return {
+							...fontsPanelState,
+							1: {
+								...fontTab1State,
+								fonts: searchedFonts,
+								match,
+							},
+						};
+					} else if (currentFontTab === '2') {
+						const fontTab2State = fontsPanelState['2'];
+						return {
+							...fontsPanelState,
+							2: {
+								...fontTab2State,
+								fonts: searchedFonts,
+								match,
+							},
+						};
+					}
 				}
 			}
+		}
+		default: {
+			return {
+				...fontsPanelState,
+			};
 		}
 	}
 }
 
 /**
+ * Escapes special characters for a regular expression.
+ * @param {string} string - Escaped string
+ */
+function escapeRegExp(string) {
+	return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+/**
  * @typedef FontsPanelState
  * @type {object}
- * @property {import("../utils/Font").FontsByCategory} fonts - Object containing every fonts available.
- * @property {FontTabNumberState} "1" - State for the tab of the first font.
- * @property {FontTabNumberState} "2" - State for the tab of the second font.
- * @property {"1"|"2"} currentFontTab - Number of the current tab.
+ * @property {import('../utils/Font').FontsByCategory|undefined} fonts - Object containing every fonts available.
+ * @property {FontTabState} 1 - State for the tab of the first font.
+ * @property {FontTabState} 2 - State for the tab of the second font.
+ * @property {'1'|'2'|undefined} currentFontTab - Number of the current tab.
  */
 export const FontPanelState = {};
 
 /**
  * @typedef FontTabState
  * @type {object}
- * @property {"serif"|"sans-serif"|"display"|"handwriting"|"monospace"} category - The open category for the current tab.
+ * @property {'serif'|'sans-serif'|'display'|'handwriting'|'monospace'} category - The open category for the current tab.
  * @property {string} match - Name or term to find in the fonts.
- * @property {import("../utils/Font").FontsByCategory} fonts - Fonts matching the match name/term.
+ * @property {import('../utils/Font').FontsByCategory} fonts - Fonts matching the match name/term.
  */
 
 /**
  * @typedef FontsPanelAction
  * @type {object}
- * @property {"setFonts"|"setFontTab"|"setCategory"|"searchFonts"} type Name of the work to do.
- * @property {import("../utils/Font").FontsByCategory|undefined} fonts Fonts to set.
- * @property {string|undefined} match Term or name to search in the fonts' family name.
- * @property {string|undefined} category Category that needs to be opened.
- * @property {string|undefined} fontTab Font tab number to set.
+ * @property {'setFonts'|'setFontTab'|'setCategory'|'searchFonts'|'setMatch'} type Name of the work to do.
+ * @property {import('../utils/Font').FontsByCategory|undefined} [fonts] Fonts to set.
+ * @property {string|undefined} [match] Term or name to search in the fonts' family name.
+ * @property {'serif'|'sans-serif'|'display'|'handwriting'|'monospace'|undefined} [category] Category that needs to be opened.
+ * @property {'1'|'2'} [fontTab] Font tab number to set.
  *
  */

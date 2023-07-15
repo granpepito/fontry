@@ -26,7 +26,7 @@
 
 .radioContainer:hover,
 .radioContainer:focus-within {
-	background-color: rgb(230, 230, 230);
+	background-color: #00000010;
 	font-style: italic;
 }
 
@@ -111,7 +111,7 @@
 	align-items: start;
 	gap: 8px 10px;
 	max-height: 0;
-	width: 100%;
+	width: auto;
 	opacity: 0;
 	margin: 0;
 	padding: var(--closed-fonts-container-padding);

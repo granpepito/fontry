@@ -8,12 +8,113 @@ main#mainContent {
 	width: auto;
 }
 
-main#mainContent > .panelsContainer {
+main#mainContent .panelsAndSelectorContainer {
+	position: relative;
+	display: flex;
+}
+
+main#mainContent .panelsContainer {
+	position: relative;
 	display: grid;
 	grid-template-columns: repeat(15, 1fr);
 	padding: 0;
 	margin: 0;
+	height: var(--panels-container-height);
 	max-width: var(--panels-container-max-width);
-	border: 2px solid #000;
+	outline: 2px solid #000;
 	border-radius: 8px;
+	z-index: 1;
+	background-color: #fff;
+}
+
+main#mainContent .comparisonSectionSelector {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	padding: 2rem 0;
+	right: -28px;
+	transition: var(--transition-speed) var(--transition-timing-function);
+	z-index: 0;
+}
+
+main#mainContent .comparisonSectionSelector:hover {
+	right: -38px;
+}
+
+main#mainContent .comparisonSectionSelector label {
+	/* padding: 0.375rem; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	height: 2.25rem;
+	width: 2.25rem;
+	outline: 2px solid black;
+	transition: var(--transition-speed) step-start;
+}
+
+main#mainContent .comparisonSectionSelector label:hover,
+main#mainContent .comparisonSectionSelector label:focus-within {
+	background-color: #00000010;
+	box-shadow: inset 4px 4px 4px 0px rgba(0, 0, 0, 0.075);
+}
+
+main#mainContent .comparisonSectionSelector label.active {
+	background-color: #00000010;
+	box-shadow: inset 4px 4px 4px 0px rgba(0, 0, 0, 0.075);
+}
+
+main#mainContent .comparisonSectionSelector label.alphaNumRadioLabel {
+	border-radius: 0 0.5rem 0 0;
+}
+
+main#mainContent .comparisonSectionSelector label.textualRadioLabel {
+	font-size: 1.125rem;
+	font-style: italic;
+}
+
+main#mainContent
+	.comparisonSectionSelector
+	label.textualRadioLabel
+	.bodyTextIcon {
+	height: 1rem;
+	width: 1rem;
+}
+
+main#mainContent .comparisonSectionSelector label.codeRadioLabel {
+	border-radius: 0 0 0.5rem 0;
+}
+
+main#mainContent .comparisonSectionSelector label > input[type='radio'] {
+	width: 0;
+	height: 0;
+	margin: 0;
+	opacity: 0;
+}
+
+main#mainContent .savePairButton {
+	display: flex;
+	justify-content: end;
+	align-items: center;
+	padding: 0.1rem;
+	position: absolute;
+	bottom: 0;
+	right: -28px;
+	margin: 2rem 0;
+	height: 2.25rem;
+	width: 2.25rem;
+	outline: 2px solid black;
+	border-radius: 0 0.5rem 0.5rem 0;
+	transition: var(--transition-speed) var(--transition-timing-function);
+	z-index: 0;
+}
+
+/* main#mainContent .savePairButton:hover {
+	justify-content: center;
+	right: -38px;
+} */
+
+main#mainContent .savePairButton:active {
+	background-color: #fff;
 }

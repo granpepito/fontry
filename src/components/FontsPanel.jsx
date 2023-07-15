@@ -34,17 +34,14 @@ export function FontsPanel() {
 			: fontsPanelState.fonts;
 
 	const pair = usePair();
-	const pairDispatch = usePairDispatch();
+	const { updateFont } = usePairDispatch();
 
 	/**
 	 * @callback handleFontTabSelector - Sets the tab of the FontsPanel component. Changes the state of the FontsPanel component.
 	 * @param {Event} e - Event
 	 */
 	function handleFontTabSelectorChange(e) {
-		dispatch({
-			type: 'setFontTab',
-			fontTab: e.target.value,
-		});
+		dispatch.setFontTab(e.target.value);
 	}
 
 	/**
@@ -52,10 +49,7 @@ export function FontsPanel() {
 	 * @param {Event} e - Event
 	 */
 	function handleSearch(e) {
-		dispatch({
-			type: 'searchFonts',
-			match: e.target.value,
-		});
+		dispatch.searchFonts(e.target.value);
 	}
 
 	/**
@@ -63,11 +57,7 @@ export function FontsPanel() {
 	 * @param {Event} e - Event
 	 */
 	function setMatch(e) {
-		const match = e.target.value;
-		dispatch({
-			type: 'setMatch',
-			match,
-		});
+		dispatch.setMatch(e.target.value);
 	}
 
 	/**
@@ -75,13 +65,10 @@ export function FontsPanel() {
 	 * @param {Event} e - Event
 	 */
 	function handleFontCategoryButtonClick(e) {
-		const value = e.target.value;
+		const category = e.target.value;
 
-		import(`../assets/styles/${value}-fonts.css`);
-		dispatch({
-			type: 'setCategory',
-			category: value,
-		});
+		import(`../assets/styles/${category}-fonts.css`);
+		dispatch.setCategory(category);
 	}
 
 	/**
@@ -91,12 +78,20 @@ export function FontsPanel() {
 	function handleFontButtonClick(e) {
 		const fontData = e.target.dataset.font;
 
-		pairDispatch({
-			type: 'updateFont',
-			fontNumber: currentFontTab,
-			font: fontData,
-		});
+		updateFont(fontData, currentFontTab);
 	}
+
+	const debouncedOnChangeHandler = useMemo(
+		() => debounce(handleSearch, 400),
+		[]
+	);
+
+	// Stop the invocation of the debounced function after unmounting
+	useEffect(() => {
+		return () => {
+			debouncedOnChangeHandler.cancel();
+		};
+	}, []);
 
 	return (
 		<aside id={styles.fontsPanel}>
@@ -105,7 +100,11 @@ export function FontsPanel() {
 				onChange={handleFontTabSelectorChange}
 			/>
 			<div className={styles.fontCategorySectionsContainer}>
-				<SearchBar onSearch={handleSearch} onChange={setMatch} value={match} />
+				<SearchBar
+					onSearch={debouncedOnChangeHandler}
+					onChange={setMatch}
+					value={match}
+				/>
 				<FontCategorySection
 					fontCategoryName='serif'
 					openCategory={category}
@@ -221,19 +220,10 @@ function FontTabSelector({ currentFontTab, onChange }) {
  * @param {string} value - Value of the input
  */
 function SearchBar({ onSearch, onChange, value }) {
-	const debouncedOnChangeHandler = useMemo(() => debounce(onSearch, 400), []);
-
 	function handleChange(e) {
 		onChange(e);
-		debouncedOnChangeHandler(e);
+		onSearch(e);
 	}
-
-	// Stop the invocation of the debounced function after unmounting
-	useEffect(() => {
-		return () => {
-			debouncedOnChangeHandler.cancel();
-		};
-	}, []);
 
 	return (
 		<label className={inputStyles.searchBarLabel}>
@@ -282,7 +272,7 @@ function FontCategorySection({
 	const { category: currentCategory } = pair[`font${currentFontTab}`];
 	const isCurrentFontInCategory = currentCategory === fontCategoryName;
 
-	const fontList = useMemo(() => {
+	const fonts = useMemo(() => {
 		return children.map((fontData, index) => (
 			<FontButton
 				key={index}
@@ -291,7 +281,7 @@ function FontCategorySection({
 				currentFontTab={currentFontTab}
 			/>
 		));
-	}, [children, onFontButtonClick, currentFontTab]);
+	}, [children, currentFontTab]);
 
 	return (
 		<section
@@ -326,7 +316,7 @@ function FontCategorySection({
 					className={[styles.fieldset, openSectionClassName].join(' ')}
 					disabled={!isOpen}
 				>
-					{fontList}
+					{fonts}
 				</fieldset>
 			</div>
 		</section>

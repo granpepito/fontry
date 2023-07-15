@@ -1,4 +1,7 @@
 .buttonIcon {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	padding-bottom: 0;
 	border: none;
 	background-color: transparent;
@@ -8,7 +11,7 @@
 }
 
 .buttonIcon:focus {
-	background-color: hsl(0, 0%, 95%);
+	background-color: #00000010;
 	border-radius: 8px;
 }
 
@@ -55,19 +58,19 @@
 .button:focus,
 .button.active {
 	color: black;
-	background-color: hsl(0, 0%, 95%);
-	outline: 1px solid hsl(0, 0%, 95%);
+	background-color: #00000010;
+	outline: 1px solid #00000010;
 }
 
 .button.active {
-	border-color: hsl(0, 0%, 95%);
+	border-color: #00000010;
 }
 
 .button:active {
 	color: black;
-	background-color: hsl(0, 0%, 95%);
+	background-color: #00000010;
 	outline: 1px solid hsl(0, 0%, 75%);
-	border-color: hsl(0, 0%, 95%);
+	border-color: #00000010;
 }
 
 .searchBarLabel {
@@ -81,6 +84,10 @@
 	width: 20px;
 	height: 20px;
 	content: url('/src/assets/img/magnifying-glass.svg');
+}
+
+.searchBar:focus-within {
+	outline: 1px solid black;
 }
 
 .searchBarLabel .searchBar {
