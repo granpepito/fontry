@@ -100,6 +100,8 @@
 }
 .comparisonPanelContent .textualElementsContainer .textualElement .example {
 	grid-column: 2/-1;
+	display: flex;
+	align-items: center;
 }
 
 .comparisonPanelContent .textualElementsContainer .textualElement .example h1,
@@ -124,6 +126,13 @@
 .comparisonPanelContent
 	.textualElementsContainer
 	.textualElement.paragraphElement
+	.example {
+	display: block;
+}
+
+.comparisonPanelContent
+	.textualElementsContainer
+	.textualElement.paragraphElement
 	.example,
 .comparisonPanelContent .textualElement.actionsElement .example {
 	font-size: 1rem;
@@ -143,6 +152,8 @@
 }
 
 .comparisonPanelContent .textualElement.actionsElement .example span a {
+	display: flex;
+	align-items: center;
 	color: #000;
 	text-decoration: none;
 	cursor: pointer;
