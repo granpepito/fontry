@@ -51,16 +51,22 @@ ul.savedPairsList > li.savedPair {
 
 li.savedPair > p {
 	text-overflow: ellipsis;
+	pointer-events: none;
 }
 
-li.savedPair button {
+li.savedPair .popOverButton {
 	position: absolute;
 	top: 1rem;
 	right: 0.5rem;
 	cursor: pointer;
 }
 
-li.savedPair button > .ellipsisVertIcon {
+li.savedPair .popOverButton:focus,
+li.savedPair .popOverButton:active {
+	background-color: white;
+}
+
+li.savedPair .popOverButton > .ellipsisVertIcon {
 	width: 24px;
 	height: 24px;
 }
