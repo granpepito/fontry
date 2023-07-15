@@ -7,12 +7,7 @@ export function usePairStore() {
 	const includes = useCallback(pairStore.includes, []);
 	const getLastPair = useCallback(pairStore.getLastPair, []);
 	const subscribe = useCallback(pairStore.subscribe, []);
-	const getSnapshot = useCallback(
-		function getSnapshot() {
-			return pairStore.pairs;
-		},
-		[pairStore.pairs]
-	);
+	const getSnapshot = useCallback(pairStore.getSnapshot, []);
 
 	const pairs = useSyncExternalStore(subscribe, getSnapshot);
 	// const pairs = useMemo(() => snapshot, [snapshot]);

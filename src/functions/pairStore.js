@@ -1,11 +1,11 @@
-let pairs = getPairs();
-
+let pairs;
+getPairs();
 /**
  * Gets the pairs of fonts stored in the localStorage.
  * @returns {import('../utils/Pair').Pair[]}
  */
 function getPairs() {
-	let pairs;
+	// let pairs;
 
 	try {
 		pairs = JSON.parse(localStorage.getItem('pairStore'));
@@ -20,7 +20,7 @@ function getPairs() {
 		pairs = [];
 	}
 
-	return pairs;
+	// return pairs;
 }
 
 /**
@@ -28,12 +28,14 @@ function getPairs() {
  * @param {import('../utils/Pair').Pair} pair
  */
 function add(pair) {
-	pairs = pairs.concat([pair]);
+	if (!includes(pair)) {
+		pairs = pairs.concat([pair]);
 
-	try {
-		localStorage.setItem('pairStore', JSON.stringify(pairs));
-	} catch (error) {
-		console.error(error);
+		try {
+			localStorage.setItem('pairStore', JSON.stringify(pairs));
+		} catch (error) {
+			console.error(error);
+		}
 	}
 }
 
@@ -46,7 +48,7 @@ function remove(pair) {
 
 	if (index >= 0) {
 		pairs.splice(index, 1);
-		pairs = [...pairs];
+		pairs = pairs.concat([]);
 		try {
 			localStorage.setItem('pairStore', JSON.stringify(pairs));
 		} catch (error) {
@@ -105,6 +107,10 @@ function subscribe(callback) {
 	};
 }
 
+function getSnapshot() {
+	return pairs;
+}
+
 export const pairStore = {
 	pairs,
 	add,
@@ -112,4 +118,5 @@ export const pairStore = {
 	includes,
 	getLastPair,
 	subscribe,
+	getSnapshot,
 };
