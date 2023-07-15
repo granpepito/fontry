@@ -80,18 +80,18 @@ export function PairProvider({ children }) {
 
 	const changePair = useCallback(
 		(id) => {
-			if (Array.isArray(pairStore) && pairStore.length > id + 1) {
-				const nextPair = pairStore[id];
+			if (pairs.length > id) {
+				const pairToUpdate = pairs[id];
 
-				if (nextPair) {
+				if (pairToUpdate) {
 					dispatch({
 						type: 'changePair',
-						pairToUpdate: nextPair,
+						pairToUpdate,
 					});
 				}
 			}
 		},
-		[pair, pairStore]
+		[pairs]
 	);
 
 	const dispatchContext = {
@@ -140,12 +140,14 @@ function pairReducer(pair, action) {
 				const { pairToUpdate } = action;
 
 				if (pairToUpdate) {
+					const { font1, font2 } = pairToUpdate;
+					// console.log('udpate', pairToUpdate);
 					loadFont(font1.family, font1.variants);
 					loadFont(font2.family, font2.variants);
 
 					return pairToUpdate;
 				}
-				return { ...pair };
+				return pair;
 			} catch (error) {
 				console.error(error);
 			}
