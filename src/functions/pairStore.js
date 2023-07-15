@@ -112,7 +112,6 @@ function getSnapshot() {
 }
 
 export const pairStore = {
-	pairs,
 	add,
 	remove,
 	includes,
