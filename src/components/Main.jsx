@@ -1,14 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ComparisonPanel } from './ComparisonPanel';
 import { FontsPanel } from './FontsPanel';
-import { usePair, usePairDispatch } from '../hooks/PairContext';
+import { usePair } from '../hooks/PairContext';
 
 import alphaNumericalSectionIcon from '../assets/img/alpha-numerical-section-icon.svg';
 import textualSectionIcon from '../assets/img/textual-section-icon.svg';
+import exportSectionIcon from '../assets/img/export-section-icon.svg';
 import styles from '/src/assets/styles/main.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
-import { CodeBracketIcon, BookmarkIcon } from '@heroicons/react/24/outline';
+import { BookmarkIcon as OutlineBookmarkIcon } from '@heroicons/react/24/outline';
+import { BookmarkIcon as SolidBookmarkIcon } from '@heroicons/react/24/solid';
+// import { usePairStoreDispatch } from '../hooks/PairStoreContext';
+import { usePairStore } from '../hooks/usePairStore';
 
 export function Main() {
 	const [currentComparisonSection, setComparisonSection] = useState('alphanum');
@@ -84,7 +88,14 @@ function ComparisonSectionSelector({ currentSection, handleChange }) {
 				/>
 			</label>
 			<label className={[styles.codeRadioLabel, active(code)].join(' ')}>
-				<CodeBracketIcon className={iconStyles.smallIcon} />
+				<img
+					style={{
+						height: '24px',
+						width: '24px',
+					}}
+					alt='Export Section Icon'
+					src={exportSectionIcon}
+				/>
 				<input
 					type='radio'
 					value={code}
@@ -98,20 +109,40 @@ function ComparisonSectionSelector({ currentSection, handleChange }) {
 
 function SavePairButton({}) {
 	const pair = usePair();
-	const dispatch = usePairDispatch();
+	const { pairs, add, remove, includes } = usePairStore();
+	const [isSaved, setIsSaved] = useState(!!includes(pair));
 
-	function handleClick() {
-		dispatch({
-			type: 'savePair',
-		});
+	useEffect(() => {
+		setIsSaved(!!includes(pair));
+	}, [pair]);
+
+	function handleClick(e) {
+		try {
+			const pair = JSON.parse(e.target.dataset.pair);
+
+			if (isSaved) {
+				remove(pair);
+				setIsSaved(!!includes(pair));
+			} else {
+				add(pair);
+				setIsSaved(!!includes(pair));
+			}
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
 	return (
 		<button
 			className={[inputStyles.buttonIcon, styles.savePairButton].join(' ')}
+			data-pair={JSON.stringify(pair || '')}
 			onClick={handleClick}
 		>
-			<BookmarkIcon className={iconStyles.smallIcon} />
+			{isSaved ? (
+				<SolidBookmarkIcon className={iconStyles.smallIcon} />
+			) : (
+				<OutlineBookmarkIcon className={iconStyles.smallIcon} />
+			)}
 		</button>
 	);
 }

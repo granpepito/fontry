@@ -1,5 +1,6 @@
-import { useMemo } from 'react';
-import { usePairStore, usePairStoreDispatch } from '../hooks/PairStoreContext';
+import { useCallback, useEffect, useMemo } from 'react';
+import { usePairStore } from '../hooks/usePairStore';
+import { usePairDispatch } from '../hooks/PairContext';
 import { XMarkIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline';
 import {
 	SunIcon as SunIconSolid,
@@ -12,28 +13,37 @@ import inputStyles from '/src/assets/styles/input.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
 
 /**
- *
+ * Renders the SideBar of the App.
  * @param {{ handleClick: Function, isOpen: boolean}} props
- * @
  * @returns
  */
 export function SideBar({ handleClick, isOpen }) {
 	const sideBarContainerOpen = isOpen ? styles.open : '';
-	const pairStore = usePairStore();
-	const { deleteFromPairStore, pairStoreIncludes } = usePairStoreDispatch();
+	const { changePair } = usePairDispatch();
+	const { pairs, remove } = usePairStore();
+
+	const handleSavedPairClick = useCallback(function handleSavedPairClick(e) {
+		try {
+			const { id } = e.target.dataset;
+			changePair(id);
+		} catch (error) {
+			console.error(error);
+		}
+	}, []);
 
 	const savedPairs = useMemo(() => {
-		return pairStore.map((pair, index) => {
+		return pairs.map((pair, index) => {
 			return (
 				<SavedPair
 					key={index}
 					id={index}
+					onClick={handleSavedPairClick}
 					firstFontFamily={pair?.font1?.family}
 					secondFontFamily={pair?.font2?.family}
 				/>
 			);
 		});
-	}, [pairStore]);
+	}, [pairs]);
 
 	return (
 		<>
@@ -80,20 +90,22 @@ function ThemeSelector() {
 }
 
 /**
- *
- * @param {} param0
+ * Component representing a pair that is saved inside the Pair Store.
+ * @param {{id: string, firstFontFamily: string, secondFontFamily: string, onClick: Function}} props
  * @returns
  */
-function SavedPair({ firstFontFamily, secondFontFamily }) {
+function SavedPair({ id, firstFontFamily, secondFontFamily, onClick }) {
 	return (
-		<li className={styles.savedPair}>
+		<li className={styles.savedPair} data-id={id} onClick={onClick}>
 			<p>
 				1. <span>{firstFontFamily}</span>
 			</p>
 			<p>
 				2. <span>{secondFontFamily}</span>
 			</p>
-			<button className={inputStyles.buttonIcon}>
+			<button
+				className={[inputStyles.buttonIcon, styles.popOverButton].join(' ')}
+			>
 				<EllipsisVerticalIcon
 					className={[iconStyles.icon, styles.ellipsisVertIcon].join(' ')}
 				/>
