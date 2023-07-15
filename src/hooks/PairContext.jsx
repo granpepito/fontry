@@ -156,7 +156,7 @@ function pairReducer(pair, action) {
 			return { ...pair, theme: action.theme };
 		}
 		default: {
-			return { ...pair };
+			return pair;
 		}
 	}
 }
