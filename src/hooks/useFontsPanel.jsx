@@ -1,17 +1,52 @@
-import { useReducer, useEffect } from 'react';
+import { useCallback, useReducer, useEffect } from 'react';
 
 import getFonts from '../functions/getFonts';
 
 /**
  * Hook for the state of the FontsPanel component.
  * @param {FontsPanelState} initialState Initial State of the FontsPanel component.
- * @returns {array} Returns an array containing the current state of the FontsPanel component and a dispatch function.
+ * @returns {[FontsPanelState, { setFonts: Function, setFontTab: Function, setCategory: Function, setMatch: Function, searchFonts: Function }]} Returns an array containing the current state of the FontsPanel component and a dispatch function.
  */
 export function useFontsPanel(initialState) {
 	const [fontsPanelState, dispatch] = useReducer(
 		fontsPanelReducer,
 		initialState
 	);
+
+	const setFonts = useCallback(function setFonts(fonts) {
+		dispatch({
+			type: 'setFonts',
+			fonts,
+		});
+	}, []);
+
+	const setFontTab = useCallback(function setFontTab(fontTab) {
+		dispatch({
+			type: 'setFontTab',
+			fontTab,
+		});
+	}, []);
+
+	const setCategory = useCallback(function setCategory(category) {
+		dispatch({
+			type: 'setCategory',
+			category,
+		});
+	}, []);
+
+	const setMatch = useCallback(function setMatch(match) {
+		dispatch({
+			type: 'setMatch',
+			match,
+		});
+	}, []);
+
+	const searchFonts = useCallback(function searchFonts(match) {
+		dispatch({
+			type: 'searchFonts',
+			match,
+		});
+	}, []);
 
 	useEffect(() => {
 		if (!fontsPanelState.fonts) {
@@ -22,16 +57,13 @@ export function useFontsPanel(initialState) {
 					data = await getFonts();
 				}
 
-				dispatch({
-					type: 'setFonts',
-					fonts: data,
-				});
+				setFonts(data);
 			})();
 		}
 		// return () => {};
 	}, [fontsPanelState.fonts]);
 
-	return [fontsPanelState, dispatch];
+	return [fontsPanelState, { setFontTab, setCategory, setMatch, searchFonts }];
 }
 
 /**

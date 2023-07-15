@@ -41,10 +41,7 @@ export function FontsPanel() {
 	 * @param {Event} e - Event
 	 */
 	function handleFontTabSelectorChange(e) {
-		dispatch({
-			type: 'setFontTab',
-			fontTab: e.target.value,
-		});
+		dispatch.setFontTab(e.target.value);
 	}
 
 	/**
@@ -52,10 +49,7 @@ export function FontsPanel() {
 	 * @param {Event} e - Event
 	 */
 	function handleSearch(e) {
-		dispatch({
-			type: 'searchFonts',
-			match: e.target.value,
-		});
+		dispatch.searchFonts(e.target.value);
 	}
 
 	/**
@@ -63,11 +57,7 @@ export function FontsPanel() {
 	 * @param {Event} e - Event
 	 */
 	function setMatch(e) {
-		const match = e.target.value;
-		dispatch({
-			type: 'setMatch',
-			match,
-		});
+		dispatch.setMatch(e.target.value);
 	}
 
 	/**
@@ -75,13 +65,10 @@ export function FontsPanel() {
 	 * @param {Event} e - Event
 	 */
 	function handleFontCategoryButtonClick(e) {
-		const value = e.target.value;
+		const category = e.target.value;
 
-		import(`../assets/styles/${value}-fonts.css`);
-		dispatch({
-			type: 'setCategory',
-			category: value,
-		});
+		import(`../assets/styles/${category}-fonts.css`);
+		dispatch.setCategory(category);
 	}
 
 	/**
