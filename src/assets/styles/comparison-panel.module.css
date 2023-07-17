@@ -6,6 +6,9 @@
 		var(--comparison-panel-padding-horizontal);
 	overflow-y: hidden;
 	border-left: 2px solid black;
+	background-color: inherit;
+	border-radius: 0 8px 8px 0;
+	z-index: 10;
 }
 
 .comparisonPanel .comparisonPanelContent {
@@ -178,3 +181,66 @@
 	width: 24px;
 	content: url('/src/assets/img/arrow-long-right.svg');
 } */
+
+.comparisonSectionSelector {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	padding: 2rem 0;
+	right: -28px;
+	transition: var(--transition-speed) var(--transition-timing-function);
+	z-index: 5;
+}
+
+.comparisonSectionSelector:hover {
+	right: -38px;
+}
+
+.comparisonSectionSelector label {
+	/* padding: 0.375rem; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	height: 2.25rem;
+	width: 2.25rem;
+	outline: 2px solid black;
+	transition: var(--transition-speed) step-start;
+}
+
+.comparisonSectionSelector label:hover,
+.comparisonSectionSelector label:focus-within {
+	background-color: #00000010;
+	box-shadow: inset 4px 4px 4px 0px rgba(0, 0, 0, 0.075);
+}
+
+.comparisonSectionSelector label.active {
+	background-color: #00000010;
+	box-shadow: inset 4px 4px 4px 0px rgba(0, 0, 0, 0.075);
+}
+
+.comparisonSectionSelector label.alphaNumRadioLabel {
+	border-radius: 0 0.5rem 0 0;
+}
+
+.comparisonSectionSelector label.textualRadioLabel {
+	font-size: 1.125rem;
+	font-style: italic;
+}
+
+.comparisonSectionSelector label.textualRadioLabel .bodyTextIcon {
+	height: 1rem;
+	width: 1rem;
+}
+
+.comparisonSectionSelector label.codeRadioLabel {
+	border-radius: 0 0 0.5rem 0;
+}
+
+.comparisonSectionSelector label > input[type='radio'] {
+	width: 0;
+	height: 0;
+	margin: 0;
+	opacity: 0;
+}
