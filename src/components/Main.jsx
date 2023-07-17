@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { ComparisonPanel } from './ComparisonPanel';
 import { FontsPanel } from './FontsPanel';
 import { usePair } from '../hooks/PairContext';
@@ -24,10 +25,15 @@ export function Main() {
 	);
 }
 
-function SavePairButton({}) {
+function SavePairButton() {
 	const pair = usePair();
-	const { add, remove, includes } = usePairStore();
-	const isSaved = !!includes(pair);
+	const { pairs, add, remove, includes } = usePairStore();
+	const isPairInPairStore = !!includes(pair);
+	const [isSaved, setIsSaved] = useState(isPairInPairStore);
+
+	useEffect(() => {
+		setIsSaved(!!includes(pair));
+	}, [pair, pairs]);
 
 	function handleClick(e) {
 		try {
@@ -35,8 +41,10 @@ function SavePairButton({}) {
 
 			if (isSaved) {
 				remove(pair);
+				setIsSaved(!!includes(pair));
 			} else {
 				add(pair);
+				setIsSaved(!!includes(pair));
 			}
 		} catch (error) {
 			console.error(error);
