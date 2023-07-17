@@ -46,7 +46,11 @@ function add(pair) {
 function remove(pair) {
 	const index = includes(pair, true);
 
-	if (index >= 0) {
+	removeById(index);
+}
+
+function removeById(index) {
+	if (index > 0 && index < pairs.length) {
 		pairs.splice(index, 1);
 		pairs = pairs.concat([]);
 		try {
@@ -114,6 +118,7 @@ function getSnapshot() {
 export const pairStore = {
 	add,
 	remove,
+	removeById,
 	includes,
 	getLastPair,
 	subscribe,
