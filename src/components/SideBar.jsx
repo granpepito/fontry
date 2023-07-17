@@ -1,3 +1,6 @@
+import { useCallback, useEffect, useMemo } from 'react';
+import { usePairStore } from '../hooks/usePairStore';
+import { usePairDispatch } from '../hooks/PairContext';
 import { XMarkIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline';
 import {
 	SunIcon as SunIconSolid,
@@ -5,21 +8,42 @@ import {
 } from '@heroicons/react/24/solid';
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid';
 
-// import Pair from '/src/utils/Pair';
-// import Font from '/src/utils/Font';
-
 import styles from '/src/assets/styles/sidebar.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
 
 /**
- *
- * @param {{ handleClick: Function, isOpen: boolean}} param0
- * @
+ * Renders the SideBar of the App.
+ * @param {{ handleClick: Function, isOpen: boolean}} props
  * @returns
  */
 export function SideBar({ handleClick, isOpen }) {
 	const sideBarContainerOpen = isOpen ? styles.open : '';
+	const { changePair } = usePairDispatch();
+	const { pairs, remove } = usePairStore();
+
+	const handleSavedPairClick = useCallback(function handleSavedPairClick(e) {
+		try {
+			const { id } = e.target.dataset;
+			changePair(id);
+		} catch (error) {
+			console.error(error);
+		}
+	}, []);
+
+	const savedPairs = useMemo(() => {
+		return pairs.map((pair, index) => {
+			return (
+				<SavedPair
+					key={index}
+					id={index}
+					onClick={handleSavedPairClick}
+					firstFontFamily={pair?.font1?.family}
+					secondFontFamily={pair?.font2?.family}
+				/>
+			);
+		});
+	}, [pairs]);
 
 	return (
 		<>
@@ -39,12 +63,7 @@ export function SideBar({ handleClick, isOpen }) {
 				</div>
 				<nav className={styles.sideBarBottomContainer}>
 					<h2>Combinaisons Enregistrées</h2>
-					<ul className={styles.savedPairsList}>
-						<SavedPair />
-						<SavedPair />
-						<SavedPair />
-						<SavedPair />
-					</ul>
+					<ul className={styles.savedPairsList}>{savedPairs}</ul>
 				</nav>
 			</div>
 			<div
@@ -71,20 +90,22 @@ function ThemeSelector() {
 }
 
 /**
- *
- * @param {} param0
+ * Component representing a pair that is saved inside the Pair Store.
+ * @param {{id: string, firstFontFamily: string, secondFontFamily: string, onClick: Function}} props
  * @returns
  */
-function SavedPair({}) {
+function SavedPair({ id, firstFontFamily, secondFontFamily, onClick }) {
 	return (
-		<li className={styles.savedPair}>
+		<li className={styles.savedPair} data-id={id} onClick={onClick}>
 			<p>
-				1. <span>Police 1</span>
+				1. <span>{firstFontFamily}</span>
 			</p>
 			<p>
-				2. <span>Police 2</span>
+				2. <span>{secondFontFamily}</span>
 			</p>
-			<button className={inputStyles.buttonIcon}>
+			<button
+				className={[inputStyles.buttonIcon, styles.popOverButton].join(' ')}
+			>
 				<EllipsisVerticalIcon
 					className={[iconStyles.icon, styles.ellipsisVertIcon].join(' ')}
 				/>

@@ -1,11 +1,23 @@
+import { usePair } from '../hooks/PairContext';
 import styles from '/src/assets/styles/comparison-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
 import { ArrowLongRightIcon } from '@heroicons/react/20/solid';
 
-export function TextualExampleComparison({ firstFont, secondFont }) {
+export function TextualExampleComparisonSection({ isCurrentSection }) {
+	const pair = usePair();
+	const firstFont = pair.font1;
+	const secondFont = pair.font2;
+	const active = isCurrentSection ? styles.active : '';
+
 	return (
-		<section className={styles.comparisonPanel}>
+		<section
+			className={[
+				styles.comparisonPanelContent,
+				styles.textualSection,
+				active,
+			].join(' ')}
+		>
 			<div className={styles.comparisonPanelTitle}>
 				<h2>Comparaison Textuelle</h2>
 				<div className={styles.fontFamilies}>
@@ -84,7 +96,7 @@ function TextualElement({ fontFamily, type }) {
 							className={[inputStyles.button, styles.button].join(' ')}
 							style={{ fontFamily }}
 						>
-							Bouton
+							Call to Action
 						</button>
 						<span>
 							<a>

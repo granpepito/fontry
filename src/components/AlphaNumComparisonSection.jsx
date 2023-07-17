@@ -1,8 +1,19 @@
+import { usePair } from '../hooks/PairContext';
 import styles from '/src/assets/styles/comparison-panel.module.css';
 
-export function AlphaNumComparison({ firstFont, secondFont }) {
+export function AlphaNumComparisonSection({ isCurrentSection }) {
+	const pair = usePair();
+	const firstFont = pair.font1;
+	const secondFont = pair.font2;
+	const active = isCurrentSection ? styles.active : '';
 	return (
-		<section className={styles.comparisonPanel}>
+		<section
+			className={[
+				styles.comparisonPanelContent,
+				styles.alphaNumSection,
+				active,
+			].join(' ')}
+		>
 			<div className={styles.comparisonPanelTitle}>
 				<h2>Comparaison Alphanumérique</h2>
 			</div>

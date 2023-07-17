@@ -1,6 +1,7 @@
 #fontsPanel {
 	grid-column: 1/7;
 	height: var(--fonts-panel-height);
+	z-index: 10;
 }
 
 .fontSelectorContainer {
@@ -26,7 +27,7 @@
 
 .radioContainer:hover,
 .radioContainer:focus-within {
-	background-color: rgb(230, 230, 230);
+	background-color: #00000010;
 	font-style: italic;
 }
 
@@ -103,23 +104,26 @@
 	background-color: rgb(0, 0, 0);
 }
 
-.fontsContainer {
+.fontsContainer .fieldset {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	align-content: start;
 	align-items: start;
-	/* justify-content: space-between; */
-	margin: 0;
-	max-height: 0;
-	padding: var(--closed-fonts-container-padding);
 	gap: 8px 10px;
+	max-height: 0;
+	width: auto;
+	opacity: 0;
+	margin: 0;
+	padding: var(--closed-fonts-container-padding);
+	border: none;
 	overflow-y: scroll;
 	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
-.fontsContainer.open {
+.fontsContainer .fieldset.open {
 	padding: var(--open-fonts-container-padding);
 	max-height: var(--fonts-container-height);
 	width: auto;
+	opacity: 1;
 }

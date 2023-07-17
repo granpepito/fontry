@@ -1,32 +1,66 @@
 .comparisonPanel {
+	grid-column: 7/-1;
+	width: auto;
+	/* height: var(--panels-container-height); */
+	padding: var(--comparison-panel-padding-vertical)
+		var(--comparison-panel-padding-horizontal);
+	overflow-y: hidden;
+	border-left: 2px solid black;
+	background-color: inherit;
+	border-radius: 0 8px 8px 0;
+	z-index: 10;
+}
+
+.comparisonPanel .comparisonPanelContent {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
 	gap: 30px;
-	grid-column: 7/-1;
-	border-left: 2px solid black;
-	height: var(--comparison-panel-height);
-	padding: var(--comparison-panel-padding-vertical)
-		var(--comparison-panel-padding-horizontal);
+	height: calc(
+		var(--panels-container-height) - 2 *
+			var(--comparison-panel-padding-vertical)
+	);
+	overflow-y: scroll;
+	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
-.comparisonPanel .comparisonPanelTitle {
+.comparisonPanel .comparisonPanelContent.alphaNumSection {
+	translate: 0% calc(-100% - var(--comparison-panel-padding-vertical));
+}
+.comparisonPanel .comparisonPanelContent.textualSection {
+	translate: 0% calc(-200% - var(--comparison-panel-padding-vertical));
+}
+.comparisonPanel .comparisonPanelContent.codeSection {
+	translate: 0% calc(-300% - var(--comparison-panel-padding-vertical));
+}
+.comparisonPanel .comparisonPanelContent.alphaNumSection.active {
+	translate: 0% 0%;
+}
+.comparisonPanel .comparisonPanelContent.textualSection.active {
+	translate: 0% -100%;
+}
+.comparisonPanel .comparisonPanelContent.codeSection.active {
+	translate: 0% -200%;
+}
+
+.comparisonPanelContent .comparisonPanelTitle {
 	align-items: center;
 	/* align-self: start; */
 }
 
-.comparisonPanel .comparisonPanelTitle > h2 {
+.comparisonPanelContent .comparisonPanelTitle > h2 {
 	text-align: center;
 	letter-spacing: 2px;
 	text-decoration: underline;
 }
 
-.comparisonPanel .fontFamilies {
+.comparisonPanelContent .fontFamilies {
 	text-align: center;
 	font-style: italic;
 }
 
-.comparisonPanel .alphaNumFontContainer > div {
+.comparisonPanelContent .alphaNumFontContainer > div {
 	display: flex;
 	flex-grow: 1;
 	flex-wrap: wrap;
@@ -35,15 +69,19 @@
 	text-align: center;
 }
 
-.comparisonPanel .alphaNumFontContainer .alphaNumElementContainer:first-child {
+.comparisonPanelContent
+	.alphaNumFontContainer
+	.alphaNumElementContainer:first-child {
 	margin-right: 0.5rem;
 }
 
-.comparisonPanel .alphaNumFontContainer .alphaNumElementContainer:nth-child(2) {
+.comparisonPanelContent
+	.alphaNumFontContainer
+	.alphaNumElementContainer:nth-child(2) {
 	margin-left: 0.5rem;
 }
 
-.comparisonPanel .textualElementsContainer {
+.comparisonPanelContent .textualElementsContainer {
 	display: flex;
 	flex-direction: column;
 	/* justify-content: end; */
@@ -51,48 +89,59 @@
 	gap: 1.875rem;
 }
 
-.comparisonPanel .textualElementsContainer .textualElement {
+.comparisonPanelContent .textualElementsContainer .textualElement {
 	display: grid;
-	grid-template-columns: repeat(6, 1fr);
+	grid-template-columns: repeat(12, 1fr);
 }
 
-.comparisonPanel .textualElement .typesettingFontNumber {
+.comparisonPanelContent .textualElement .typesettingFontNumber {
 	font-style: italic;
 	grid-column: 1/2;
-	/* transform: rotate(270deg); */
+	align-self: center;
+	writing-mode: vertical-lr;
+	writing-mode: sideways-lr;
 }
-.comparisonPanel .textualElementsContainer .textualElement .example {
+.comparisonPanelContent .textualElementsContainer .textualElement .example {
 	grid-column: 2/-1;
+	display: flex;
+	align-items: center;
 }
 
-.comparisonPanel .textualElementsContainer .textualElement .example h1,
-.comparisonPanel .textualElementsContainer .textualElement .example h3 {
+.comparisonPanelContent .textualElementsContainer .textualElement .example h1,
+.comparisonPanelContent .textualElementsContainer .textualElement .example h3 {
 	margin: 0;
 }
 
-.comparisonPanel
+.comparisonPanelContent
 	.textualElementsContainer
 	.textualElement.titleElement
 	.example {
 	font-size: 2.25rem;
 }
 
-.comparisonPanel
+.comparisonPanelContent
 	.textualElementsContainer
 	.textualElement.leadElement
 	.example {
 	font-size: 1.625rem;
 }
 
-.comparisonPanel
+.comparisonPanelContent
+	.textualElementsContainer
+	.textualElement.paragraphElement
+	.example {
+	display: block;
+}
+
+.comparisonPanelContent
 	.textualElementsContainer
 	.textualElement.paragraphElement
 	.example,
-.comparisonPanel .textualElement.actionsElement .example {
+.comparisonPanelContent .textualElement.actionsElement .example {
 	font-size: 1rem;
 }
 
-.comparisonPanel .textualElement.actionsElement .example {
+.comparisonPanelContent .textualElement.actionsElement .example {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: flex-start;
@@ -101,23 +150,25 @@
 	width: 100%;
 }
 
-.comparisonPanel .textualElement.actionsElement .example .button {
+.comparisonPanelContent .textualElement.actionsElement .example .button {
 	font-size: 1rem;
 }
 
-.comparisonPanel .textualElement.actionsElement .example span a {
+.comparisonPanelContent .textualElement.actionsElement .example span a {
+	display: flex;
+	align-items: center;
 	color: #000;
 	text-decoration: none;
 	cursor: pointer;
 	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
-.comparisonPanel .textualElement.actionsElement .example span a:hover {
+.comparisonPanelContent .textualElement.actionsElement .example span a:hover {
 	color: #555;
 	text-decoration: underline;
 }
 
-.comparisonPanel .textualElement.actionsElement .example span a .icon {
+.comparisonPanelContent .textualElement.actionsElement .example span a .icon {
 	margin-right: 0.875rem;
 }
 
@@ -130,3 +181,66 @@
 	width: 24px;
 	content: url('/src/assets/img/arrow-long-right.svg');
 } */
+
+.comparisonSectionSelector {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	padding: 2rem 0;
+	right: -28px;
+	transition: var(--transition-speed) var(--transition-timing-function);
+	z-index: 5;
+}
+
+.comparisonSectionSelector:hover {
+	right: -38px;
+}
+
+.comparisonSectionSelector label {
+	/* padding: 0.375rem; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	height: 2.25rem;
+	width: 2.25rem;
+	outline: 2px solid black;
+	transition: var(--transition-speed) step-start;
+}
+
+.comparisonSectionSelector label:hover,
+.comparisonSectionSelector label:focus-within {
+	background-color: #00000010;
+	box-shadow: inset 4px 4px 4px 0px rgba(0, 0, 0, 0.075);
+}
+
+.comparisonSectionSelector label.active {
+	background-color: #00000010;
+	box-shadow: inset 4px 4px 4px 0px rgba(0, 0, 0, 0.075);
+}
+
+.comparisonSectionSelector label.alphaNumRadioLabel {
+	border-radius: 0 0.5rem 0 0;
+}
+
+.comparisonSectionSelector label.textualRadioLabel {
+	font-size: 1.125rem;
+	font-style: italic;
+}
+
+.comparisonSectionSelector label.textualRadioLabel .bodyTextIcon {
+	height: 1rem;
+	width: 1rem;
+}
+
+.comparisonSectionSelector label.codeRadioLabel {
+	border-radius: 0 0 0.5rem 0;
+}
+
+.comparisonSectionSelector label > input[type='radio'] {
+	width: 0;
+	height: 0;
+	margin: 0;
+	opacity: 0;
+}

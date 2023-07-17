@@ -84,7 +84,7 @@ async function buildStyleSheet(filePath, cssBuffer) {
 
 				const fontFaces = await fetchFonts(url);
 				buildStyleSheet(
-					`../src/${category}-fonts.css`,
+					`../src/assets/styles/${category}-fonts.css`,
 					await fontFaces.buffer()
 				);
 			});

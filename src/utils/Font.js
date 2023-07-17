@@ -12,3 +12,14 @@
  * @property {object} [files] - URL of the font variants.
  */
 export const Font = {};
+
+/**
+ * @typedef FontsByCategory
+ * @type {object}
+ * @property {FontFamily[]} serif Serif fonts.
+ * @property {FontFamily[]} sans-serif Sans-serif fonts.
+ * @property {FontFamily[]} display Display fonts.
+ * @property {FontFamily[]} handwriting Handwriting fonts.
+ * @property {FontFamily[]} monospace Monospace fonts.
+ */
+export const FontsByCategory = {};

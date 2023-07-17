@@ -74,7 +74,7 @@
 	--main-content-margin-left-right: 3rem;
 	--main-content-margin-bottom: 1.75rem;
 
-	--panels-container-min-height: 635px;
+	--panels-container-height: 700px;
 	--panels-container-max-width: 1276px;
 
 	--comparison-panel-height: calc(
@@ -84,10 +84,12 @@
 	--comparison-panel-padding-vertical: 1rem;
 	--comparison-panel-padding-horizontal: 0.75rem;
 
-	--fonts-panel-height: calc(
+	/* --fonts-panel-height: calc(
 		100vh - (2 * var(--header-padding-top-bottom) + var(--website-font-size)) -
 			(1.75rem + 0.875rem)
-	);
+	); */
+	--fonts-panel-height: var(--panels-container-height);
+
 	--font-selector-radio-container-padding: 1.5625rem;
 	--font-category-section-container-flex-gap: 0.625rem;
 	--font-category-section-container-padding-vertical: 0.625rem;
