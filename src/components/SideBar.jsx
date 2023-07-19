@@ -15,7 +15,6 @@ import iconStyles from '/src/assets/styles/icon.module.css';
 /**
  * Renders the SideBar of the App.
  * @param {{ handleClick: Function, isOpen: boolean}} props
- * @returns
  */
 export function SideBar({ handleClick, isOpen }) {
 	const sideBarContainerOpen = isOpen ? styles.open : '';
@@ -77,7 +76,6 @@ export function SideBar({ handleClick, isOpen }) {
 
 /**
  *
- * @returns
  */
 function ThemeSelector() {
 	return (
@@ -92,7 +90,6 @@ function ThemeSelector() {
 /**
  * Component representing a pair that is saved inside the Pair Store.
  * @param {{id: string, firstFontFamily: string, secondFontFamily: string, onClick: Function}} props
- * @returns
  */
 function SavedPair({ id, firstFontFamily, secondFontFamily, onClick }) {
 	return (
