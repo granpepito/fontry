@@ -35,8 +35,10 @@ ul.savedPairsList {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
-	padding: 1rem 0rem 1rem 1rem;
+	padding: 1rem 1rem 1rem 1rem;
 	justify-content: left;
+	height: 70vh;
+	overflow-y: scroll;
 }
 
 ul.savedPairsList > li.savedPair {
