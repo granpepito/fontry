@@ -98,8 +98,14 @@
 	font-style: italic;
 	grid-column: 1/2;
 	align-self: center;
-	writing-mode: vertical-lr;
 	writing-mode: sideways-lr;
+}
+
+@supports not (writing-mode: sideways-lr) {
+	.comparisonPanelContent .textualElement .typesettingFontNumber {
+		writing-mode: vertical-lr;
+		transform: rotate(180deg);
+	}
 }
 .comparisonPanelContent .textualElementsContainer .textualElement .example {
 	grid-column: 2/-1;
