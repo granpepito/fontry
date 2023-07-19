@@ -28,11 +28,11 @@ export function Main() {
 function SavePairButton() {
 	const pair = usePair();
 	const { pairs, add, remove, includes } = usePairStore();
-	const isPairInPairStore = !!includes(pair);
+	const isPairInPairStore = includes(pair);
 	const [isSaved, setIsSaved] = useState(isPairInPairStore);
 
 	useEffect(() => {
-		setIsSaved(!!includes(pair));
+		setIsSaved(includes(pair));
 	}, [pair, pairs]);
 
 	function handleClick(e) {
@@ -41,10 +41,10 @@ function SavePairButton() {
 
 			if (isSaved) {
 				remove(pair);
-				setIsSaved(!!includes(pair));
+				setIsSaved(includes(pair));
 			} else {
 				add(pair);
-				setIsSaved(!!includes(pair));
+				setIsSaved(includes(pair));
 			}
 		} catch (error) {
 			console.error(error);
