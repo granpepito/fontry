@@ -111,6 +111,10 @@ function subscribe(callback) {
 	};
 }
 
+/**
+ * Return a snapshot of the Pair Store.
+ * @returns {import('../utils/Pair').Pair[]}
+ */
 function getSnapshot() {
 	return pairs;
 }
