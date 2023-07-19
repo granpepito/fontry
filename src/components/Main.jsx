@@ -11,6 +11,9 @@ import { BookmarkIcon as SolidBookmarkIcon } from '@heroicons/react/24/solid';
 
 import { usePairStore } from '../hooks/usePairStore';
 
+/**
+ * Renders the main HTML tag and its content.
+ */
 export function Main() {
 	return (
 		<main id={styles.mainContent}>
@@ -25,6 +28,9 @@ export function Main() {
 	);
 }
 
+/**
+ * Renders a Save button to save the current Pair of fonts.
+ */
 function SavePairButton() {
 	const pair = usePair();
 	const { pairs, add, remove, includes } = usePairStore();
