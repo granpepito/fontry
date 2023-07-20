@@ -82,7 +82,7 @@
 	transform: rotate(90deg);
 }
 
-.categorySection .buttonOpenSection span:first-of-type {
+.categorySection .buttonOpenSection > * {
 	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
@@ -96,8 +96,8 @@
 	height: 16px;
 	width: 16px;
 	border-radius: 100%;
-	transition: var(--transition-speed) var(--transition-timing-function);
 }
+
 .categorySection .buttonOpenSection .circleIndicator.hasCurrentFont {
 	height: 8px;
 	width: 8px;
