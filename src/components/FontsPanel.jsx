@@ -263,8 +263,10 @@ function FontCategorySection({
 }) {
 	const pair = usePair();
 	const isOpen = openCategory === fontCategoryName;
-	const formattedFontCategoryName =
-		fontCategoryName[0].toUpperCase() + fontCategoryName.substring(1);
+	const formattedFontCategoryName = useMemo(
+		() => fontCategoryName[0].toUpperCase() + fontCategoryName.substring(1),
+		[]
+	);
 
 	const openSectionClassName = isOpen ? styles.open : '';
 	const isEmptyClassName = children.length === 0 ? styles.empty : '';
