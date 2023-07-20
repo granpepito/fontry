@@ -86,8 +86,8 @@
 	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
-.categorySection.empty .buttonOpenSection span:first-of-type {
-	text-decoration: line-through;
+.categorySection.empty .buttonOpenSection > * {
+	opacity: 0.6;
 }
 
 .categorySection .buttonOpenSection .circleIndicator {
