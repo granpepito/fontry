@@ -11,22 +11,6 @@ import { loadFont } from '../functions/loadFont';
 import { SpaceGrotesk } from '../utils/SpaceGrotesk';
 import { Arvo } from '../utils/Arvo';
 
-function getLastSavedPair() {
-	try {
-		const pairs = JSON.parse(localStorage.getItem('pairStore'));
-
-		if (Array.isArray(pairs) && pairs.length > 0) {
-			const latestPair = pairs[pairs.length - 1];
-
-			return latestPair;
-		}
-		return null;
-	} catch (error) {
-		console.error(error);
-		return null;
-	}
-}
-
 /**
  * Initiate the Pair for the PairProvider. If the Pair Store is not empty it will return the last saved pair, else it will create one.
  * @returns {import('../utils/Pair').Pair}
