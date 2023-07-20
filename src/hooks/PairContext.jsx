@@ -1,10 +1,4 @@
-import {
-	createContext,
-	useCallback,
-	useContext,
-	useMemo,
-	useReducer,
-} from 'react';
+import { createContext, useCallback, useContext, useReducer } from 'react';
 
 import { usePairStore } from './usePairStore';
 import { loadFont } from '../functions/loadFont';
@@ -63,8 +57,7 @@ export function usePairDispatch() {
  */
 export function PairProvider({ children }) {
 	const [pair, dispatch] = useReducer(pairReducer, getPair());
-	const { pairs: snapshot } = usePairStore();
-	const pairs = useMemo(() => snapshot, [snapshot]);
+	const { pairs } = usePairStore();
 
 	const updateFont = useCallback((font, fontNumber) => {
 		dispatch({
