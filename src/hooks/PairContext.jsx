@@ -28,11 +28,12 @@ function getLastSavedPair() {
 }
 
 /**
- *
+ * Initiate the Pair for the PairProvider. If the Pair Store is not empty it will return the last saved pair, else it will create one.
  * @returns {import('../utils/Pair').Pair}
  */
 function getPair() {
-	const latestPair = getLastSavedPair();
+	const { getLastPair } = usePairStore();
+	const latestPair = getLastPair();
 	if (latestPair) {
 		const { font1, font2 } = latestPair;
 		if (font1 && font1.family) {
