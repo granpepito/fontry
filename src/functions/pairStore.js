@@ -79,11 +79,7 @@ function includes(pair, returnIndex = false) {
 		return index;
 	}
 
-	if (index >= 0) {
-		return true;
-	} else {
-		return false;
-	}
+	return index >= 0;
 }
 
 /**
