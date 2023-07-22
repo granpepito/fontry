@@ -1,8 +1,10 @@
 import { useMemo, useEffect, memo } from 'react';
 import debounce from 'lodash.debounce';
+import { useInView } from 'react-intersection-observer';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { usePair, usePairDispatch } from '../hooks/PairContext';
 import { useFontsPanel } from '../hooks/useFontsPanel';
+import { loadFont } from '../functions/loadFont';
 
 import styles from '/src/assets/styles/fonts-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
@@ -67,7 +69,6 @@ export function FontsPanel() {
 	function handleFontCategoryButtonClick(e) {
 		const category = e.target.value;
 
-		import(`../assets/styles/${category}-fonts.css`);
 		dispatch.setCategory(category);
 	}
 
@@ -334,8 +335,12 @@ function FontCategorySection({
  */
 const FontButton = memo(({ fontData, onClick, currentFontTab }) => {
 	const pair = usePair();
+	const { ref, inView } = useInView({
+		root: document.querySelector(`.${styles.fieldset}.${styles.open}`),
+		threshold: 0,
+	});
 	const fontFamily = fontData.family;
-	const { category } = fontData;
+	const { category, variants } = fontData;
 	const currentFont = pair[`font${currentFontTab}`].family ?? null;
 
 	const className = [
@@ -343,10 +348,19 @@ const FontButton = memo(({ fontData, onClick, currentFontTab }) => {
 		(() => (fontFamily === currentFont ? inputStyles.active : ''))(),
 	].join(' ');
 
+	if (inView) {
+		if (variants && variants.includes('regular')) {
+			loadFont(fontFamily, ['400'], true);
+		} else {
+			loadFont(fontFamily, variants, true);
+		}
+	}
+
 	return (
 		<button
 			className={className}
 			name={fontFamily}
+			ref={ref}
 			title={fontFamily}
 			type='button'
 			value={fontFamily}
