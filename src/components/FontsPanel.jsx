@@ -331,18 +331,12 @@ function FontCategorySection({
  * @param {import("../utils/Font").FontFamily} props.fontData - Data of the font.
  * @param {handleFontButtonClick} props.onClick - Event handler for the onclick event.
  * @param {string} props.currentFontTab - Currently opened font panel tab.
- * @param {boolean} props.isCategoryOpen - Boolean value stating if the FontButton's category is opened.
  */
-function FontButton({ fontData, onClick, currentFontTab, isCategoryOpen }) {
+const FontButton = memo(({ fontData, onClick, currentFontTab }) => {
 	const pair = usePair();
 	const fontFamily = fontData.family;
 	const { category } = fontData;
-	const currentFont =
-		currentFontTab === '1'
-			? pair.font1.family
-			: currentFontTab === '2'
-			? pair.font2.family
-			: null;
+	const currentFont = pair[`font${currentFontTab}`].family ?? null;
 
 	const className = [
 		inputStyles.button,
@@ -365,4 +359,4 @@ function FontButton({ fontData, onClick, currentFontTab, isCategoryOpen }) {
 			{fontFamily}
 		</button>
 	);
-}
+});
