@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useReducer } from 'react';
 
 import { usePairStore } from './usePairStore';
-import { loadFont, loadMultipleFonts } from '../functions/loadFont';
+import { loadFont } from '../functions/loadFont';
 import { SpaceGrotesk } from '../utils/SpaceGrotesk';
 import { Arvo } from '../utils/Arvo';
 
@@ -15,14 +15,14 @@ function getPair() {
 
 	if (latestPair) {
 		const { font1, font2 } = latestPair;
-		loadMultipleFonts([font1, font2]);
+		loadPair({ font1, font2 });
 
 		return latestPair;
 	}
 	const font1 = Arvo;
 	const font2 = SpaceGrotesk;
 
-	loadMultipleFonts([font1, font2]);
+	loadPair({ font1, font2 });
 
 	return {
 		font1,
@@ -135,8 +135,7 @@ function pairReducer(pair, action) {
 				const { pairToUpdate } = action;
 
 				if (pairToUpdate) {
-					const { font1, font2 } = pairToUpdate;
-					loadMultipleFonts([font1, font2]);
+					loadPair(pairToUpdate);
 
 					return pairToUpdate;
 				}
@@ -151,6 +150,21 @@ function pairReducer(pair, action) {
 		default: {
 			return pair;
 		}
+	}
+}
+
+/**
+ * Loads the fonts that form the given Pair.
+ * @param {import('../utils/Pair').Pair} pair - Pair of fonts to load.
+ * @param {import('../utils/Font').FontFamily} pair.font1 - First font to load.
+ * @param {import('../utils/Font').FontFamily} pair.font2 - Second font to load.
+ */
+function loadPair({ font1, font2 }) {
+	if (font1 && font1.family) {
+		loadFont(font1.family, font1.variants);
+	}
+	if (font2 && font2.family) {
+		loadFont(font2.family, font2.variants);
 	}
 }
 
