@@ -105,11 +105,8 @@
 
 .fontsContainer .fieldset {
 	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	align-content: start;
-	align-items: start;
-	gap: 8px 10px;
+	flex-direction: column;
+	gap: 8px 0;
 	max-height: 0;
 	width: auto;
 	opacity: 0;
@@ -125,4 +122,13 @@
 	max-height: var(--fonts-container-height);
 	width: auto;
 	opacity: 1;
+}
+
+.fontsContainer .fieldset .fontButtonGroup {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: start;
+	align-content: start;
+	gap: 8px 10px;
 }

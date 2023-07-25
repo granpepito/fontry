@@ -1,10 +1,10 @@
-import { useMemo, useEffect, memo } from 'react';
+import { useMemo, useEffect, memo, useState } from 'react';
 import debounce from 'lodash.debounce';
 import { useInView } from 'react-intersection-observer';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { usePair, usePairDispatch } from '../hooks/PairContext';
 import { useFontsPanel } from '../hooks/useFontsPanel';
-import { loadFont } from '../functions/loadFont';
+import { loadFont, loadMultipleFonts } from '../functions/loadFont';
 
 import styles from '/src/assets/styles/fonts-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
@@ -34,12 +34,11 @@ export function FontsPanel() {
 		Object.keys(fontsPanelState[currentFontTab].fonts).length > 0
 			? fontsPanelState[currentFontTab].fonts
 			: fontsPanelState.fonts;
-
 	const pair = usePair();
 	const { updateFont } = usePairDispatch();
 
 	/**
-	 * @callback handleFontTabSelector - Sets the tab of the FontsPanel component. Changes the state of the FontsPanel component.
+	 * @callback handleFontTabSelectorChange - Sets the tab of the FontsPanel component. Changes the state of the FontsPanel component.
 	 * @param {Event} e - Event
 	 */
 	function handleFontTabSelectorChange(e) {
@@ -276,14 +275,24 @@ function FontCategorySection({
 	const isCurrentFontInCategory = currentCategory === fontCategoryName;
 
 	const fonts = useMemo(() => {
-		return children.map((fontData, index) => (
-			<FontButton
-				key={index}
-				fontData={fontData}
-				onClick={onFontButtonClick}
-				currentFontTab={currentFontTab}
-			/>
-		));
+		const fonts = [];
+		const numberOfFontButtonGroups = Math.ceil(children.length / 100);
+
+		for (let i = 0; i < numberOfFontButtonGroups; i++) {
+			const baseIndex = i * 100;
+			const fontsOfGroup = children.slice(baseIndex, baseIndex + 100);
+
+			fonts.push(
+				<FontButtonGroup
+					key={i}
+					onFontButtonClick={onFontButtonClick}
+					currentFontTab={currentFontTab}
+				>
+					{fontsOfGroup}
+				</FontButtonGroup>
+			);
+		}
+		return fonts;
 	}, [children, currentFontTab]);
 
 	return (
@@ -319,10 +328,49 @@ function FontCategorySection({
 					className={[styles.fieldset, openSectionClassName].join(' ')}
 					disabled={!isOpen}
 				>
-					{fonts}
+					{fonts ?? null}
 				</fieldset>
 			</div>
 		</section>
+	);
+}
+
+/**
+ * Renders a group of FontButton components. Is used as a pagination to download the fonts.
+ * @param {object} props
+ * @param {string} props.currentFontTab - Current font tab of the FontsPanel component.
+ * @param {handleFontButtonClick} props.onFontButtonClick - Event handler for the onclick event of the FontButton component.
+ * @param {import('../utils/Font').FontFamily[]} props.children - Array of FontFamily objects passed as children to the component.
+ */
+function FontButtonGroup({
+	currentFontTab,
+	onFontButtonClick,
+	children: fonts,
+}) {
+	const { ref, inView } = useInView({
+		root: document.querySelector(`.${styles.fieldset}.${styles.open}`),
+		triggerOnce: true,
+	});
+
+	const fontButtons = fonts.map((font, index) => {
+		return (
+			<FontButton
+				key={index}
+				fontData={font}
+				onClick={onFontButtonClick}
+				currentFontTab={currentFontTab}
+			/>
+		);
+	});
+
+	if (inView) {
+		loadMultipleFonts(fonts, true);
+	}
+
+	return (
+		<div ref={ref} className={styles.fontButtonGroup}>
+			{fontButtons}
+		</div>
 	);
 }
 
@@ -333,12 +381,9 @@ function FontCategorySection({
  * @param {handleFontButtonClick} props.onClick - Event handler for the onclick event.
  * @param {string} props.currentFontTab - Currently opened font panel tab.
  */
-const FontButton = memo(({ fontData, onClick, currentFontTab }) => {
+function FontButton({ fontData, onClick, currentFontTab }) {
 	const pair = usePair();
-	const { ref, inView } = useInView({
-		root: document.querySelector(`.${styles.fieldset}.${styles.open}`),
-		threshold: 0,
-	});
+
 	const fontFamily = fontData.family;
 	const { category, variants } = fontData;
 	const currentFont = pair[`font${currentFontTab}`].family ?? null;
@@ -348,19 +393,10 @@ const FontButton = memo(({ fontData, onClick, currentFontTab }) => {
 		(() => (fontFamily === currentFont ? inputStyles.active : ''))(),
 	].join(' ');
 
-	if (inView) {
-		if (variants && variants.includes('regular')) {
-			loadFont(fontFamily, ['400'], true);
-		} else {
-			loadFont(fontFamily, variants, true);
-		}
-	}
-
 	return (
 		<button
 			className={className}
 			name={fontFamily}
-			ref={ref}
 			title={fontFamily}
 			type='button'
 			value={fontFamily}
@@ -373,4 +409,4 @@ const FontButton = memo(({ fontData, onClick, currentFontTab }) => {
 			{fontFamily}
 		</button>
 	);
-});
+}
