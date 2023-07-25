@@ -1,10 +1,10 @@
-import { useMemo, useEffect, memo, useState } from 'react';
+import { useMemo, useEffect } from 'react';
 import debounce from 'lodash.debounce';
 import { useInView } from 'react-intersection-observer';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { usePair, usePairDispatch } from '../hooks/PairContext';
 import { useFontsPanel } from '../hooks/useFontsPanel';
-import { loadFont, loadMultipleFonts } from '../functions/loadFont';
+import { loadMultipleFonts } from '../functions/loadFont';
 
 import styles from '/src/assets/styles/fonts-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
