@@ -1,3 +1,5 @@
+const FONTS_PER_PAGES = 75;
+
 /**
  * Returns an Object of the fonts grouped by category.
  * @param {Object[]} fontsList
@@ -11,6 +13,10 @@ function groupFontsByCategory(fontsList) {
 
 		return groupedFonts;
 	}, {});
+
+	for (const [category, fonts] of Object.entries(groupedFontsList)) {
+		groupedFontsList[category] = makePages(fonts);
+	}
 
 	return groupedFontsList;
 }
@@ -48,7 +54,7 @@ function storeFonts(fontsList) {
  * Get every fonts available
  * @returns
  */
-export default async function getFonts() {
+export async function getFonts() {
 	// Get the list of fonts from localStorage
 	let fontsList = localStorage.getItem('fontsList');
 	// If Fonts were indeed stored.
@@ -75,10 +81,32 @@ export default async function getFonts() {
 	// If data fetching is successful
 	if (data && data.items) {
 		fontsList = groupFontsByCategory(data.items);
-		storeFonts(fontsList);
+		// storeFonts(fontsList);
 
 		return fontsList;
 	}
 	// If error
 	return data;
+}
+
+/**
+ *
+ * @param {import("../utils/Font").FontFamily} fonts
+ * @param {number} FONTS_PER_PAGES
+ * @returns {import("../utils/Font").FontFamily[][]}
+ */
+export function makePages(fonts) {
+	const pages = [];
+	const numberOfPages = Math.ceil(fonts.length / FONTS_PER_PAGES);
+
+	for (let i = 0; i < numberOfPages; i++) {
+		const baseIndex = i * FONTS_PER_PAGES;
+		const fontsInCurrentPage = fonts.slice(
+			baseIndex,
+			baseIndex + FONTS_PER_PAGES
+		);
+
+		pages.push(fontsInCurrentPage);
+	}
+	return pages;
 }

@@ -259,41 +259,31 @@ function FontCategorySection({
 	onClick,
 	onFontButtonClick,
 	currentFontTab,
-	children,
+	children: fonts,
 }) {
 	const pair = usePair();
 	const isOpen = openCategory === fontCategoryName;
-	const formattedFontCategoryName = useMemo(
-		() => fontCategoryName[0].toUpperCase() + fontCategoryName.substring(1),
-		[]
-	);
+	const formattedFontCategoryName =
+		fontCategoryName[0].toUpperCase() + fontCategoryName.slice(1);
 
 	const openSectionClassName = isOpen ? styles.open : '';
-	const isEmptyClassName = children.length === 0 ? styles.empty : '';
+	const isEmptyClassName = fonts.length === 0 ? styles.empty : '';
 
-	const { category: currentCategory } = pair[`font${currentFontTab}`];
-	const isCurrentFontInCategory = currentCategory === fontCategoryName;
+	const { category: categoryOfCurrentPair } = pair[`font${currentFontTab}`];
+	const isCurrentFontInCategoryStyle =
+		categoryOfCurrentPair === fontCategoryName ? styles.hasCurrentFont : '';
 
-	const fonts = useMemo(() => {
-		const fonts = [];
-		const numberOfFontButtonGroups = Math.ceil(children.length / 100);
-
-		for (let i = 0; i < numberOfFontButtonGroups; i++) {
-			const baseIndex = i * 100;
-			const fontsOfGroup = children.slice(baseIndex, baseIndex + 100);
-
-			fonts.push(
-				<FontButtonGroup
-					key={i}
-					onFontButtonClick={onFontButtonClick}
-					currentFontTab={currentFontTab}
-				>
-					{fontsOfGroup}
-				</FontButtonGroup>
-			);
-		}
-		return fonts;
-	}, [children, currentFontTab]);
+	const pages = fonts.map((pageOfFonts, index) => {
+		return (
+			<FontButtonPage
+				key={index}
+				onFontButtonClick={onFontButtonClick}
+				currentFontTab={currentFontTab}
+			>
+				{pageOfFonts}
+			</FontButtonPage>
+		);
+	});
 
 	return (
 		<section
@@ -319,7 +309,7 @@ function FontCategorySection({
 				<span
 					className={[
 						styles.circleIndicator,
-						(() => (isCurrentFontInCategory ? styles.hasCurrentFont : ''))(),
+						isCurrentFontInCategoryStyle,
 					].join(' ')}
 				></span>
 			</button>
@@ -328,7 +318,7 @@ function FontCategorySection({
 					className={[styles.fieldset, openSectionClassName].join(' ')}
 					disabled={!isOpen}
 				>
-					{fonts ?? null}
+					{pages ?? null}
 				</fieldset>
 			</div>
 		</section>
@@ -342,30 +332,36 @@ function FontCategorySection({
  * @param {handleFontButtonClick} props.onFontButtonClick - Event handler for the onclick event of the FontButton component.
  * @param {import('../utils/Font').FontFamily[]} props.children - Array of FontFamily objects passed as children to the component.
  */
-function FontButtonGroup({
+function FontButtonPage({
 	currentFontTab,
 	onFontButtonClick,
 	children: fonts,
 }) {
 	const { ref, inView } = useInView({
-		root: document.querySelector(`.${styles.fieldset}.${styles.open}`),
+		root: document.querySelector(`${styles.fontCategorySectionsContainer}`),
 		triggerOnce: true,
 	});
 
-	const fontButtons = fonts.map((font, index) => {
-		return (
-			<FontButton
-				key={index}
-				fontData={font}
-				onClick={onFontButtonClick}
-				currentFontTab={currentFontTab}
-			/>
-		);
-	});
+	useEffect(() => {
+		if (inView) {
+			loadMultipleFonts(fonts, true);
+		}
+	}, [inView]);
 
-	if (inView) {
-		loadMultipleFonts(fonts, true);
-	}
+	const fontButtons = useMemo(
+		() =>
+			fonts.map((font, index) => {
+				return (
+					<FontButton
+						key={index}
+						fontData={font}
+						onClick={onFontButtonClick}
+						currentFontTab={currentFontTab}
+					/>
+				);
+			}),
+		[currentFontTab]
+	);
 
 	return (
 		<div ref={ref} className={styles.fontButtonGroup}>
@@ -384,29 +380,30 @@ function FontButtonGroup({
 function FontButton({ fontData, onClick, currentFontTab }) {
 	const pair = usePair();
 
-	const fontFamily = fontData.family;
-	const { category, variants } = fontData;
+	const { category, family } = fontData;
 	const currentFont = pair[`font${currentFontTab}`].family ?? null;
+	const isCurrentFontStyle = family === currentFont ? inputStyles.active : '';
 
 	const className = [
 		inputStyles.button,
-		(() => (fontFamily === currentFont ? inputStyles.active : ''))(),
+		styles.fontButton,
+		isCurrentFontStyle,
 	].join(' ');
 
 	return (
 		<button
 			className={className}
-			name={fontFamily}
-			title={fontFamily}
+			name={family}
+			title={family}
 			type='button'
-			value={fontFamily}
+			value={family}
 			data-font={JSON.stringify(fontData)}
 			onClick={onClick}
 			style={{
-				fontFamily: `${fontFamily}, ${category}, Lotion`,
+				fontFamily: `${family}, ${category}, Lotion`,
 			}}
 		>
-			{fontFamily}
+			{family}
 		</button>
 	);
 }
