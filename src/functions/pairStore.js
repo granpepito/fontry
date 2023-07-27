@@ -1,4 +1,4 @@
-let pairs;
+let pairs = [];
 getPairs();
 /**
  * Gets the pairs of fonts stored in the localStorage.
