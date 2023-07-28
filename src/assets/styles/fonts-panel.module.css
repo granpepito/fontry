@@ -72,22 +72,21 @@
 	background-color: transparent;
 }
 
+.categorySection .buttonOpenSection > * {
+	transition: var(--transition-speed) var(--transition-timing-function);
+}
+
+.categorySection.empty .buttonOpenSection > * {
+	opacity: 0.6;
+}
+
 .categorySection .chevron {
 	margin-right: 0.5rem;
 	align-self: baseline;
-	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
 .categorySection.open .chevron {
 	transform: rotate(90deg);
-}
-
-.categorySection .buttonOpenSection span:first-of-type {
-	transition: var(--transition-speed) var(--transition-timing-function);
-}
-
-.categorySection.empty .buttonOpenSection span:first-of-type {
-	text-decoration: line-through;
 }
 
 .categorySection .buttonOpenSection .circleIndicator {
@@ -96,8 +95,8 @@
 	height: 16px;
 	width: 16px;
 	border-radius: 100%;
-	transition: var(--transition-speed) var(--transition-timing-function);
 }
+
 .categorySection .buttonOpenSection .circleIndicator.hasCurrentFont {
 	height: 8px;
 	width: 8px;
@@ -106,11 +105,8 @@
 
 .fontsContainer .fieldset {
 	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	align-content: start;
-	align-items: start;
-	gap: 8px 10px;
+	flex-direction: column;
+	gap: 8px 0;
 	max-height: 0;
 	width: auto;
 	opacity: 0;
@@ -126,4 +122,13 @@
 	max-height: var(--fonts-container-height);
 	width: auto;
 	opacity: 1;
+}
+
+.fontsContainer .fieldset .fontButtonGroup {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: start;
+	align-content: start;
+	gap: 8px 10px;
 }

@@ -1,4 +1,4 @@
-let pairs;
+let pairs = [];
 getPairs();
 /**
  * Gets the pairs of fonts stored in the localStorage.
@@ -79,11 +79,7 @@ function includes(pair, returnIndex = false) {
 		return index;
 	}
 
-	if (index >= 0) {
-		return true;
-	} else {
-		return false;
-	}
+	return index >= 0;
 }
 
 /**
@@ -111,6 +107,10 @@ function subscribe(callback) {
 	};
 }
 
+/**
+ * Return a snapshot of the Pair Store.
+ * @returns {import('../utils/Pair').Pair[]}
+ */
 function getSnapshot() {
 	return pairs;
 }

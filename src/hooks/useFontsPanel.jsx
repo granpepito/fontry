@@ -1,6 +1,6 @@
 import { useCallback, useReducer, useEffect } from 'react';
 
-import getFonts from '../functions/getFonts';
+import { getFonts, makePages } from '../functions/getFonts';
 
 /**
  * Hook for the state of the FontsPanel component.
@@ -151,16 +151,16 @@ function fontsPanelReducer(fontsPanelState, action) {
 
 					if (typeof match === 'string' && match.length > 0) {
 						categoriesAndFonts.forEach(([category, fonts]) => {
-							const filteredFonts = fonts.filter((font) => {
+							const filteredFonts = fonts.flat().filter((font) => {
 								const { family } = font;
 								const isMatch = new RegExp(
 									`\S?${escapeRegExp(match)}\S?`,
 									'iu'
 								).test(family);
-								// const isMatch = family.includes(match);
+
 								return isMatch;
 							});
-							searchedFonts[category] = filteredFonts;
+							searchedFonts[category] = makePages(filteredFonts);
 						});
 					}
 
