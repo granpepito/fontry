@@ -1,5 +1,6 @@
 let pairs = [];
 getPairs();
+
 /**
  * Gets the pairs of fonts stored in the localStorage.
  * @returns {import('../utils/Pair').Pair[]}
@@ -11,7 +12,7 @@ function getPairs() {
 		pairs = JSON.parse(localStorage.getItem('pairStore'));
 
 		if (!Array.isArray(pairs)) {
-			throw Error('PairStore is not an array.');
+			throw Error('Pair Store is not an array. Reinitialising the Pair Store');
 		}
 	} catch (error) {
 		console.error(error);
@@ -97,7 +98,7 @@ function getLastPair() {
 
 /**
  * Subscribes to the 'storage' event.
- * @param {*} callback
+ * @param {Function} callback
  * @returns Returns a function that unsubscribes to the 'storage' event.
  */
 function subscribe(callback) {
