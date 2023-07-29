@@ -348,20 +348,16 @@ function FontButtonPage({
 		}
 	}, [inView]);
 
-	const fontButtons = useMemo(
-		() =>
-			fonts.map((font, index) => {
-				return (
-					<FontButton
-						key={index}
-						fontData={font}
-						onClick={onFontButtonClick}
-						currentFontTab={currentFontTab}
-					/>
-				);
-			}),
-		[currentFontTab]
-	);
+	const fontButtons = fonts.map((font, index) => {
+		return (
+			<FontButton
+				key={index}
+				fontData={font}
+				onClick={onFontButtonClick}
+				currentFontTab={currentFontTab}
+			/>
+		);
+	});
 
 	return (
 		<div ref={ref} className={styles.fontButtonGroup}>
