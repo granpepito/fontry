@@ -51,7 +51,7 @@ function remove(pair) {
 }
 
 function removeById(index) {
-	if (index > 0 && index < pairs.length) {
+	if (index >= 0 && index < pairs.length) {
 		pairs.splice(index, 1);
 		pairs = pairs.concat([]);
 		try {
