@@ -396,7 +396,11 @@ function FontButton({ fontData, onClick, currentFontTab }) {
 			data-font={JSON.stringify(fontData)}
 			onClick={onClick}
 			style={{
-				fontFamily: `${family}, ${category}, Lotion`,
+				fontFamily: `${family}, ${
+					(category === 'display') | (category === 'handwriting')
+						? 'cursive'
+						: category
+				}, Lotion`,
 			}}
 		>
 			{family}
