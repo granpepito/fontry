@@ -52,8 +52,8 @@ function remove(pair) {
 
 function removeById(index) {
 	if (index >= 0 && index < pairs.length) {
-		pairs.splice(index, 1);
-		pairs = pairs.concat([]);
+		pairs = pairs.filter((_, id) => id !== index);
+
 		try {
 			localStorage.setItem('pairStore', JSON.stringify(pairs));
 		} catch (error) {
