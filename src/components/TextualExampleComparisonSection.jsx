@@ -29,13 +29,17 @@ export function TextualExampleComparisonSection({ isCurrentSection }) {
 				<TextualElement type='title' fontFamily={firstFont.family} />
 				<TextualElement type='lead' fontFamily={firstFont.family} />
 				<TextualElement type='paragraph' fontFamily={secondFont.family} />
-				<TextualElement type='actions' fontFamily={secondFont.family} />
+				<TextualElement
+					type='actions'
+					fontFamily={secondFont.family}
+					isDisabled={!isCurrentSection}
+				/>
 			</div>
 		</section>
 	);
 }
 
-function TextualElement({ fontFamily, type }) {
+function TextualElement({ fontFamily, type, isDisabled = false }) {
 	const typesettingFontNumber = (fontNumber) => (
 		<p className={styles.typesettingFontNumber}>{fontNumber}</p>
 	);
@@ -95,6 +99,7 @@ function TextualElement({ fontFamily, type }) {
 						<button
 							className={[inputStyles.button, styles.button].join(' ')}
 							style={{ fontFamily }}
+							disabled={isDisabled}
 						>
 							Call to Action
 						</button>
