@@ -120,6 +120,9 @@ function SavedPair({ id, firstFontFamily, secondFontFamily, onClick }) {
 	);
 }
 
+/**
+ * Renders a prompt for the user to start saving pairs.
+ */
 function InvitationToSavePairs() {
 	return (
 		<li className={styles.invitationToSavePairs}>
