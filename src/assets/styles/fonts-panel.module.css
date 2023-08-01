@@ -113,7 +113,7 @@
 	margin: 0;
 	padding: var(--closed-fonts-container-padding);
 	border: none;
-	overflow-y: scroll;
+	overflow-y: auto;
 	transition: var(--transition-speed) var(--transition-timing-function);
 }
 

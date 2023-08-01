@@ -38,7 +38,7 @@ ul.savedPairsList {
 	padding: 1rem 1rem 1rem 1rem;
 	justify-content: left;
 	height: 70vh;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 ul.savedPairsList > li.savedPair {

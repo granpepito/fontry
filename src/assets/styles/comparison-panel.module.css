@@ -21,7 +21,7 @@
 		var(--panels-container-height) - 2 *
 			var(--comparison-panel-padding-vertical)
 	);
-	overflow-y: scroll;
+	overflow-y: auto;
 	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
