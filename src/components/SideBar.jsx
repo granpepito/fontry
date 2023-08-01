@@ -1,10 +1,17 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { usePairStore } from '../hooks/usePairStore';
 import { usePairDispatch } from '../hooks/PairContext';
-import { XMarkIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline';
+import {
+	XMarkIcon,
+	SunIcon,
+	MoonIcon,
+	BookmarkIcon as OutlineBookmarkIcon,
+	ArrowRightIcon,
+} from '@heroicons/react/24/outline';
 import {
 	SunIcon as SunIconSolid,
 	MoonIcon as MoonIconSolid,
+	BookmarkIcon as SolidBookmarkIcon,
 } from '@heroicons/react/24/solid';
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid';
 
@@ -62,7 +69,9 @@ export function SideBar({ handleClick, isOpen }) {
 				</div>
 				<nav className={styles.sideBarBottomContainer}>
 					<h2>Combinaisons Enregistrées</h2>
-					<ul className={styles.savedPairsList}>{savedPairs}</ul>
+					<ul className={styles.savedPairsList}>
+						{pairs.length > 0 ? savedPairs : <InvitationToSavePairs />}
+					</ul>
 				</nav>
 			</div>
 			<div
@@ -107,6 +116,31 @@ function SavedPair({ id, firstFontFamily, secondFontFamily, onClick }) {
 					className={[iconStyles.icon, styles.ellipsisVertIcon].join(' ')}
 				/>
 			</button>
+		</li>
+	);
+}
+
+function InvitationToSavePairs() {
+	return (
+		<li className={styles.invitationToSavePairs}>
+			<div className={styles.invitationIcons}>
+				<div className={styles.notSavedIcon}>
+					<OutlineBookmarkIcon className={iconStyles.icon} />{' '}
+					<p>Pas Enregistrée</p>
+				</div>
+				<div className={styles.arrowRightIcon}>
+					<ArrowRightIcon className={iconStyles.smallIcon} />
+				</div>
+				<div className={styles.savedIcon}>
+					<SolidBookmarkIcon className={iconStyles.icon} /> <p>Enregistrée</p>
+				</div>
+			</div>
+			<div className={styles.invitationText}>
+				<p>
+					Enregistrez les combinaisons que vous trouvez intéressantes !<br />
+					Elles seront disponibles juste ici.
+				</p>
+			</div>
 		</li>
 	);
 }
