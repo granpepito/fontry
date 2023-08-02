@@ -226,7 +226,7 @@
 	box-shadow: inset 4px 4px 4px 0px rgba(0, 0, 0, 0.075);
 }
 
-.comparisonSectionSelector label.alphaNumRadioLabel {
+.comparisonSectionSelector label:first-of-type {
 	border-radius: 0 0.5rem 0 0;
 }
 
@@ -240,7 +240,7 @@
 	width: 1rem;
 }
 
-.comparisonSectionSelector label.codeRadioLabel {
+.comparisonSectionSelector label:last-of-type {
 	border-radius: 0 0 0.5rem 0;
 }
 
