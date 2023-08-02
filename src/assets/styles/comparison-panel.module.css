@@ -199,7 +199,8 @@
 	z-index: 5;
 }
 
-.comparisonSectionSelector:hover {
+.comparisonSectionSelector:hover,
+.comparisonSectionSelector:focus-within {
 	right: -38px;
 }
 

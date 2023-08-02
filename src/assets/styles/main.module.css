@@ -51,3 +51,7 @@ main#mainContent .savePairButton {
 main#mainContent .savePairButton:active {
 	background-color: #fff;
 }
+
+main#mainContent .savePairButton:focus {
+	right: -33px;
+}
