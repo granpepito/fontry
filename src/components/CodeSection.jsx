@@ -71,14 +71,14 @@ function WeightsSelector({ firstFont, secondFont, isDisabled }) {
 	const firstVariants = useMemo(() => {
 		const { family, variants } = firstFont;
 		return variants.map((variant, index) => {
-			return <VariantCheckBock key={index} {...{ family, variant }} />;
+			return <VariantCheckbox key={index} {...{ family, variant }} />;
 		});
 	}, [firstFont]);
 
 	const secondVariants = useMemo(() => {
 		const { family, variants } = secondFont;
 		return variants.map((variant, index) => {
-			return <VariantCheckBock key={index} {...{ family, variant }} />;
+			return <VariantCheckbox key={index} {...{ family, variant }} />;
 		});
 	}, [secondFont]);
 
@@ -96,7 +96,7 @@ function WeightsSelector({ firstFont, secondFont, isDisabled }) {
 	);
 }
 
-function VariantCheckBock({ family, variant }) {
+function VariantCheckbox({ family, variant }) {
 	const [isChecked, setIsChecked] = useState(true);
 	const activeClassName = isChecked ? inputStyles.active : '';
 
