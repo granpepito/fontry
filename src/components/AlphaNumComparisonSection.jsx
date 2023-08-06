@@ -153,6 +153,7 @@ function AlphaNumGroup({ family, variants, isDisabled }) {
 					variant={formatVariant(variant)}
 				/>
 			)),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[family, variants]
 	);
 
@@ -161,6 +162,7 @@ function AlphaNumGroup({ family, variants, isDisabled }) {
 			variants.map((variant, index) => (
 				<VariantButton key={index} variant={variant} onClick={handleClick} />
 			)),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[variants]
 	);
 

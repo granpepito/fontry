@@ -83,6 +83,7 @@ export function FontsPanel() {
 
 	const debouncedOnChangeHandler = useMemo(
 		() => debounce(handleSearch, 400),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
 
@@ -91,7 +92,7 @@ export function FontsPanel() {
 		return () => {
 			debouncedOnChangeHandler.cancel();
 		};
-	}, []);
+	}, [debouncedOnChangeHandler]);
 
 	return (
 		<aside id={styles.fontsPanel}>
@@ -346,6 +347,7 @@ function FontButtonPage({
 		if (inView) {
 			loadMultipleFonts(fonts, true);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [inView]);
 
 	const fontButtons = fonts.map((font, index) => {
