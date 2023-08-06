@@ -7,6 +7,7 @@ import { getFonts, makePages } from '../functions/getFonts';
  * @param {FontsPanelState} initialState Initial State of the FontsPanel component.
  * @returns {[FontsPanelState, { setFonts: Function, setFontTab: Function, setCategory: Function, setMatch: Function, searchFonts: Function }]} Returns an array containing the current state of the FontsPanel component and a dispatch function.
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export function useFontsPanel(initialState) {
 	const [fontsPanelState, dispatch] = useReducer(
 		fontsPanelReducer,
@@ -60,7 +61,7 @@ export function useFontsPanel(initialState) {
 				setFonts(data);
 			})();
 		}
-		// return () => {};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fontsPanelState.fonts]);
 
 	return [fontsPanelState, { setFontTab, setCategory, setMatch, searchFonts }];
@@ -86,6 +87,8 @@ function fontsPanelReducer(fontsPanelState, action) {
 				...fontsPanelState,
 				currentFontTab: action.fontTab,
 			};
+		}
+			return fontsPanelState;
 		}
 		case 'setCategory': {
 			const { currentFontTab } = fontsPanelState;
@@ -114,6 +117,7 @@ function fontsPanelReducer(fontsPanelState, action) {
 					},
 				};
 			}
+			return fontsPanelState;
 		}
 		case 'setMatch': {
 			const { currentFontTab } = fontsPanelState;
@@ -138,6 +142,7 @@ function fontsPanelReducer(fontsPanelState, action) {
 					},
 				};
 			}
+			return fontsPanelState;
 		}
 		case 'searchFonts': {
 			const { match } = action;
@@ -186,7 +191,9 @@ function fontsPanelReducer(fontsPanelState, action) {
 						};
 					}
 				}
+				return fontsPanelState;
 			}
+			break;
 		}
 		default: {
 			return {
