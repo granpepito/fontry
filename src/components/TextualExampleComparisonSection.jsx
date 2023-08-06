@@ -21,8 +21,12 @@ export function TextualExampleComparisonSection({ isCurrentSection }) {
 			<div className={styles.comparisonPanelTitle}>
 				<h2>Comparaison Textuelle</h2>
 				<div className={styles.fontFamilies}>
-					<p>Police 1 - {firstFont.family ?? 'Lotion'}</p>
-					<p>Police 2 - {secondFont.family ?? 'Lotion'}</p>
+					<p>
+						Police 1 - <span>{firstFont.family ?? 'Lotion'}</span>
+					</p>
+					<p>
+						Police 2 - <span>{secondFont.family ?? 'Lotion'}</span>
+					</p>
 				</div>
 			</div>
 			<div className={styles.textualElementsContainer}>

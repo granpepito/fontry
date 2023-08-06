@@ -26,7 +26,7 @@ export function AlphaNumComparisonSection({ isCurrentSection }) {
 			</div>
 			<div className={styles.alphaNumContainer}>
 				<p className={styles.fontFamilies}>
-					Police 1 - {firstFont.family ?? 'Lotion'}
+					Police 1 - <span>{firstFont.family ?? 'Lotion'}</span>
 				</p>
 				<AlphaNumGroup
 					key={firstFont.family}
@@ -37,7 +37,7 @@ export function AlphaNumComparisonSection({ isCurrentSection }) {
 			</div>
 			<div className={styles.alphaNumContainer}>
 				<p className={styles.fontFamilies}>
-					Police 2 - {secondFont.family ?? 'Lotion'}
+					Police 2 - <span>{secondFont.family ?? 'Lotion'}</span>
 				</p>
 
 				<AlphaNumGroup
