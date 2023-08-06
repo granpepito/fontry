@@ -107,7 +107,7 @@ function VariantButton({ variant, onClick }) {
 			className={[inputStyles.button, inputStyles.pillButton].join(' ')}
 			type='button'
 			name={variant}
-			title={formatVariant}
+			title={formattedVariant}
 			value={variant}
 			onClick={onClick}
 		>
