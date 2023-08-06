@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, useState } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { usePair } from '../hooks/PairContext';
 import { useVariants } from '../hooks/useVariants';
 // import { VariantSelector } from './VariantSelector';
@@ -84,7 +84,9 @@ const AlphaNumElement = forwardRef(function AlphaNumElement(
 				<br />
 				.,:;… ¡!¿?
 				<br />
-				'" ‘’ “” ‚„′″‹› «» ()[]&#123;&#125;/|\
+				&apos; &quot;&nbsp; &lsquo; &rsquo;&nbsp; &ldquo; &rdquo;&nbsp; &sbquo;
+				&bdquo;&nbsp; &prime; &Prime;&nbsp; &lt; &gt;&nbsp; &laquo; &raquo;
+				<br />( ) [ ] &#123; &#125; /|\
 			</p>
 		</div>
 	);

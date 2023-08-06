@@ -119,7 +119,7 @@ function VariantCheckbox({ family, variant }) {
 	);
 }
 
-function Code({ children, ...props }) {
+function Code({ children }) {
 	const ref = useRef(null);
 
 	function handleClick() {

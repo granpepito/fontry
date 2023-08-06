@@ -10,7 +10,7 @@ import textualSectionIcon from '../assets/img/textual-section-icon.svg';
 import styles from '/src/assets/styles/comparison-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
 
-export function ComparisonPanel({}) {
+export function ComparisonPanel() {
 	const [currentSection, setCurrentSection] = useState('alphanum');
 
 	const handleComparisonSectionChange = useCallback(
