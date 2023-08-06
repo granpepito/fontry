@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { usePair } from '../hooks/PairContext';
 
 import { ClipboardIcon } from '@heroicons/react/24/outline';
@@ -120,8 +120,10 @@ function VariantCheckbox({ family, variant }) {
 }
 
 function Code({ children, ...props }) {
+	const ref = useRef(null);
+
 	function handleClick() {
-		navigator.clipboard.writeText(document.querySelector(styles.code));
+		navigator.clipboard.writeText(ref.current?.innerText);
 	}
 
 	return (
@@ -135,7 +137,9 @@ function Code({ children, ...props }) {
 				</button>
 			</div>
 			<pre className={styles.pre}>
-				<code className={styles.code}>{children}</code>
+				<code ref={ref} className={styles.code}>
+					{children}
+				</code>
 			</pre>
 		</div>
 	);
