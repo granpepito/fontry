@@ -1,6 +1,6 @@
 import { forwardRef, useMemo } from 'react';
 import { usePair } from '../hooks/PairContext';
-import { useVariants } from '../hooks/useVariants';
+import { useVariantsRef } from '../hooks/useVariants';
 // import { VariantSelector } from './VariantSelector';
 import { formatVariant } from '../functions/format';
 // import { variants, variantsState } from '../utils/variants';
@@ -125,7 +125,7 @@ function VariantButton({ variant, onClick }) {
  * @returns
  */
 function AlphaNumGroup({ family, variants, isDisabled }) {
-	const refs = useVariants();
+	const refs = useVariantsRef();
 
 	/**
 	 * @callback handleVariantButtonClick Function to handle the click of a VariantButton component. Trigger a scroll animation to the corresponding AlphaNumElement component.
