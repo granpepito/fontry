@@ -130,15 +130,15 @@ input.searchBar[type='search']::-webkit-search-results-decoration {
 
 .variantSelector {
 	width: 100%;
-}
-
-.variantSelector > fieldset {
-	width: 100%;
 	display: block;
 	padding: 0;
 	margin: 0;
 	border: none;
 }
+
+/* .variantSelector > fieldset {
+	width: 100%;
+} */
 
 .variantSelector > .variants {
 	width: 100%;
@@ -146,21 +146,32 @@ input.searchBar[type='search']::-webkit-search-results-decoration {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: center;
-	gap: 1rem;
+	justify-content: start;
+	align-content: flex-start;
+	gap: 0.5rem 0.7rem;
 	padding: 1rem 0.35rem;
-	/* overflow-x: auto; */
+}
+
+.variantSelector .variant {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.variantSelector label.checkboxLabel span {
+	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
 .variantSelector label.checkboxLabel,
 .pillButton {
-	/* display: flex;
+	position: relative;
+	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
 	align-items: center;
 	justify-content: center;
-	align-self: center; */
-	/* gap: 0px; */
+	align-self: center;
+	gap: 0px;
 	padding: 6px 10px;
 	width: fit-content;
 	height: auto;
@@ -179,11 +190,22 @@ input.searchBar[type='search']::-webkit-search-results-decoration {
 }
 
 .variantSelector input.checkbox[type='checkbox']:checked + label.checkboxLabel {
-	color: black;
-	background-color: #00000010;
-	border: 1px solid #00000010;
-	outline: 1px solid #00000010;
+	/* color: black; */
+	color: #000000cc;
+	border: 1px solid #00000085;
+	outline: 1px solid #00000085;
 }
+
+/* .variantSelector
+	input.checkbox[type='checkbox']:checked
+	+ label.checkboxLabel::after {
+	position: absolute;
+	right: 0.625rem;
+	top: 0.45rem;
+	width: 20px;
+	height: 20px;
+	content: url('/src/assets/img/checkmark-mini-solid.svg');
+} */
 
 .variantSelector label.checkboxLabel:hover,
 input.checkbox[type='checkbox']:checked + label.checkboxLabel,
@@ -192,5 +214,5 @@ input.checkbox[type='checkbox']:focus + label.checkboxLabel {
 }
 
 .variantSelector label.checkboxLabel:focus-within {
-	border: 1px solid #00000010;
+	border: 1px solid #00000085;
 }

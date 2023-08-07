@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react';
 import { AlphaNumComparisonSection } from './AlphaNumComparisonSection';
 import { TextualExampleComparisonSection } from './TextualExampleComparisonSection';
-// import { CodeSection } from './CodeSection';
+import { CodeSection } from './CodeSection';
 
 import alphaNumericalSectionIcon from '../assets/img/alpha-numerical-section-icon.svg';
 import textualSectionIcon from '../assets/img/textual-section-icon.svg';
-// import exportSectionIcon from '../assets/img/export-section-icon.svg';
+import exportSectionIcon from '../assets/img/export-section-icon.svg';
 
 import styles from '/src/assets/styles/comparison-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
@@ -31,7 +31,7 @@ export function ComparisonPanel() {
 				<TextualExampleComparisonSection
 					isCurrentSection={currentSection === 'textual'}
 				/>
-				{/* <CodeSection isCurrentSection={currentSection === 'code'} /> */}
+				<CodeSection isCurrentSection={currentSection === 'code'} />
 			</div>
 			<ComparisonSectionSelector
 				currentSection={currentSection}
@@ -43,8 +43,8 @@ export function ComparisonPanel() {
 
 function ComparisonSectionSelector({ currentSection, onChange }) {
 	const alphaNum = 'alphanum',
-		textual = 'textual';
-	// code = 'code';
+		textual = 'textual',
+		code = 'code';
 
 	const active = (sectionName) =>
 		sectionName === currentSection ? styles.active : '';
@@ -94,7 +94,7 @@ function ComparisonSectionSelector({ currentSection, onChange }) {
 					onChange={onChange}
 				/>
 			</label>
-			{/* <label className={[styles.codeRadioLabel, active(code)].join(' ')}>
+			<label className={[styles.codeRadioLabel, active(code)].join(' ')}>
 				<img
 					style={{
 						height: '24px',
@@ -105,12 +105,13 @@ function ComparisonSectionSelector({ currentSection, onChange }) {
 				/>
 				<input
 					id={`${code}-select`}
+					name='comparison-selector'
 					type='radio'
 					value={code}
 					checked={currentSection === code}
 					onChange={onChange}
 				/>
-			</label> */}
+			</label>
 		</fieldset>
 	);
 }
