@@ -43,7 +43,7 @@ export function Header() {
 				</button>
 
 				<h1 className={styles.websiteName}>
-					<a href='#'>Fontry</a>
+					<a href='#'>Fontoo</a>
 				</h1>
 				<div
 					style={{
