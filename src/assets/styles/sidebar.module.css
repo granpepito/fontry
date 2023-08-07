@@ -5,8 +5,9 @@
 	position: absolute;
 	top: 0;
 	left: -450px;
-	min-width: 320px;
-	min-height: 100vh;
+	width: 390px;
+	min-height: 100%;
+	min-height: 100dvh;
 	padding: calc(var(--header-padding-top-bottom) + 5px)
 		var(--header-padding-left-right) var(--header-padding-top-bottom);
 	background-color: var(--background-color);
