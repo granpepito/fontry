@@ -187,7 +187,7 @@ function FontTabSelector({ currentFontTab, onChange }) {
 					type='radio'
 					id='font1'
 					value='1'
-					name='font1'
+					name='font-tab'
 					checked={currentFontTab === '1'}
 					onChange={onChange}
 				/>
@@ -204,7 +204,7 @@ function FontTabSelector({ currentFontTab, onChange }) {
 					type='radio'
 					id='font2'
 					value='2'
-					name='font2'
+					name='font-tab'
 					checked={currentFontTab === '2'}
 					onChange={onChange}
 				/>

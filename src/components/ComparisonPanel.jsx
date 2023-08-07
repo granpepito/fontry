@@ -69,7 +69,7 @@ function ComparisonSectionSelector({ currentSection, onChange }) {
 				/>
 				<input
 					id={`${alphaNum}-select`}
-					name={`${alphaNum}-select`}
+					name='comparison-selector'
 					type='radio'
 					value={alphaNum}
 					checked={currentSection === alphaNum}
@@ -87,7 +87,7 @@ function ComparisonSectionSelector({ currentSection, onChange }) {
 				/>
 				<input
 					id={`${textual}-select`}
-					name={`${textual}-select`}
+					name='comparison-selector'
 					type='radio'
 					value={textual}
 					checked={currentSection === textual}
