@@ -25,7 +25,11 @@
 	border-radius: 8px 0 0 0;
 }
 
-.radioContainer:hover,
+.radioContainer:hover {
+	background-color: #00000010;
+	font-style: italic;
+}
+
 .radioContainer:focus-within {
 	background-color: #00000010;
 	font-style: italic;
