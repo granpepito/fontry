@@ -293,9 +293,6 @@
 	font-weight: 600;
 }
 
-.codeSection .codeSectionContainers .variantSelectorContainer {
-}
-
 .codeSection .codeSectionContainers .variantSelectorContainer fieldset {
 	/* padding: 1rem; */
 	margin: 0;
@@ -353,13 +350,19 @@
 	margin: 0.5rem 0;
 	padding: 0 0.5rem;
 	overflow-x: auto;
-	/* overflow-wrap: break-word; */
 }
 
 .codeContainer .code {
 	display: block;
 	padding: 0 0 1rem 0;
+	word-wrap: break-word;
+	font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo,
+		monospace;
 	/* color: gray; */
+}
+
+.codeContainer .code .fontQuery {
+	font-weight: 700;
 }
 
 /*--------------------------------------------------------------*/
