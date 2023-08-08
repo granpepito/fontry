@@ -91,8 +91,6 @@ function CodeSectionStateHolder({ firstFont, secondFont, isDisabled }) {
 			Object.entries(checkboxesState).filter(([_, checked]) => checked)
 				.length === 1
 		) {
-			console.log('oui');
-
 			return;
 		}
 
