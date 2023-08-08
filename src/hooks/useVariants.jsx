@@ -20,9 +20,10 @@ export function useVariantsRef() {
  *
  * @returns
  */
-export function useVariantsState(variantsOfFont) {
+export function useVariantsState() {
 	const [areChecked, setAreChecked] = useState(
-		variantsOfFont.reduce((currentState, variant) => {
+		variants.reduce((currentState, variant) => {
+			// currentState[variant] = useRef(null);
 			currentState[variant] = true;
 
 			return currentState;

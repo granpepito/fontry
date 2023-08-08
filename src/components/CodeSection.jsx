@@ -1,8 +1,7 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { usePair } from '../hooks/PairContext';
 import { useVariantsState } from '../hooks/useVariants';
 import { formatVariant } from '../functions/format';
-import { variants as allVariants } from '../utils/variants';
 
 import { ClipboardIcon } from '@heroicons/react/24/outline';
 import { MinusIcon, PlusIcon } from '@heroicons/react/20/solid';
@@ -18,10 +17,45 @@ import inputStyles from '/src/assets/styles/input.module.css';
  */
 export function CodeSection({ isCurrentSection }) {
 	const pair = usePair();
+	const [firstVariantsCheckboxes, setFirstVariantsCheckboxes] =
+		useVariantsState();
+	const [secondVariantsCheckboxes, setSecondVariantsCheckboxes] =
+		useVariantsState();
 	const firstFont = pair.font1;
 	const secondFont = pair.font2;
-
 	const active = isCurrentSection ? styles.active : '';
+
+	// const [activeVariants, setActiveVariants] = useState([firstFont, secondFont]);
+	useEffect(
+		() => console.log(firstVariantsCheckboxes),
+		[firstVariantsCheckboxes]
+	);
+
+	/**
+	 * @callback onFirstFontVariantChange Update the state of the 'firstVariantsCheckboxes'
+	 * @param {Event} e - Event target
+	 */
+	function onFirstFontVariantChange(e) {
+		const { checked, value } = e.target;
+
+		setFirstVariantsCheckboxes({
+			...firstVariantsCheckboxes,
+			[value]: checked,
+		});
+	}
+
+	/**
+	 * @callback onSecondFontVariantChange Update the state of the 'secondVariantsCheckboxes'
+	 * @param {Event} e - Event target
+	 */
+	function onSecondFontVariantChange(e) {
+		const { checked, value } = e.target;
+
+		setSecondVariantsCheckboxes({
+			...secondVariantsCheckboxes,
+			[value]: checked,
+		});
+	}
 
 	return (
 		<section
@@ -34,121 +68,35 @@ export function CodeSection({ isCurrentSection }) {
 			<h2>Code</h2>
 
 			<div className={styles.codeSectionContainers}>
-				<CodeSectionStateHolder
-					key={`${firstFont.family}-${secondFont.family}`}
-					firstFont={firstFont}
-					secondFont={secondFont}
-					isDisabled={!isCurrentSection}
-				/>
+				<div className={styles.fontWeights}>
+					<h3>Poids des Polices</h3>
+					<VariantSelector
+						firstFont={firstFont}
+						secondFont={secondFont}
+						firstVariantsCheckboxes={firstVariantsCheckboxes}
+						secondVariantsCheckboxes={secondVariantsCheckboxes}
+						onFirstFontVariantChange={onFirstFontVariantChange}
+						onSecondFontVariantChange={onSecondFontVariantChange}
+						isDisabled={!isCurrentSection}
+					/>
+				</div>
+				<div className={styles.htmlCode}>
+					<h3>
+						HTML <span style={{ fontStyle: 'italic' }}>{'<link>'}</span>
+					</h3>
+					<Code isDisabled={!isCurrentSection}>
+						<HtmlCode />
+					</Code>
+				</div>
+				<div className={styles.cssCode}>
+					<h3>CSS</h3>
+					<Code isDisabled={!isCurrentSection}>
+						<CssCode font={firstFont} />
+						<CssCode font={secondFont} />
+					</Code>
+				</div>
 			</div>
 		</section>
-	);
-}
-
-function CodeSectionStateHolder({ firstFont, secondFont, isDisabled }) {
-	const [firstVariantsCheckboxes, setFirstVariantsCheckboxes] =
-		useVariantsState(firstFont.variants);
-	const [secondVariantsCheckboxes, setSecondVariantsCheckboxes] =
-		useVariantsState(secondFont.variants);
-
-	/**
-	 * @callback onFirstFontVariantChange Update the state of the 'firstVariantsCheckboxes'
-	 * @param {Event} e - Event target
-	 */
-	function onFirstFontVariantChange(e) {
-		setVariantCheckboxes(
-			e.target,
-			firstVariantsCheckboxes,
-			setFirstVariantsCheckboxes
-		);
-	}
-
-	/**
-	 * @callback onSecondFontVariantChange Update the state of the 'secondVariantsCheckboxes'
-	 * @param {Event} e - Event target
-	 */
-	function onSecondFontVariantChange(e) {
-		setVariantCheckboxes(
-			e.target,
-			secondVariantsCheckboxes,
-			setSecondVariantsCheckboxes
-		);
-	}
-
-	/**
-	 *
-	 * @param {EventTarget} target - Reference to the element on which the event was disptached.
-	 * @param {Object} checkboxesState - State of the given VariantCheckbox componenents.
-	 * @param {onFirstFontVariantChange|onSecondFontVariantChange} setCheckboxesState - Function to update the state.
-	 */
-	function setVariantCheckboxes(
-		{ checked, value },
-		checkboxesState,
-		setCheckboxesState
-	) {
-		if (
-			!checked &&
-			Object.entries(checkboxesState).filter(([_, checked]) => checked)
-				.length === 1
-		) {
-			console.log('oui');
-
-			return;
-		}
-
-		setCheckboxesState({
-			...checkboxesState,
-			[value]: checked,
-		});
-	}
-
-	const firstFontQuery = useMemo(
-		() => formatHtmlUrlQuery(firstFont, firstVariantsCheckboxes),
-		[firstFont, firstVariantsCheckboxes]
-	);
-
-	const secondFontQuery = useMemo(
-		() => formatHtmlUrlQuery(secondFont, secondVariantsCheckboxes),
-		[secondFont, secondVariantsCheckboxes]
-	);
-
-	return (
-		<>
-			<div className={styles.fontWeights}>
-				<h3>Poids des Polices</h3>
-				<VariantSelector
-					firstFont={firstFont}
-					secondFont={secondFont}
-					firstVariantsCheckboxes={firstVariantsCheckboxes}
-					secondVariantsCheckboxes={secondVariantsCheckboxes}
-					onFirstFontVariantChange={onFirstFontVariantChange}
-					onSecondFontVariantChange={onSecondFontVariantChange}
-					isDisabled={isDisabled}
-				/>
-			</div>
-			<div className={styles.htmlCode}>
-				<h3>
-					HTML <span style={{ fontStyle: 'italic' }}>{'<link>'}</span>
-				</h3>
-				<Code isDisabled={isDisabled}>
-					{`<link rel="preconnect" href="https://fonts.googleapis.com">`}
-					<br />
-					{`<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>`}
-					<br />
-					{`<link href="https://fonts.googleapis.com/css2?`}
-					<span className={styles.fontQuery}>{firstFontQuery}</span>&
-					<span className={styles.fontQuery}>{secondFontQuery}</span>
-					{`&display=swap" rel="stylesheet">`}
-				</Code>
-			</div>
-			<div className={styles.cssCode}>
-				<h3>CSS</h3>
-				<Code isDisabled={isDisabled}>
-					<CssCode font={firstFont} />
-					<CssCode font={secondFont} />
-				</Code>
-			</div>
-		</>
 	);
 }
 
@@ -268,13 +216,20 @@ function Code({ children, isDisabled }) {
 					<ClipboardIcon className={iconStyles.smallIcon} />
 				</button>
 			</div>
-			<div className={styles.pre}>
-				<div ref={ref} className={styles.code}>
+			<pre className={styles.pre}>
+				<code ref={ref} className={styles.code}>
 					{children}
-				</div>
-			</div>
+				</code>
+			</pre>
 		</div>
 	);
+}
+
+// TODO: Style the same way as Google Fonts does (word-wrap).
+function HtmlCode() {
+	return `<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">`;
 }
 
 function CssCode({ font }) {
@@ -292,56 +247,8 @@ function CssCode({ font }) {
 	);
 }
 
-/**
- *
- * @param {import("../utils/Font").FontFamily} font
- * @param {} variantsState
- */
-function formatHtmlUrlQuery(font, variantsState) {
-	const { family, variants } = font;
-
-	let hasItalic = false;
-	const weightsToInclude = Object.entries(variantsState)
-		.filter(([variant, checked]) => {
-			if (variant.includes('italic') && checked) {
-				hasItalic = true;
-			}
-
-			return checked;
-		})
-		.reduce((checkedVariants, [variant, _]) => {
-			return [...checkedVariants, variant];
-		}, []);
-
-	let weights = '';
-
-	if (weightsToInclude.length === 0) {
-		return weights;
-	}
-
-	const formattedFamily = `family=${family.split(' ').join('+')}`;
-	if (variants.length === 1) {
-		return formattedFamily;
-	}
-
-	if (!hasItalic) {
-		weights = 'wght@';
-	} else {
-		weights = 'ital,wght@';
-	}
-
-	let numberOfWeightsAdded = 0;
-	for (let i = 0; i < allVariants.length; i++) {
-		if (weightsToInclude.includes(allVariants[i])) {
-			const variant = allVariants[i];
-			const [weight, italic] = formatVariant(variant).split(' ');
-
-			weights += `${hasItalic ? (italic ? '1,' : '0,') : ''}${weight}`;
-			numberOfWeightsAdded++;
-			if (numberOfWeightsAdded < weightsToInclude.length) {
-				weights += ';';
-			}
-		}
-	}
-	return formattedFamily + ':' + weights;
-}
+// function formatHtmlUrlCode(font) {
+// 	if (!font || Object.keys(font).length === 0) {
+// 		return '';
+// 	}
+// }
