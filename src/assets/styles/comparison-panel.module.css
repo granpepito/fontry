@@ -110,12 +110,19 @@
 .comparisonPanelContent .alphaNumContainer .alphaNumElementContainer {
 	gap: 2rem;
 	/* justify-content: center; */
-	text-align: center;
+	/* text-align: center; */
 	overflow-x: auto;
 	padding: 0 1.5rem;
 	scrollbar-width: none;
 	/* width: fit-content;
 	min-width: 100%; */
+}
+
+.comparisonPanelContent
+	.alphaNumContainer
+	.alphaNumElementContainer
+	p:first-of-type {
+	text-align: center;
 }
 
 .comparisonPanelContent
@@ -255,6 +262,7 @@
 /*--------------------------------------------------------------*/
 .codeSection h2 {
 	text-align: center;
+	text-decoration: underline;
 }
 
 .codeSection .codeSectionContainers {
