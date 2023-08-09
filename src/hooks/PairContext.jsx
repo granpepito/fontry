@@ -30,8 +30,9 @@ export function usePairDispatch() {
  * @returns Renders the children of of PairProvider.
  */
 export function PairProvider({ children }) {
+	const { getLastPair, pairs } = usePairStore();
+
 	// Initiate the Pair for the PairProvider hook. If the Pair Store is not empty it will use the last saved pair, else it will create one.
-	const { getLastPair } = usePairStore();
 	let latestPair = getLastPair();
 
 	if (latestPair) {
@@ -49,7 +50,6 @@ export function PairProvider({ children }) {
 	}
 
 	const [pair, dispatch] = useReducer(pairReducer, latestPair);
-	const { pairs } = usePairStore();
 
 	/**
 	 * @callback updateFont Changes the fontNumber font to the font provided.
@@ -67,15 +67,13 @@ export function PairProvider({ children }) {
 	 */
 	const changePair = useCallback(
 		(id) => {
-			if (pairs.length > id) {
-				const pairToUpdate = pairs[id];
+			const pairToUpdate = pairs[id];
 
-				if (pairToUpdate) {
-					dispatch({
-						type: 'changePair',
-						pairToUpdate,
-					});
-				}
+			if (pairToUpdate) {
+				dispatch({
+					type: 'changePair',
+					pairToUpdate,
+				});
 			}
 		},
 		[pairs]
