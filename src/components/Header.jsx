@@ -43,7 +43,7 @@ export function Header() {
 				</button>
 
 				<h1 className={styles.websiteName}>
-					<a href='#'>Fontoo</a>
+					<a href='#'>Fonts</a>
 				</h1>
 				<div
 					style={{
