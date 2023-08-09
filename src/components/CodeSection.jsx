@@ -31,7 +31,7 @@ export function CodeSection({ isCurrentSection }) {
 				active,
 			].join(' ')}
 		>
-			<h2>Code</h2>
+			<h2>Exportation pour HTML et CSS</h2>
 
 			<div className={styles.codeSectionContainers}>
 				<CodeSectionStateHolder
