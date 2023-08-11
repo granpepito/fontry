@@ -25,33 +25,3 @@ main#mainContent .panelsContainer {
 	border-radius: 8px;
 	background-color: #fff;
 }
-
-main#mainContent .savePairButton {
-	display: flex;
-	justify-content: end;
-	align-items: center;
-	padding: 0.1rem;
-	position: absolute;
-	bottom: 0;
-	right: -28px;
-	margin: 2rem 0;
-	height: 2.25rem;
-	width: 2.25rem;
-	outline: 2px solid black;
-	border-radius: 0 0.5rem 0.5rem 0;
-	transition: var(--transition-speed) var(--transition-timing-function);
-	z-index: 5;
-}
-
-/* main#mainContent .savePairButton:hover {
-	justify-content: center;
-	right: -38px;
-} */
-
-main#mainContent .savePairButton:active {
-	background-color: #fff;
-}
-
-main#mainContent .savePairButton:focus {
-	right: -33px;
-}

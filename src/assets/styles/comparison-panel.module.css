@@ -439,3 +439,56 @@
 	margin: 0;
 	opacity: 0;
 }
+
+/*--------------------------------------------------------------*/
+/* SavePairButton */
+/*--------------------------------------------------------------*/
+
+.savePairButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0rem;
+	position: absolute;
+	bottom: 0;
+	right: 28px;
+	margin: 2rem 0;
+	height: 2.25rem;
+	width: 2.25rem;
+	outline: 2px solid black;
+	border-radius: 0.5rem;
+	transition: var(--transition-speed) var(--transition-timing-function);
+	z-index: 5;
+}
+
+/* main#mainContent .savePairButton:hover {
+	justify-content: center;
+	right: -38px;
+} */
+
+.savePairButton:active {
+	background-color: #fff;
+	animation: horizontal-shaking 200ms var(--transition-timing-function);
+}
+
+/* main#mainContent .savePairButton:focus svg {
+	background-color: #fff;
+} */
+
+@keyframes horizontal-shaking {
+	0% {
+		transform: translateX(0);
+	}
+	25% {
+		transform: translateX(2px);
+	}
+	50% {
+		transform: translateX(-2px);
+	}
+	75% {
+		transform: translateX(2px);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
