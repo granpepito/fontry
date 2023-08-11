@@ -20,7 +20,7 @@ export function Footer() {
 				<li>
 					<a href='https://www.github.com/granpepito/fontry'>
 						<img
-							className={[iconStyles.icon, styles.githubIcon].join(' ')}
+							className={[iconStyles.smallIcon, styles.githubIcon].join(' ')}
 							src={githubIcon}
 							alt='GitHub Logo'
 						/>
