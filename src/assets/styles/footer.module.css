@@ -1,0 +1,63 @@
+.footer {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	/* padding: 1rem 1rem 1.35rem; */
+	padding: var(--header-padding-top-bottom) var(--header-padding-left-right);
+	border-top: 2px solid black;
+}
+
+.footer > *::after {
+	border: 0px solid black;
+	transition: var(--transition-speed) var(--transition-timing-function);
+}
+
+.footer > *::after:hover {
+	border: 2px solid black;
+}
+
+.footer .pencil:hover {
+	animation: shake-rotate var(--transition-speed)
+		var(--transition-timing-function);
+}
+
+.footer > ul {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	/* margin-left: auto; */
+}
+
+.footer ul li {
+	list-style: none;
+}
+
+.footer img {
+	display: block;
+	transition: var(--transition-speed) var(--transition-timing-function);
+}
+
+/* .footer .link img:hover {
+	filter: invert(100%) url('../img/github.svg#colorFilter'); 
+ background-color: #555555;
+} */
+
+@keyframes shake-rotate {
+	0% {
+		transform: rotate(0deg);
+	}
+	25% {
+		transform: rotate(5deg);
+	}
+	50% {
+		transform: rotate(0eg);
+	}
+	75% {
+		transform: rotate(-5deg);
+	}
+	100% {
+		transform: rotate(0deg);
+	}
+}
