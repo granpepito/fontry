@@ -18,9 +18,3 @@ export const variants = [
 	'800italic',
 	'900italic',
 ];
-
-// export const variantsState = variants.reduce((currentState, variant) => {
-// 	currentState[variant] = true;
-
-// 	return currentState;
-// }, {});
