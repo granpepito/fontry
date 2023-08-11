@@ -9,7 +9,7 @@ import { BookmarkIcon as SolidBookmarkIcon } from '@heroicons/react/24/solid';
 
 import alphaNumericalSectionIcon from '../assets/img/alpha-numerical-section-icon.svg';
 import textualSectionIcon from '../assets/img/textual-section-icon.svg';
-import exportSectionIcon from '../assets/img/export-section-icon.svg';
+import htmlCssSectionIcon from '../assets/img/HTML CSS.svg';
 
 import styles from '/src/assets/styles/comparison-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
@@ -106,10 +106,10 @@ function ComparisonSectionSelector({ currentSection, onChange }) {
 				<img
 					style={{
 						height: '24px',
-						width: '24px',
+						width: '27px',
 					}}
 					alt='Export Section Icon'
-					src={exportSectionIcon}
+					src={htmlCssSectionIcon}
 				/>
 				<input
 					id={`${code}-select`}
