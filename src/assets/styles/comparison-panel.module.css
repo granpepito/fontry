@@ -25,22 +25,22 @@
 	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
-.comparisonPanel .comparisonPanelContent.alphaNumSection {
+.comparisonPanel .comparisonPanelContent.textualSection {
 	translate: 0% calc(-100% - var(--comparison-panel-padding-vertical));
+	/* gap: 30px; */
+}
+.comparisonPanel .comparisonPanelContent.alphaNumSection {
+	translate: 0% calc(-200% - var(--comparison-panel-padding-vertical));
 	padding-bottom: 0.5rem;
 	gap: 0;
-}
-.comparisonPanel .comparisonPanelContent.textualSection {
-	translate: 0% calc(-200% - var(--comparison-panel-padding-vertical));
-	/* gap: 30px; */
 }
 .comparisonPanel .comparisonPanelContent.codeSection {
 	translate: 0% calc(-300% - var(--comparison-panel-padding-vertical));
 }
-.comparisonPanel .comparisonPanelContent.alphaNumSection.active {
+.comparisonPanel .comparisonPanelContent.textualSection.active {
 	translate: 0% 0%;
 }
-.comparisonPanel .comparisonPanelContent.textualSection.active {
+.comparisonPanel .comparisonPanelContent.alphaNumSection.active {
 	translate: 0% -100%;
 }
 .comparisonPanel .comparisonPanelContent.codeSection.active {

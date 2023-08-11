@@ -9,14 +9,14 @@ import { BookmarkIcon as SolidBookmarkIcon } from '@heroicons/react/24/solid';
 
 import alphaNumericalSectionIcon from '../assets/img/alpha-numerical-section-icon.svg';
 import textualSectionIcon from '../assets/img/textual-section-icon.svg';
-import htmlCssSectionIcon from '../assets/img/HTML CSS.svg';
+import htmlCssSectionIcon from '../assets/img/html-css-icon.svg';
 
 import styles from '/src/assets/styles/comparison-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
 
 export function ComparisonPanel() {
-	const [currentSection, setCurrentSection] = useState('alphanum');
+	const [currentSection, setCurrentSection] = useState('textual');
 
 	const handleComparisonSectionChange = useCallback(
 		function handleComparisonSectionChange(e) {
@@ -30,19 +30,19 @@ export function ComparisonPanel() {
 	return (
 		<>
 			<div className={styles.comparisonPanel}>
-				<AlphaNumComparisonSection
-					isCurrentSection={currentSection === 'alphanum'}
-				/>
 				<TextualExampleComparisonSection
 					isCurrentSection={currentSection === 'textual'}
+				/>
+				<AlphaNumComparisonSection
+					isCurrentSection={currentSection === 'alphanum'}
 				/>
 				<CodeSection isCurrentSection={currentSection === 'code'} />
 			</div>
 			<>
-			<ComparisonSectionSelector
-				currentSection={currentSection}
-				onChange={handleComparisonSectionChange}
-			/>
+				<ComparisonSectionSelector
+					currentSection={currentSection}
+					onChange={handleComparisonSectionChange}
+				/>
 				<SavePairButton />
 			</>
 		</>
@@ -64,6 +64,24 @@ function ComparisonSectionSelector({ currentSection, onChange }) {
 				styles.comparisonSectionSelector,
 			].join(' ')}
 		>
+			<label className={[styles.textualRadioLabel, active(textual)].join(' ')}>
+				<img
+					style={{
+						height: '16px',
+						width: '25px',
+					}}
+					alt='Textual Section Icon'
+					src={textualSectionIcon}
+				/>
+				<input
+					id={`${textual}-select`}
+					name='comparison-selector'
+					type='radio'
+					value={textual}
+					checked={currentSection === textual}
+					onChange={onChange}
+				/>
+			</label>
 			<label
 				className={[styles.alphaNumRadioLabel, active(alphaNum)].join(' ')}
 			>
@@ -81,24 +99,6 @@ function ComparisonSectionSelector({ currentSection, onChange }) {
 					type='radio'
 					value={alphaNum}
 					checked={currentSection === alphaNum}
-					onChange={onChange}
-				/>
-			</label>
-			<label className={[styles.textualRadioLabel, active(textual)].join(' ')}>
-				<img
-					style={{
-						height: '16px',
-						width: '25px',
-					}}
-					alt='Textual Section Icon'
-					src={textualSectionIcon}
-				/>
-				<input
-					id={`${textual}-select`}
-					name='comparison-selector'
-					type='radio'
-					value={textual}
-					checked={currentSection === textual}
 					onChange={onChange}
 				/>
 			</label>
@@ -135,7 +135,7 @@ function SavePairButton() {
 
 	useEffect(() => {
 		setIsSaved(includes(pair));
-	}, [pair, pairs]);
+	}, [includes, pair, pairs]);
 
 	function handleClick(e) {
 		try {
