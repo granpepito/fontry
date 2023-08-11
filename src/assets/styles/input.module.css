@@ -196,23 +196,8 @@ input.searchBar[type='search']::-webkit-search-results-decoration {
 	outline: 1px solid #00000085;
 }
 
-/* .variantSelector
-	input.checkbox[type='checkbox']:checked
-	+ label.checkboxLabel::after {
-	position: absolute;
-	right: 0.625rem;
-	top: 0.45rem;
-	width: 20px;
-	height: 20px;
-	content: url('/src/assets/img/checkmark-mini-solid.svg');
-} */
-
 .variantSelector label.checkboxLabel:hover,
-input.checkbox[type='checkbox']:checked + label.checkboxLabel,
-input.checkbox[type='checkbox']:focus + label.checkboxLabel {
+.variantSelector input.checkbox[type='checkbox']:focus + label.checkboxLabel {
+	border: 1px solid #000000;
 	outline: 1px solid #000000;
-}
-
-.variantSelector label.checkboxLabel:focus-within {
-	border: 1px solid #00000085;
 }
