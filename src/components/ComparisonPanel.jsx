@@ -67,7 +67,7 @@ function ComparisonSectionSelector({ currentSection, onChange }) {
 			<label className={[styles.textualRadioLabel, active(textual)].join(' ')}>
 				<img
 					style={{
-						height: '16px',
+						height: '24px',
 						width: '25px',
 					}}
 					alt='Textual Section Icon'
@@ -106,7 +106,7 @@ function ComparisonSectionSelector({ currentSection, onChange }) {
 				<img
 					style={{
 						height: '24px',
-						width: '27px',
+						width: '24px',
 					}}
 					alt='Export Section Icon'
 					src={htmlCssSectionIcon}
