@@ -13,19 +13,19 @@
 	letter-spacing: -0.01rem;
 }
 
-.websiteName > a {
+.header a {
 	text-decoration: none;
 	color: var(--global-font-color);
 }
 
-.websiteName > a:hover,
-.websiteName > a:focus {
+.header a:hover,
+.header a:focus {
 	color: #555555;
 	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
-.websiteName > a::after,
-.websiteName > a::before {
+.header a::after,
+.header a::before {
 	position: initial;
 	display: initial;
 	width: 0;
@@ -33,4 +33,9 @@
 	bottom: 0;
 	left: 0;
 	background-color: transparent;
+}
+
+.header div:last-of-type {
+	height: 40px;
+	width: 36px;
 }

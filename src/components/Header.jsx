@@ -45,12 +45,7 @@ export function Header() {
 				<h1 className={styles.websiteName}>
 					<a href='#'>Fonts</a>
 				</h1>
-				<div
-					style={{
-						height: '40px',
-						width: '36px',
-					}}
-				></div>
+				<div></div>
 			</header>
 		</>
 	);
