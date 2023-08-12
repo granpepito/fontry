@@ -71,10 +71,18 @@
 	width: 100%;
 	justify-content: left;
 	align-content: center;
+	border-radius: 0.5rem;
 }
 
 .categorySection .buttonOpenSection:focus {
 	background-color: transparent;
+}
+
+.categorySection .buttonOpenSection:hover,
+.categorySection .buttonOpenSection:active,
+.categorySection .buttonOpenSection.active:active,
+.categorySection .buttonOpenSection.active:hover {
+	background-color: #ececec;
 }
 
 .categorySection .buttonOpenSection > * {
