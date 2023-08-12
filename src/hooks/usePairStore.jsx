@@ -1,22 +1,132 @@
-import { useCallback, useSyncExternalStore } from 'react';
-import { pairStore } from '../functions/pairStore';
+import { useCallback, useMemo, useSyncExternalStore } from 'react';
+
+/**
+ * Subscribes to the 'storage' event.
+ * @param {Function} callback
+ * @returns Returns a function that unsubscribes to the 'storage' event.
+ */
+function onStorage(callback) {
+	window.addEventListener('storage', callback);
+	return () => {
+		window.removeEventListener('storage', callback);
+	};
+}
 
 export function usePairStore() {
-	const add = useCallback(pairStore.add, []);
-	const remove = useCallback(pairStore.remove, []);
-	const removeById = useCallback(pairStore.removeById, []);
-	const includes = useCallback(pairStore.includes, []);
-	const getLastPair = useCallback(pairStore.getLastPair, []);
-	const subscribe = useCallback(pairStore.subscribe, []);
-	const getSnapshot = useCallback(pairStore.getSnapshot, []);
+	const subscribe = useCallback(onStorage, []);
+	const stringifiedPairs = useSyncExternalStore(subscribe, () =>
+		localStorage.getItem('pairStore')
+	);
 
-	const pairs = useSyncExternalStore(subscribe, getSnapshot);
-	// const pairs = useMemo(() => snapshot, [snapshot]);
+	let pairs = useMemo(() => {
+		try {
+			return JSON.parse(stringifiedPairs);
+		} catch (error) {
+			console.error('Could not parse pairStore item in the localStorage.');
+			return [];
+		}
+	}, [stringifiedPairs]);
+
+	/**
+	 * Finds the index of the given pair if it is found inside the pairStore.
+	 * @param {import('../utils/Pair').Pair} pair
+	 * @param {boolean} returnIndex Flag to indicate if the index is wanted. Is set to false by default.
+	 * @returns {boolean|number} If the returnIndex is false: returns true if the pair is included, else it returns false. If the returnIndex flag is true: returns the index of the pair. If not found, returns -1.
+	 */
+	const includes = useCallback(
+		function includes(pair, returnIndex = false) {
+			const index = pairs.findIndex((pairFromStore) => {
+				const font1Equals =
+					pairFromStore?.font1?.family === pair?.font1?.family;
+				const font2Equals =
+					pairFromStore?.font2?.family === pair?.font2?.family;
+
+				return font1Equals && font2Equals;
+			});
+
+			if (returnIndex) {
+				return index;
+			}
+
+			return index >= 0;
+		},
+		[pairs]
+	);
+
+	/**
+	 * Adds a pair of fonts to the PairStore
+	 * @param {import('../utils/Pair').Pair} pair
+	 */
+	const add = useCallback(
+		function add(pair) {
+			if (!includes(pair)) {
+				try {
+					localStorage.setItem(
+						'pairStore',
+						JSON.stringify(pairs.concat([pair]))
+					);
+				} catch (error) {
+					console.error(error);
+				}
+			}
+		},
+		[includes, pairs]
+	);
+
+	/**
+	 * Removes a pair by using its index.
+	 * @param {number} index - Index of the pair.
+	 */
+	const removeByIndex = useCallback(
+		function removeByIndex(index) {
+			if (index >= 0 && index < pairs.length) {
+				try {
+					localStorage.setItem(
+						'pairStore',
+						JSON.stringify(pairs.filter((_, id) => id !== index))
+					);
+				} catch (error) {
+					console.error(error);
+				}
+			}
+		},
+		[pairs]
+	);
+
+	/**
+	 * Removes a pair of fonts from the PairStore.
+	 * @param {import('../utils/Pair').Pair} pair
+	 */
+	const remove = useCallback(
+		function remove(pair) {
+			const index = includes(pair, true);
+
+			removeByIndex(index);
+		},
+		[includes, removeByIndex]
+	);
+
+	/**
+	 * Gets the most recently saved pair of fonts of the PairStore.
+	 * @returns {import('../utils/Pair').Pair}
+	 */
+	const getLastPair = useCallback(
+		function getLastPair() {
+			if (pairs.length > 0) {
+				return pairs[pairs.length - 1];
+			}
+
+			// PairStore is empty
+			return undefined;
+		},
+		[pairs]
+	);
+
 	return {
 		pairs,
 		add,
 		remove,
-		removeById,
+		removeById: removeByIndex,
 		includes,
 		getLastPair,
 	};
