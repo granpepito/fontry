@@ -1,9 +1,8 @@
 main#mainContent {
-	display: flex;
+	/* display: flex; */
 	flex-direction: column;
 	align-items: center;
-	margin: var(--main-content-margin-top) var(--main-content-margin-left-right)
-		var(--main-content-margin-bottom);
+	/* margin: 0 0 var(--main-content-margin-bottom); */
 	height: 100%;
 	width: auto;
 }
@@ -16,12 +15,12 @@ main#mainContent .pairContainer {
 main#mainContent .panelsContainer {
 	position: relative;
 	display: grid;
-	grid-template-columns: repeat(15, 1fr);
+	grid-template-columns: repeat(19, 1fr);
 	padding: 0;
 	margin: 0;
 	height: var(--panels-container-height);
-	max-width: var(--panels-container-max-width);
+	max-width: 1920px;
 	outline: 2px solid #000;
-	border-radius: 8px;
+	/* border-radius: 8px; */
 	background-color: #fff;
 }

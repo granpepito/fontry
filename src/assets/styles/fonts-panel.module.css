@@ -1,7 +1,8 @@
 #fontsPanel {
-	grid-column: 1/7;
+	grid-column: 1/6;
 	height: var(--fonts-panel-height);
-	z-index: 10;
+	/* z-index: 10; */
+	/* border-right: 2px solid black; */
 }
 
 .fontSelectorContainer {
@@ -118,6 +119,7 @@
 	padding: var(--closed-fonts-container-padding);
 	border: none;
 	overflow-y: auto;
+	transition-property: opacity, max-height;
 	transition: var(--transition-speed) var(--transition-timing-function);
 }
 

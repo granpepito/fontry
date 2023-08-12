@@ -34,6 +34,16 @@
 	list-style: none;
 }
 
+.footer ul li:first-of-type a::after,
+.footer ul li:first-of-type a::before {
+	position: initial;
+	display: initial;
+	width: 0;
+	height: 0;
+	bottom: 0;
+	left: 0;
+}
+
 .footer img {
 	display: block;
 	transition: var(--transition-speed) var(--transition-timing-function);

@@ -3,6 +3,7 @@
 	flex-direction: row;
 	align-items: center;
 	padding: var(--header-padding-top-bottom) var(--header-padding-left-right);
+	border-bottom: 2px solid black;
 }
 
 .header > .websiteName {
@@ -17,7 +18,19 @@
 	color: var(--global-font-color);
 }
 
-.websiteName > a:hover {
+.websiteName > a:hover,
+.websiteName > a:focus {
 	color: #555555;
-	transition: var(--transition-speed);
+	transition: var(--transition-speed) var(--transition-timing-function);
+}
+
+.websiteName > a::after,
+.websiteName > a::before {
+	position: initial;
+	display: initial;
+	width: 0;
+	height: 0;
+	bottom: 0;
+	left: 0;
+	background-color: transparent;
 }
