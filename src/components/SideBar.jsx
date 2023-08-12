@@ -28,14 +28,17 @@ export function SideBar({ handleClick, isOpen }) {
 	const { changePair } = usePairDispatch();
 	const { pairs, remove } = usePairStore();
 
-	const handleSavedPairClick = useCallback(function handleSavedPairClick(e) {
-		try {
-			const { id } = e.target.dataset;
-			changePair(id);
-		} catch (error) {
-			console.error(error);
-		}
-	}, []);
+	const handleSavedPairClick = useCallback(
+		function handleSavedPairClick(e) {
+			try {
+				const { id } = e.target.dataset;
+				changePair(id);
+			} catch (error) {
+				console.error(error);
+			}
+		},
+		[changePair]
+	);
 
 	const savedPairs = useMemo(() => {
 		return pairs.map((pair, index) => {
@@ -49,7 +52,7 @@ export function SideBar({ handleClick, isOpen }) {
 				/>
 			);
 		});
-	}, [pairs]);
+	}, [handleSavedPairClick, pairs]);
 
 	return (
 		<>
