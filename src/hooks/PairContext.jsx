@@ -30,7 +30,7 @@ export function usePairDispatch() {
  * @returns Renders the children of of PairProvider.
  */
 export function PairProvider({ children }) {
-	const { getLastPair, pairs } = usePairStore();
+	const { getLastPair, getPair } = usePairStore();
 
 	// Initiate the Pair for the PairProvider hook. If the Pair Store is not empty it will use the last saved pair, else it will create one.
 	let latestPair = getLastPair();
@@ -67,7 +67,7 @@ export function PairProvider({ children }) {
 	 */
 	const changePair = useCallback(
 		(id) => {
-			const pairToUpdate = pairs[id];
+			const pairToUpdate = getPair(id);
 
 			if (pairToUpdate) {
 				dispatch({
@@ -76,7 +76,7 @@ export function PairProvider({ children }) {
 				});
 			}
 		},
-		[pairs]
+		[getPair]
 	);
 
 	const dispatchContext = {

@@ -74,6 +74,18 @@ export function usePairStore() {
 	);
 
 	/**
+	 * Get a pair from the Pair Store.
+	 * @param {number} index - Index of the pair to get.
+	 * @returns {import('../utils/Pair').Pair|undefined} Returns the pair if it exists or else it returns undefined.
+	 */
+	const getPair = useCallback(
+		function get(index) {
+			return pairs[index];
+		},
+		[pairs]
+	);
+
+	/**
 	 * Removes a pair by using its index.
 	 * @param {number} index - Index of the pair.
 	 */
@@ -125,6 +137,7 @@ export function usePairStore() {
 	return {
 		pairs,
 		add,
+		getPair,
 		remove,
 		removeById: removeByIndex,
 		includes,
