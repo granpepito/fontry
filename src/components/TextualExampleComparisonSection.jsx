@@ -1,4 +1,5 @@
 import { usePair } from '../hooks/PairContext';
+import { useIsLargeScreen } from '../hooks/useIsLargeScreen';
 import styles from '/src/assets/styles/comparison-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
@@ -19,7 +20,7 @@ export function TextualExampleComparisonSection({ isCurrentSection }) {
 			].join(' ')}
 		>
 			<div className={styles.comparisonPanelTitle}>
-				<h2>Comparaison Textuelle</h2>
+				<h2>Visualisation Textuelle</h2>
 				<div className={styles.fontFamilies}>
 					<p>
 						Police 1 - <span>{firstFont.family ?? 'Lotion'}</span>
@@ -44,18 +45,16 @@ export function TextualExampleComparisonSection({ isCurrentSection }) {
 }
 
 function TextualElement({ fontFamily, type, isDisabled = false }) {
-	const typesettingFontNumber = (fontNumber) => (
-		<p className={styles.typesettingFontNumber}>{fontNumber}</p>
-	);
+	const isLargeScreen = useIsLargeScreen(980);
+	let fontsPanelPosition = isLargeScreen ? 'À gauche' : 'En haut';
+
 	switch (type) {
 		case 'title': {
 			return (
 				<div className={[styles.textualElement, styles.titleElement].join(' ')}>
-					{typesettingFontNumber('Police 1')}
+					<TypesettingFontNumber fontNumber={'Police 1'} />
 					<div className={styles.example} style={{ fontFamily }}>
-						<h1>
-							<span>TITRE</span> Article
-						</h1>
+						<h1>{/*<span>TITRE</span>  */}Fonts - Combinaisons de Polices</h1>
 					</div>
 				</div>
 			);
@@ -63,10 +62,11 @@ function TextualElement({ fontFamily, type, isDisabled = false }) {
 		case 'lead': {
 			return (
 				<div className={[styles.textualElement, styles.leadElement].join(' ')}>
-					{typesettingFontNumber('Police 1')}
+					<TypesettingFontNumber fontNumber={'Police 1'} />
 					<div className={styles.example} style={{ fontFamily }}>
 						<h3>
-							<span>SOUS-TITRE</span> Article
+							{/* <span>SOUS-TITRE</span>*/} Observez les combinaisons entre
+							différentes polices
 						</h3>
 					</div>
 				</div>
@@ -77,16 +77,28 @@ function TextualElement({ fontFamily, type, isDisabled = false }) {
 				<div
 					className={[styles.textualElement, styles.paragraphElement].join(' ')}
 				>
-					{typesettingFontNumber('Police 2')}
+					<TypesettingFontNumber fontNumber={'Police 2'} />
 					<div className={styles.example} style={{ fontFamily }}>
-						<p>PARAGRAPHE</p>
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-							eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus
-							metus aliquam eleifend mi in nulla posuere sollicitudin. Commodo
-							viverra maecenas accumsan lacus vel facilisis. Natoque penatibus
-							et magnis dis parturient montes nascetur ridiculus. Neque laoreet
-							suspendisse interdum consectetur libero id.
+							Ce site vous permet de visualiser l&apos;utilisation de deux
+							polices et de comparer celles qui vous intéressent.
+						</p>
+						<p>
+							{fontsPanelPosition}, vous pourrez sélectionner les polices
+							désirées. Elles sont triées dans l&apos;ordre alphabétique et
+							groupées par catégorie. Choisissez la première police puis la
+							deuxième et ensuite vous pourrez les contempler!
+						</p>
+						<p>
+							Dans la section actuelle vous pouvez lire cet exemple pour voir si
+							vous aimez la manière dont les deux polices vont ensembles, ou
+							voir les différentes variantes des polices sélectionnées. Vous
+							trouverez ensuite les éléments pour les utiliser sur le web.
+						</p>
+						<p>
+							La sauvegarde des combinaisons de polices est possible! Cliquez
+							sur le bouton en bas à droite, et vous retrouverez ces
+							combinaisons dans la barre de navigation.
 						</p>
 					</div>
 				</div>
@@ -97,7 +109,7 @@ function TextualElement({ fontFamily, type, isDisabled = false }) {
 				<div
 					className={[styles.textualElement, styles.actionsElement].join(' ')}
 				>
-					{typesettingFontNumber('Police 2')}
+					<TypesettingFontNumber fontNumber={'Police 2'} />
 
 					<div className={styles.example} style={{ fontFamily }}>
 						<button
@@ -105,14 +117,14 @@ function TextualElement({ fontFamily, type, isDisabled = false }) {
 							style={{ fontFamily }}
 							disabled={isDisabled}
 						>
-							Call to Action
+							Un Bouton Inutile
 						</button>
 						<span>
 							<a>
 								<ArrowLongRightIcon
 									className={[iconStyles.smallIcon, styles.icon].join(' ')}
 								/>
-								URL 1
+								Un lien inutile
 							</a>
 						</span>
 						<span>
@@ -120,7 +132,7 @@ function TextualElement({ fontFamily, type, isDisabled = false }) {
 								<ArrowLongRightIcon
 									className={[iconStyles.smallIcon, styles.icon].join(' ')}
 								/>
-								URL 2
+								Un deuxième lien inutile
 							</a>
 						</span>
 					</div>
@@ -131,4 +143,8 @@ function TextualElement({ fontFamily, type, isDisabled = false }) {
 			return null;
 		}
 	}
+}
+
+function TypesettingFontNumber({ fontNumber }) {
+	return <p className={styles.typesettingFontNumber}>{fontNumber}</p>;
 }
