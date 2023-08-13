@@ -129,13 +129,13 @@ function ComparisonSectionSelector({ currentSection, onChange }) {
  */
 function SavePairButton() {
 	const pair = usePair();
-	const { pairs, add, remove, includes } = usePairStore();
+	const { add, remove, includes } = usePairStore();
 	const isPairInPairStore = includes(pair);
 	const [isSaved, setIsSaved] = useState(isPairInPairStore);
 
 	useEffect(() => {
 		setIsSaved(includes(pair));
-	}, [includes, pair, pairs]);
+	}, [includes, pair]);
 
 	function handleClick(e) {
 		try {
