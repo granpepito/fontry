@@ -3,7 +3,6 @@
 	justify-content: center;
 	align-items: start;
 	gap: 1rem;
-	/* padding: 1rem 1rem 1.35rem; */
 	padding: var(--header-padding-top-bottom) var(--header-padding-left-right);
 	border-top: 2px solid black;
 }

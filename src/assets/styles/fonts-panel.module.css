@@ -1,8 +1,6 @@
 #fontsPanel {
 	grid-column: 1/6;
 	height: var(--fonts-panel-height);
-	/* z-index: 10; */
-	/* border-right: 2px solid black; */
 }
 
 .fontSelectorContainer {
@@ -12,7 +10,10 @@
 
 .radioContainer {
 	display: inline-block;
-	padding: var(--font-selector-radio-container-padding);
+	padding-top: var(--font-selector-radio-container-padding-top);
+	padding-bottom: var(--font-selector-radio-container-padding-bottom);
+	padding-left: var(--font-selector-radio-container-padding-horizontal);
+	padding-right: var(--font-selector-radio-container-padding-horizontal);
 	width: 100%;
 	border-bottom: 2px solid black;
 	text-align: center;
@@ -143,4 +144,10 @@
 	align-items: start;
 	align-content: start;
 	gap: 8px 10px;
+}
+
+@media screen and (min-width: 980px) {
+}
+
+@media screen and (min-width: 1440px) {
 }

@@ -14,13 +14,28 @@ main#mainContent .pairContainer {
 
 main#mainContent .panelsContainer {
 	position: relative;
-	display: grid;
-	grid-template-columns: repeat(19, 1fr);
+	display: block;
 	padding: 0;
 	margin: 0;
 	height: var(--panels-container-height);
-	max-width: 1920px;
+	min-width: 100%;
+	max-width: var(--panels-container-max-width);
 	outline: 2px solid #000;
 	/* border-radius: 8px; */
 	background-color: #fff;
+}
+
+@media screen and (min-width: 980px) {
+	main#mainContent .panelsContainer {
+		display: grid;
+		grid-template-columns: repeat(16, 1fr);
+		grid-template-rows: auto;
+	}
+}
+
+@media screen and (min-width: 1440px) {
+	main#mainContent .panelsContainer {
+		grid-template-columns: repeat(19, 1fr);
+		grid-template-rows: auto;
+	}
 }

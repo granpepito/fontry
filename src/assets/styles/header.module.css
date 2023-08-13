@@ -1,9 +1,22 @@
+.headerAndSidebarContainer {
+	position: sticky;
+	top: 0;
+	left: 0;
+	z-index: 50;
+	width: 100%;
+}
+
 .header {
+	position: sticky;
+	top: 0;
+	left: 0;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	padding: var(--header-padding-top-bottom) var(--header-padding-left-right);
 	border-bottom: 2px solid black;
+	background-color: #fff;
+	z-index: 90;
 }
 
 .header > .websiteName {
@@ -38,4 +51,21 @@
 .header div:last-of-type {
 	height: 40px;
 	width: 36px;
+}
+
+@media screen and (min-width: 980px) {
+	.headerAndSidebarContainer {
+		position: relative;
+	}
+
+	.header {
+		position: relative;
+		z-index: 0;
+	}
+}
+
+@media screen and (min-width: 1440px) {
+	.comparisonSectionSelector {
+		right: 28px;
+	}
 }
