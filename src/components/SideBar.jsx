@@ -3,17 +3,17 @@ import { usePairStore } from '../hooks/usePairStore';
 import { usePairDispatch } from '../hooks/PairContext';
 import {
 	XMarkIcon,
-	SunIcon,
-	MoonIcon,
+	// SunIcon,
+	// MoonIcon,
 	BookmarkIcon as OutlineBookmarkIcon,
 	ArrowRightIcon,
 } from '@heroicons/react/24/outline';
 import {
-	SunIcon as SunIconSolid,
-	MoonIcon as MoonIconSolid,
+	// SunIcon as SunIconSolid,
+	// MoonIcon as MoonIconSolid,
 	BookmarkIcon as SolidBookmarkIcon,
 } from '@heroicons/react/24/solid';
-import { EllipsisVerticalIcon } from '@heroicons/react/20/solid';
+// import { EllipsisVerticalIcon } from '@heroicons/react/20/solid';
 
 import styles from '/src/assets/styles/sidebar.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
@@ -26,7 +26,7 @@ import iconStyles from '/src/assets/styles/icon.module.css';
 export function SideBar({ handleClick, isOpen }) {
 	const sideBarContainerOpen = isOpen ? styles.open : '';
 	const { changePair } = usePairDispatch();
-	const { pairs, remove } = usePairStore();
+	const { pairs } = usePairStore();
 
 	const handleSavedPairClick = useCallback(
 		function handleSavedPairClick(e) {
@@ -89,15 +89,15 @@ export function SideBar({ handleClick, isOpen }) {
 /**
  *
  */
-function ThemeSelector() {
-	return (
-		<>
-			<SunIcon className={[iconStyles.icon, iconStyles.sunIcon].join(' ')} />
-			<input className={styles.themeSelector} type='checkbox' />
-			<MoonIcon className={[iconStyles.icon, iconStyles.moonIcon].join(' ')} />
-		</>
-	);
-}
+// function ThemeSelector() {
+// 	return (
+// 		<>
+// 			<SunIcon className={[iconStyles.icon, iconStyles.sunIcon].join(' ')} />
+// 			<input className={styles.themeSelector} type='checkbox' />
+// 			<MoonIcon className={[iconStyles.icon, iconStyles.moonIcon].join(' ')} />
+// 		</>
+// 	);
+// }
 
 /**
  * Component representing a pair that is saved inside the Pair Store.
@@ -112,13 +112,13 @@ function SavedPair({ id, firstFontFamily, secondFontFamily, onClick }) {
 			<p>
 				2. <span>{secondFontFamily}</span>
 			</p>
-			<button
+			{/* <button
 				className={[inputStyles.buttonIcon, styles.popOverButton].join(' ')}
 			>
 				<EllipsisVerticalIcon
 					className={[iconStyles.icon, styles.ellipsisVertIcon].join(' ')}
 				/>
-			</button>
+			</button> */}
 		</li>
 	);
 }
