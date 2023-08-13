@@ -79,9 +79,7 @@
 }
 
 .categorySection .buttonOpenSection:hover,
-.categorySection .buttonOpenSection:active,
-.categorySection .buttonOpenSection.active:active,
-.categorySection .buttonOpenSection.active:hover {
+.categorySection .buttonOpenSection:active {
 	background-color: #ececec;
 }
 
