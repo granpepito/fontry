@@ -7,6 +7,7 @@ import { getFonts, makePages } from '../functions/getFonts';
  * @param {FontsPanelState} initialState Initial State of the FontsPanel component.
  * @returns {[FontsPanelState, { setFonts: Function, setFontTab: Function, setCategory: Function, setMatch: Function, searchFonts: Function }]} Returns an array containing the current state of the FontsPanel component and a dispatch function.
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export function useFontsPanel(initialState) {
 	const [fontsPanelState, dispatch] = useReducer(
 		fontsPanelReducer,
@@ -60,7 +61,7 @@ export function useFontsPanel(initialState) {
 				setFonts(data);
 			})();
 		}
-		// return () => {};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fontsPanelState.fonts]);
 
 	return [fontsPanelState, { setFontTab, setCategory, setMatch, searchFonts }];
@@ -82,62 +83,48 @@ function fontsPanelReducer(fontsPanelState, action) {
 			};
 		}
 		case 'setFontTab': {
-			return {
-				...fontsPanelState,
-				currentFontTab: action.fontTab,
-			};
+			const { fontTab } = action;
+
+			if (fontTab === '1' || fontTab === '2') {
+				return {
+					...fontsPanelState,
+					currentFontTab: fontTab,
+				};
+			}
+			return fontsPanelState;
 		}
 		case 'setCategory': {
 			const { currentFontTab } = fontsPanelState;
-			if (currentFontTab === '1') {
-				const fontTab1State = fontsPanelState['1'];
-				const category =
-					fontTab1State.category === action.category ? '' : action.category;
+			const category =
+				fontsPanelState[currentFontTab].category === action.category
+					? ''
+					: action.category;
 
+			if (currentFontTab === '1' || currentFontTab === '2') {
 				return {
 					...fontsPanelState,
-					1: {
-						...fontTab1State,
-						category,
-					},
-				};
-			} else if (currentFontTab === '2') {
-				const fontTab2State = fontsPanelState['2'];
-				const category =
-					fontTab2State.category === action.category ? '' : action.category;
-
-				return {
-					...fontsPanelState,
-					2: {
-						...fontTab2State,
+					[currentFontTab]: {
+						...fontsPanelState[currentFontTab],
 						category,
 					},
 				};
 			}
+			return fontsPanelState;
 		}
 		case 'setMatch': {
 			const { currentFontTab } = fontsPanelState;
 			const { match } = action;
 
-			if (currentFontTab === '1') {
-				const fontTab1State = fontsPanelState['1'];
+			if (currentFontTab === '1' || currentFontTab === '2') {
 				return {
 					...fontsPanelState,
-					1: {
-						...fontTab1State,
-						match,
-					},
-				};
-			} else if (currentFontTab === '2') {
-				const fontTab2State = fontsPanelState['2'];
-				return {
-					...fontsPanelState,
-					2: {
-						...fontTab2State,
+					[currentFontTab]: {
+						...fontsPanelState[currentFontTab],
 						match,
 					},
 				};
 			}
+			return fontsPanelState;
 		}
 		case 'searchFonts': {
 			const { match } = action;
@@ -154,7 +141,7 @@ function fontsPanelReducer(fontsPanelState, action) {
 							const filteredFonts = fonts.flat().filter((font) => {
 								const { family } = font;
 								const isMatch = new RegExp(
-									`\S?${escapeRegExp(match)}\S?`,
+									`S?${escapeRegExp(match)}S?`,
 									'iu'
 								).test(family);
 
@@ -164,34 +151,23 @@ function fontsPanelReducer(fontsPanelState, action) {
 						});
 					}
 
-					if (currentFontTab === '1') {
-						const fontTab1State = fontsPanelState['1'];
+					if (currentFontTab === '1' || currentFontTab === '2') {
 						return {
 							...fontsPanelState,
-							1: {
-								...fontTab1State,
-								fonts: searchedFonts,
-								match,
-							},
-						};
-					} else if (currentFontTab === '2') {
-						const fontTab2State = fontsPanelState['2'];
-						return {
-							...fontsPanelState,
-							2: {
-								...fontTab2State,
+							[currentFontTab]: {
+								...fontsPanelState[currentFontTab],
 								fonts: searchedFonts,
 								match,
 							},
 						};
 					}
 				}
+				return fontsPanelState;
 			}
+			break;
 		}
 		default: {
-			return {
-				...fontsPanelState,
-			};
+			return fontsPanelState;
 		}
 	}
 }

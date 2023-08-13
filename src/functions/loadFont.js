@@ -69,8 +69,8 @@ export async function loadMultipleFonts(fonts, isLimited = false) {
 					? 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 					: '',
 			},
-			active: () => resolve(`Loading result of multiple fonts: 200`),
-			inactive: () => reject(`Loading result of multiple fonts: 404`),
+			events: false,
+			classes: false,
 		});
 	});
 }

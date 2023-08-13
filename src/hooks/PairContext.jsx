@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useCallback, useContext, useReducer } from 'react';
 
 import { usePairStore } from './usePairStore';
@@ -5,38 +6,12 @@ import { loadFont, loadMultipleFonts } from '../functions/loadFont';
 import { SpaceGrotesk } from '../utils/SpaceGrotesk';
 import { Arvo } from '../utils/Arvo';
 
-/**
- * Initiate the Pair for the PairProvider hook. If the Pair Store is not empty it will return the last saved pair, else it will create one.
- * @returns {import('../utils/Pair').Pair}
- */
-function getPair() {
-	const { getLastPair } = usePairStore();
-	const latestPair = getLastPair();
-
-	if (latestPair) {
-		const { font1, font2 } = latestPair;
-		loadMultipleFonts([font1, font2]);
-
-		return latestPair;
-	}
-	const font1 = Arvo;
-	const font2 = SpaceGrotesk;
-
-	loadMultipleFonts([font1, font2]);
-
-	return {
-		font1,
-		font2,
-		theme: '',
-	};
-}
-
 const PairContext = createContext(null);
 const PairDispatchContext = createContext(null);
 
 /**
  * Hook to get the current value of the PairContext.
- * @returns {} Returns the PairContext.
+ * @returns {import('../utils/Pair').Pair} Returns the PairContext.
  */
 export function usePair() {
 	return useContext(PairContext);
@@ -44,7 +19,7 @@ export function usePair() {
 
 /**
  * Hook to use the dispatch functions of the PairDispatchContext.
- * @returns Returns the PairDispatchContext.
+ * @returns {{updateFont, changePair}} Returns the PairDispatchContext.
  */
 export function usePairDispatch() {
 	return useContext(PairDispatchContext);
@@ -56,31 +31,53 @@ export function usePairDispatch() {
  * @returns Renders the children of of PairProvider.
  */
 export function PairProvider({ children }) {
-	const [pair, dispatch] = useReducer(pairReducer, getPair());
-	const { pairs } = usePairStore();
+	const { getLastPair, getPair } = usePairStore();
 
+	// Initiate the Pair for the PairProvider hook. If the Pair Store is not empty it will use the last saved pair, else it will create one.
+	let latestPair = getLastPair();
+
+	if (latestPair) {
+		const { font1, font2 } = latestPair;
+		loadMultipleFonts([font1, font2]);
+	} else {
+		const font1 = Arvo;
+		const font2 = SpaceGrotesk;
+		loadMultipleFonts([font1, font2]);
+		latestPair = {
+			font1,
+			font2,
+			theme: '',
+		};
+	}
+
+	const [pair, dispatch] = useReducer(pairReducer, latestPair);
+
+	/**
+	 * @callback updateFont Changes the fontNumber font to the font provided.
+	 */
 	const updateFont = useCallback((font, fontNumber) => {
 		dispatch({
 			type: 'updateFont',
 			font,
 			fontNumber,
 		});
-	});
+	}, []);
 
+	/**
+	 * @callback changePair Changes the current pair to another one using its index in the Pair Store.
+	 */
 	const changePair = useCallback(
 		(id) => {
-			if (pairs.length > id) {
-				const pairToUpdate = pairs[id];
+			const pairToUpdate = getPair(id);
 
-				if (pairToUpdate) {
-					dispatch({
-						type: 'changePair',
-						pairToUpdate,
-					});
-				}
+			if (pairToUpdate) {
+				dispatch({
+					type: 'changePair',
+					pairToUpdate,
+				});
 			}
 		},
-		[pairs]
+		[getPair]
 	);
 
 	const dispatchContext = {
@@ -129,6 +126,7 @@ function pairReducer(pair, action) {
 			} catch (error) {
 				console.error(error);
 			}
+			break;
 		}
 		case 'changePair': {
 			try {
@@ -143,6 +141,7 @@ function pairReducer(pair, action) {
 				return pair;
 			} catch (error) {
 				console.error(error);
+				break;
 			}
 		}
 		case 'updateTheme': {

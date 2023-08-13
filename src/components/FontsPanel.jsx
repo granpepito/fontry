@@ -83,6 +83,7 @@ export function FontsPanel() {
 
 	const debouncedOnChangeHandler = useMemo(
 		() => debounce(handleSearch, 400),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
 
@@ -91,7 +92,7 @@ export function FontsPanel() {
 		return () => {
 			debouncedOnChangeHandler.cancel();
 		};
-	}, []);
+	}, [debouncedOnChangeHandler]);
 
 	return (
 		<aside id={styles.fontsPanel}>
@@ -186,7 +187,7 @@ function FontTabSelector({ currentFontTab, onChange }) {
 					type='radio'
 					id='font1'
 					value='1'
-					name='font1'
+					name='font-tab'
 					checked={currentFontTab === '1'}
 					onChange={onChange}
 				/>
@@ -203,7 +204,7 @@ function FontTabSelector({ currentFontTab, onChange }) {
 					type='radio'
 					id='font2'
 					value='2'
-					name='font2'
+					name='font-tab'
 					checked={currentFontTab === '2'}
 					onChange={onChange}
 				/>
@@ -346,22 +347,19 @@ function FontButtonPage({
 		if (inView) {
 			loadMultipleFonts(fonts, true);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [inView]);
 
-	const fontButtons = useMemo(
-		() =>
-			fonts.map((font, index) => {
-				return (
-					<FontButton
-						key={index}
-						fontData={font}
-						onClick={onFontButtonClick}
-						currentFontTab={currentFontTab}
-					/>
-				);
-			}),
-		[currentFontTab]
-	);
+	const fontButtons = fonts.map((font, index) => {
+		return (
+			<FontButton
+				key={index}
+				fontData={font}
+				onClick={onFontButtonClick}
+				currentFontTab={currentFontTab}
+			/>
+		);
+	});
 
 	return (
 		<div ref={ref} className={styles.fontButtonGroup}>
@@ -400,7 +398,11 @@ function FontButton({ fontData, onClick, currentFontTab }) {
 			data-font={JSON.stringify(fontData)}
 			onClick={onClick}
 			style={{
-				fontFamily: `${family}, ${category}, Lotion`,
+				fontFamily: `${family}, ${
+					(category === 'display') | (category === 'handwriting')
+						? 'cursive'
+						: category
+				}, Lotion`,
 			}}
 		>
 			{family}

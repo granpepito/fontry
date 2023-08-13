@@ -81,7 +81,7 @@ export async function getFonts() {
 	// If data fetching is successful
 	if (data && data.items) {
 		fontsList = groupFontsByCategory(data.items);
-		// storeFonts(fontsList);
+		storeFonts(fontsList);
 
 		return fontsList;
 	}

@@ -1,4 +1,5 @@
-export default {
+/* eslint-disable no-undef */
+module.exports = {
 	env: { browser: true, es2020: true },
 	extends: [
 		'eslint:recommended',
@@ -11,5 +12,15 @@ export default {
 	plugins: ['react-refresh'],
 	rules: {
 		'react-refresh/only-export-components': 'warn',
+		'react/prop-types': 0,
+		'no-unused-vars': [
+			'error',
+			{
+				vars: 'all',
+				args: 'after-used',
+				ignoreRestSiblings: false,
+				argsIgnorePattern: '^_',
+			},
+		],
 	},
 };

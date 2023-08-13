@@ -1,7 +1,6 @@
 #fontsPanel {
-	grid-column: 1/7;
+	grid-column: 1/6;
 	height: var(--fonts-panel-height);
-	z-index: 10;
 }
 
 .fontSelectorContainer {
@@ -11,7 +10,10 @@
 
 .radioContainer {
 	display: inline-block;
-	padding: var(--font-selector-radio-container-padding);
+	padding-top: var(--font-selector-radio-container-padding-top);
+	padding-bottom: var(--font-selector-radio-container-padding-bottom);
+	padding-left: var(--font-selector-radio-container-padding-horizontal);
+	padding-right: var(--font-selector-radio-container-padding-horizontal);
 	width: 100%;
 	border-bottom: 2px solid black;
 	text-align: center;
@@ -25,9 +27,13 @@
 	border-radius: 8px 0 0 0;
 }
 
-.radioContainer:hover,
+.radioContainer:hover {
+	background-color: #e6e6e6;
+	font-style: italic;
+}
+
 .radioContainer:focus-within {
-	background-color: #00000010;
+	background-color: #e6e6e6;
 	font-style: italic;
 }
 
@@ -66,10 +72,16 @@
 	width: 100%;
 	justify-content: left;
 	align-content: center;
+	border-radius: 0.5rem;
 }
 
 .categorySection .buttonOpenSection:focus {
 	background-color: transparent;
+}
+
+.categorySection .buttonOpenSection:hover,
+.categorySection .buttonOpenSection:active {
+	background-color: #ececec;
 }
 
 .categorySection .buttonOpenSection > * {
@@ -113,7 +125,8 @@
 	margin: 0;
 	padding: var(--closed-fonts-container-padding);
 	border: none;
-	overflow-y: scroll;
+	overflow-y: auto;
+	transition-property: opacity, max-height;
 	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
@@ -131,4 +144,10 @@
 	align-items: start;
 	align-content: start;
 	gap: 8px 10px;
+}
+
+@media screen and (min-width: 980px) {
+}
+
+@media screen and (min-width: 1440px) {
 }

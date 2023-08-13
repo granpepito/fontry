@@ -1,17 +1,22 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { usePair } from '../hooks/PairContext';
+import { usePairStore } from '../hooks/usePairStore';
 import { AlphaNumComparisonSection } from './AlphaNumComparisonSection';
 import { TextualExampleComparisonSection } from './TextualExampleComparisonSection';
 import { CodeSection } from './CodeSection';
+import { BookmarkIcon as OutlineBookmarkIcon } from '@heroicons/react/24/outline';
+import { BookmarkIcon as SolidBookmarkIcon } from '@heroicons/react/24/solid';
 
 import alphaNumericalSectionIcon from '../assets/img/alpha-numerical-section-icon.svg';
 import textualSectionIcon from '../assets/img/textual-section-icon.svg';
-import exportSectionIcon from '../assets/img/export-section-icon.svg';
+import htmlCssSectionIcon from '../assets/img/html-css-icon.svg';
 
 import styles from '/src/assets/styles/comparison-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
+import iconStyles from '/src/assets/styles/icon.module.css';
 
-export function ComparisonPanel({}) {
-	const [currentSection, setCurrentSection] = useState('alphanum');
+export function ComparisonPanel() {
+	const [currentSection, setCurrentSection] = useState('textual');
 
 	const handleComparisonSectionChange = useCallback(
 		function handleComparisonSectionChange(e) {
@@ -25,18 +30,21 @@ export function ComparisonPanel({}) {
 	return (
 		<>
 			<div className={styles.comparisonPanel}>
-				<AlphaNumComparisonSection
-					isCurrentSection={currentSection === 'alphanum'}
-				/>
 				<TextualExampleComparisonSection
 					isCurrentSection={currentSection === 'textual'}
 				/>
+				<AlphaNumComparisonSection
+					isCurrentSection={currentSection === 'alphanum'}
+				/>
 				<CodeSection isCurrentSection={currentSection === 'code'} />
 			</div>
-			<ComparisonSectionSelector
-				currentSection={currentSection}
-				onChange={handleComparisonSectionChange}
-			/>
+			<>
+				<ComparisonSectionSelector
+					currentSection={currentSection}
+					onChange={handleComparisonSectionChange}
+				/>
+				<SavePairButton />
+			</>
 		</>
 	);
 }
@@ -56,6 +64,24 @@ function ComparisonSectionSelector({ currentSection, onChange }) {
 				styles.comparisonSectionSelector,
 			].join(' ')}
 		>
+			<label className={[styles.textualRadioLabel, active(textual)].join(' ')}>
+				<img
+					style={{
+						height: '24px',
+						width: '25px',
+					}}
+					alt='Textual Section Icon'
+					src={textualSectionIcon}
+				/>
+				<input
+					id={`${textual}-select`}
+					name='comparison-selector'
+					type='radio'
+					value={textual}
+					checked={currentSection === textual}
+					onChange={onChange}
+				/>
+			</label>
 			<label
 				className={[styles.alphaNumRadioLabel, active(alphaNum)].join(' ')}
 			>
@@ -68,25 +94,11 @@ function ComparisonSectionSelector({ currentSection, onChange }) {
 					src={alphaNumericalSectionIcon}
 				/>
 				<input
+					id={`${alphaNum}-select`}
+					name='comparison-selector'
 					type='radio'
 					value={alphaNum}
 					checked={currentSection === alphaNum}
-					onChange={onChange}
-				/>
-			</label>
-			<label className={[styles.textualRadioLabel, active(textual)].join(' ')}>
-				<img
-					style={{
-						height: '16px',
-						width: '25px',
-					}}
-					alt='Textual Section Icon'
-					src={textualSectionIcon}
-				/>
-				<input
-					type='radio'
-					value={textual}
-					checked={currentSection === textual}
 					onChange={onChange}
 				/>
 			</label>
@@ -97,9 +109,11 @@ function ComparisonSectionSelector({ currentSection, onChange }) {
 						width: '24px',
 					}}
 					alt='Export Section Icon'
-					src={exportSectionIcon}
+					src={htmlCssSectionIcon}
 				/>
 				<input
+					id={`${code}-select`}
+					name='comparison-selector'
 					type='radio'
 					value={code}
 					checked={currentSection === code}
@@ -107,5 +121,49 @@ function ComparisonSectionSelector({ currentSection, onChange }) {
 				/>
 			</label>
 		</fieldset>
+	);
+}
+
+/**
+ * Renders a Save button to save the current Pair of fonts.
+ */
+function SavePairButton() {
+	const pair = usePair();
+	const { add, remove, includes } = usePairStore();
+	const isPairInPairStore = includes(pair);
+	const [isSaved, setIsSaved] = useState(isPairInPairStore);
+
+	useEffect(() => {
+		setIsSaved(includes(pair));
+	}, [includes, pair]);
+
+	function handleClick(e) {
+		try {
+			const pair = JSON.parse(e.target.dataset.pair);
+
+			if (isSaved) {
+				remove(pair);
+				setIsSaved(includes(pair));
+			} else {
+				add(pair);
+				setIsSaved(includes(pair));
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	return (
+		<button
+			className={[inputStyles.buttonIcon, styles.savePairButton].join(' ')}
+			data-pair={JSON.stringify(pair || '')}
+			onClick={handleClick}
+		>
+			{isSaved ? (
+				<SolidBookmarkIcon className={iconStyles.smallIcon} />
+			) : (
+				<OutlineBookmarkIcon className={iconStyles.smallIcon} />
+			)}
+		</button>
 	);
 }

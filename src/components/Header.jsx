@@ -13,6 +13,12 @@ import iconStyles from '/src/assets/styles/icon.module.css';
 export function Header() {
 	const [isSideBarOpen, setSideBarState] = useState(false);
 
+	if (isSideBarOpen) {
+		document.body.style.overflow = 'hidden';
+	} else {
+		document.body.style.overflow = 'visible';
+	}
+
 	/**
 	 * Opens the side bar.
 	 */
@@ -31,7 +37,7 @@ export function Header() {
 	}
 
 	return (
-		<>
+		<div className={styles.headerAndSidebarContainer}>
 			<SideBar handleClick={openSideBar} isOpen={isSideBarOpen} />
 			<header className={styles.header}>
 				<button
@@ -43,15 +49,10 @@ export function Header() {
 				</button>
 
 				<h1 className={styles.websiteName}>
-					<a href='#'>Fontry</a>
+					<a href='#'>Fonts</a>
 				</h1>
-				<div
-					style={{
-						height: '40px',
-						width: '36px',
-					}}
-				></div>
+				<div></div>
 			</header>
-		</>
+		</div>
 	);
 }
