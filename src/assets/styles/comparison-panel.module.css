@@ -430,7 +430,7 @@
 
 .comparisonSectionSelector label.active {
 	background-color: rgb(236, 236, 236);
-	background-color: #00000010;
+	background-color: #e6e6e6;
 	box-shadow: inset 4px 4px 4px 0px rgb(236, 236, 236);
 }
 

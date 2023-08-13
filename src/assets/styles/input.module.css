@@ -11,7 +11,7 @@
 }
 
 .buttonIcon:focus {
-	background-color: #00000010;
+	background-color: #e6e6e6;
 	border-radius: 8px;
 }
 
@@ -58,8 +58,8 @@
 .button:focus,
 .button.active {
 	color: black;
-	background-color: #00000010;
-	outline: 1px solid #00000010;
+	background-color: #e6e6e6;
+	outline: 1px solid #e6e6e6;
 }
 
 .button:focus {
@@ -67,14 +67,14 @@
 }
 
 .button.active {
-	border-color: #00000010;
+	border-color: #e6e6e6;
 }
 
 .button:active {
 	color: black;
-	background-color: #00000010;
+	background-color: #e6e6e6;
 	outline: 1px solid hsl(0, 0%, 75%);
-	border-color: #00000010;
+	border-color: #e6e6e6;
 }
 
 .searchBarLabel {
@@ -190,10 +190,9 @@ input.searchBar[type='search']::-webkit-search-results-decoration {
 }
 
 .variantSelector input.checkbox[type='checkbox']:checked + label.checkboxLabel {
-	/* color: black; */
-	color: #000000cc;
-	border: 1px solid #00000085;
-	outline: 1px solid #00000085;
+	color: #646464;
+	border: 1px solid #7a7a7a;
+	outline: 1px solid #7a7a7a;
 }
 
 .variantSelector label.checkboxLabel:hover,

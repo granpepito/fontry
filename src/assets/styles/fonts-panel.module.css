@@ -28,12 +28,12 @@
 }
 
 .radioContainer:hover {
-	background-color: #00000010;
+	background-color: #e6e6e6;
 	font-style: italic;
 }
 
 .radioContainer:focus-within {
-	background-color: #00000010;
+	background-color: #e6e6e6;
 	font-style: italic;
 }
 
