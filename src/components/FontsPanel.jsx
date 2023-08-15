@@ -341,6 +341,7 @@ function FontButtonPage({
 	const { ref, inView } = useInView({
 		root: document.querySelector(`${styles.fontCategorySectionsContainer}`),
 		triggerOnce: true,
+		rootMargin: '60px 0px',
 	});
 
 	useEffect(() => {
