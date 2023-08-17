@@ -12,10 +12,18 @@ export function Footer() {
 				/>
 			</p>
 			<p className={styles.dotDev}>
-				<a href='https://alexgm.dev'>alexgm.dev</a>
+				<a href='https://alexgm.dev' target='_blank' rel='noreferrer'>
+					alexgm.dev
+				</a>
 			</p>
 			<p>
-				<a href='https://www.github.com/granpepito/fontry'>GitHub</a>
+				<a
+					href='https://www.github.com/granpepito/fontry'
+					target='_blank'
+					rel='noreferrer'
+				>
+					GitHub
+				</a>
 			</p>
 		</footer>
 	);
