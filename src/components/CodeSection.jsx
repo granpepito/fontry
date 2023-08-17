@@ -4,8 +4,8 @@ import { useVariantsState } from '../hooks/useVariants';
 import { formatVariant } from '../functions/format';
 import { variants as allVariants } from '../utils/variants';
 
-import { ClipboardIcon } from '@heroicons/react/24/outline';
 import { MinusIcon, PlusIcon } from '@heroicons/react/20/solid';
+import { ReactComponent as ClipboardCheckIcon } from '/src/assets/img/clipboard-check-icon.svg';
 
 import styles from '/src/assets/styles/comparison-panel.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
@@ -267,10 +267,11 @@ function VariantSelector({
  * @param {boolean} props.isDisabled - Disables the button inside the component.
  */
 function Code({ children, isDisabled }) {
-	const ref = useRef(null);
+	const codeContentRef = useRef(null);
+	const svgRef = useRef(null);
 
 	function handleClick() {
-		navigator.clipboard.writeText(ref.current?.innerText);
+		navigator.clipboard.writeText(codeContentRef.current?.innerText);
 	}
 
 	return (
@@ -281,11 +282,11 @@ function Code({ children, isDisabled }) {
 					onClick={handleClick}
 					disabled={isDisabled}
 				>
-					<ClipboardIcon className={iconStyles.smallIcon} />
+					<ClipboardCheckIcon ref={svgRef} />
 				</button>
 			</div>
 			<div className={styles.pre}>
-				<div ref={ref} className={styles.code}>
+				<div ref={codeContentRef} className={styles.code}>
 					{children}
 				</div>
 			</div>
