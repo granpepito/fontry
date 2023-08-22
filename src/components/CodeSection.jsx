@@ -166,17 +166,17 @@ function VariantCheckbox({ family, variant, checked, onChange }) {
 	const checkboxId = `${checkboxName}-${variant}`;
 
 	return (
-		<div className={inputStyles.variant}>
+		<div className={styles.variant}>
 			<input
 				id={checkboxId}
-				className={[inputStyles.checkbox].join(' ')}
+				className={[styles.checkbox].join(' ')}
 				type='checkbox'
 				name={family}
 				value={variant}
 				checked={checked}
 				onChange={onChange}
 			></input>
-			<label className={inputStyles.checkboxLabel} htmlFor={checkboxId}>
+			<label className={styles.checkboxLabel} htmlFor={checkboxId}>
 				{/* Add a "plus" icon when not checked, and a "minus" icon when checked. */}
 				{checked ? (
 					<MinusIcon className={iconStyles.xSmallIcon} />
@@ -246,15 +246,15 @@ function VariantSelector({
 				Police 1 -{' '}
 				<span className={styles.fontFamily}>{firstFont?.family}</span>
 			</span>
-			<fieldset className={inputStyles.variantSelector} disabled={isDisabled}>
-				<div className={inputStyles.variants}>{firstVariants}</div>
+			<fieldset className={styles.variantSelector} disabled={isDisabled}>
+				<div className={styles.variants}>{firstVariants}</div>
 			</fieldset>
 			<span>
 				Police 2 -{' '}
 				<span className={styles.fontFamily}>{secondFont?.family}</span>
 			</span>
-			<fieldset className={inputStyles.variantSelector} disabled={isDisabled}>
-				<div className={inputStyles.variants}>{secondVariants}</div>
+			<fieldset className={styles.variantSelector} disabled={isDisabled}>
+				<div className={styles.variants}>{secondVariants}</div>
 			</fieldset>
 		</div>
 	);

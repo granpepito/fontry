@@ -544,3 +544,79 @@
 		right: 28px;
 	}
 }
+
+/*--------------------------------------------------------------*/
+/* Checkboxes and Pill Buttons */
+/*--------------------------------------------------------------*/
+.variantSelector {
+	width: 100%;
+	display: block;
+	padding: 0;
+	margin: 0;
+	border: none;
+}
+
+/* .variantSelector > fieldset {
+	width: 100%;
+} */
+
+.variantSelector > .variants {
+	width: 100%;
+	height: auto;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: start;
+	align-content: flex-start;
+	gap: 0.5rem 0.7rem;
+	padding: 1rem 0.35rem;
+}
+
+.variantSelector .variant {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.variantSelector label.checkboxLabel span {
+	transition: var(--transition-speed) var(--transition-timing-function);
+}
+
+.variantSelector label.checkboxLabel,
+.pillButton {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
+	align-self: center;
+	gap: 0px;
+	padding: 6px 10px;
+	width: fit-content;
+	height: auto;
+	border: 1px solid #000;
+	border-radius: 1rem;
+	background-color: white;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: var(--transition-speed) var(--transition-timing-function);
+}
+
+.variantSelector input.checkbox {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.variantSelector input.checkbox[type='checkbox']:checked + label.checkboxLabel {
+	color: #646464;
+	border: 1px solid #7a7a7a;
+	outline: 1px solid #7a7a7a;
+}
+
+.variantSelector label.checkboxLabel:hover,
+.variantSelector input.checkbox[type='checkbox']:focus + label.checkboxLabel {
+	border: 1px solid #000000;
+	outline: 1px solid #000000;
+}
