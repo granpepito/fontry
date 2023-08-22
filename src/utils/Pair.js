@@ -1,6 +1,7 @@
 /**
  * @typedef Pair
  * @type {object}
+ * @property {string} [id] - ID of the pair.
  * @property {import("./Font").FontFamily} font1 - First font of the pair.
  * @property {import("./Font").FontFamily} font2 - Second font of the pair.
  * @property {string} theme - Theme used to display the pair.

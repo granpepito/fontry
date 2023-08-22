@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useSyncExternalStore } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Subscribes to the 'storage' event.
@@ -61,6 +62,9 @@ export function usePairStore() {
 		function add(pair) {
 			if (!includes(pair)) {
 				try {
+					const id = uuidv4();
+					pair.id = id;
+
 					localStorage.setItem(
 						'pairStore',
 						JSON.stringify(pairs.concat([pair]))
