@@ -94,12 +94,15 @@ export function usePairStore() {
 	 * @param {number} index - Index of the pair.
 	 */
 	const removeByIndex = useCallback(
-		function removeByIndex(index) {
-			if (index >= 0 && index < pairs.length) {
+		function removeByIndex(indexOfPairToRemove) {
+			if (pairs[indexOfPairToRemove]) {
 				try {
+					const parsedIndex = parseInt(indexOfPairToRemove, 10);
 					localStorage.setItem(
 						'pairStore',
-						JSON.stringify(pairs.filter((_, id) => id !== index))
+						JSON.stringify(
+							pairs.filter((_pair, index) => index !== parsedIndex)
+						)
 					);
 				} catch (error) {
 					console.error(error);
@@ -143,7 +146,7 @@ export function usePairStore() {
 		add,
 		getPair,
 		remove,
-		removeById: removeByIndex,
+		removeByIndex,
 		includes,
 		getLastPair,
 	};
