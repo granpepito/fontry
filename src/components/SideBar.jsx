@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useState } from 'react';
 import { usePairStore } from '../hooks/usePairStore';
 import { usePairDispatch } from '../hooks/PairContext';
 import {
@@ -7,6 +7,7 @@ import {
 	// MoonIcon,
 	BookmarkIcon as OutlineBookmarkIcon,
 	ArrowRightIcon,
+	TrashIcon,
 } from '@heroicons/react/24/outline';
 import {
 	// SunIcon as SunIconSolid,
@@ -25,34 +26,62 @@ import iconStyles from '/src/assets/styles/icon.module.css';
  */
 export function SideBar({ handleClick, isOpen }) {
 	const sideBarContainerOpen = isOpen ? styles.open : '';
+	const [checkboxesEnabled, setCheckboxesEnabled] = useState(false);
+	const [pairsToDelete, setPairsToDelete] = useState([]);
 	const { changePair } = usePairDispatch();
-	const { pairs } = usePairStore();
+	const { pairs, removeByIndex } = usePairStore();
+
+	function handleCheckboxesEnabled() {
+		setCheckboxesEnabled(!checkboxesEnabled);
+	}
 
 	const handleSavedPairClick = useCallback(
 		function handleSavedPairClick(e) {
-			try {
-				const { id } = e.target.dataset;
-				changePair(id);
-			} catch (error) {
-				console.error(error);
-			}
+			const { index } = e.target.dataset;
+			changePair(index);
 		},
 		[changePair]
 	);
 
-	const savedPairs = useMemo(() => {
-		return pairs.map((pair, index) => {
-			return (
-				<SavedPair
-					key={index}
-					id={index}
-					onClick={handleSavedPairClick}
-					firstFontFamily={pair?.font1?.family}
-					secondFontFamily={pair?.font2?.family}
-				/>
-			);
-		});
-	}, [handleSavedPairClick, pairs]);
+	const handleDeletableChange = useCallback(
+		(e) => {
+			const { value, checked } = e.target;
+
+			if (checked) {
+				setPairsToDelete([...pairsToDelete, value]);
+			} else {
+				setPairsToDelete(pairsToDelete.filter((id) => id != value));
+			}
+		},
+		[pairsToDelete]
+	);
+
+	function handleDeleteSavedPairs() {
+		if (pairsToDelete.length > 0) {
+			const toDelete = pairsToDelete.sort();
+			toDelete.forEach((index) => {
+				removeByIndex(index);
+			});
+			setPairsToDelete([]);
+			setCheckboxesEnabled(false);
+		}
+	}
+
+	const savedPairs = pairs.map((pair, index) => {
+		return (
+			<SavedPair
+				key={pair?.id}
+				index={index}
+				firstFontFamily={pair?.font1?.family}
+				secondFontFamily={pair?.font2?.family}
+				checked={pairsToDelete.includes(index)}
+				deletable={checkboxesEnabled}
+				isSidebarOpen={isOpen}
+				onClick={handleSavedPairClick}
+				onChange={handleDeletableChange}
+			/>
+		);
+	});
 
 	return (
 		<>
@@ -65,6 +94,7 @@ export function SideBar({ handleClick, isOpen }) {
 						id='closeSideBarBtn'
 						className={inputStyles.buttonIcon}
 						onClick={handleClick}
+						disabled={!isOpen}
 					>
 						<XMarkIcon className={iconStyles.icon} />
 					</button>
@@ -72,6 +102,48 @@ export function SideBar({ handleClick, isOpen }) {
 				</div>
 				<nav className={styles.sideBarBottomContainer}>
 					<h2>Combinaisons Enregistrées</h2>
+					<div className={styles.savedPairsActions}>
+						{checkboxesEnabled ? (
+							<>
+								<button
+									className={[
+										inputStyles.button,
+										styles.disableCheckboxesBtn,
+									].join(' ')}
+									onClick={handleCheckboxesEnabled}
+									disabled={!isOpen}
+								>
+									Annuler
+								</button>
+								<button
+									className={[
+										inputStyles.buttonIcon,
+										inputStyles.button,
+										styles.deletePairsBtn,
+									].join(' ')}
+									onClick={handleDeleteSavedPairs}
+									disabled={!isOpen}
+								>
+									Supprimer{' '}
+									<TrashIcon
+										className={iconStyles.xxSmallIcon}
+										color='#FF000'
+									/>
+								</button>{' '}
+							</>
+						) : (
+							<button
+								className={[
+									inputStyles.button,
+									styles.enableCheckboxesBtn,
+								].join(' ')}
+								onClick={handleCheckboxesEnabled}
+								disabled={!isOpen}
+							>
+								Sélectionner
+							</button>
+						)}
+					</div>
 					<ul className={styles.savedPairsList}>
 						{pairs.length > 0 ? savedPairs : <InvitationToSavePairs />}
 					</ul>
@@ -101,24 +173,48 @@ export function SideBar({ handleClick, isOpen }) {
 
 /**
  * Component representing a pair that is saved inside the Pair Store.
- * @param {{id: string, firstFontFamily: string, secondFontFamily: string, onClick: Function}} props
+ * @param {{index: string, firstFontFamily: string, secondFontFamily: string, onClick: Function}} props
  */
-function SavedPair({ id, firstFontFamily, secondFontFamily, onClick }) {
+function SavedPair({
+	index: index,
+	firstFontFamily,
+	secondFontFamily,
+	checked,
+	deletable,
+	isSidebarOpen,
+	onClick,
+	onChange,
+}) {
+	const [isChecked, setIsChecked] = useState(checked);
+	const deleteCheckboxClassNames = deletable
+		? styles.deletable
+		: styles.notDeletable;
+
+	function handleCheck(e) {
+		const { checked } = e.target;
+		setIsChecked(checked);
+		onChange(e);
+	}
+
 	return (
-		<li className={styles.savedPair} data-id={id} onClick={onClick}>
-			<p>
-				1. <span>{firstFontFamily}</span>
-			</p>
-			<p>
-				2. <span>{secondFontFamily}</span>
-			</p>
-			{/* <button
-				className={[inputStyles.buttonIcon, styles.popOverButton].join(' ')}
-			>
-				<EllipsisVerticalIcon
-					className={[iconStyles.icon, styles.ellipsisVertIcon].join(' ')}
-				/>
-			</button> */}
+		<li>
+			<input
+				className={deleteCheckboxClassNames}
+				type='checkbox'
+				id={`delete-${index}`}
+				value={index}
+				checked={isChecked}
+				onChange={handleCheck}
+				disabled={!isSidebarOpen || !deletable}
+			/>
+			<div className={styles.savedPair} data-index={index} onClick={onClick}>
+				<p>
+					1. <span>{firstFontFamily}</span>
+				</p>
+				<p>
+					2. <span>{secondFontFamily}</span>
+				</p>
+			</div>
 		</li>
 	);
 }
