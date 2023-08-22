@@ -87,7 +87,7 @@ function TextualElement({ fontFamily, type, isDisabled = false }) {
 							{fontsPanelPosition}, vous pourrez sélectionner les polices
 							désirées. Elles sont triées dans l&apos;ordre alphabétique et
 							groupées par catégorie. Choisissez la première police puis la
-							deuxième et ensuite vous pourrez les contempler!
+							deuxième et ensuite vous pourrez les contempler !
 						</p>
 						<p>
 							Dans la section actuelle vous pouvez lire cet exemple pour voir si
