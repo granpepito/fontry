@@ -137,20 +137,13 @@ function SavePairButton() {
 		setIsSaved(includes(pair));
 	}, [includes, pair]);
 
-	function handleClick(e) {
-		try {
-			const pair = JSON.parse(e.target.dataset.pair);
-
-			if (isSaved) {
-				remove(pair);
-				setIsSaved(includes(pair));
-			} else {
-				add(pair);
-				setIsSaved(includes(pair));
-			}
-		} catch (error) {
-			console.error(error);
+	function handleClick() {
+		if (isPairInPairStore) {
+			remove(pair);
+		} else {
+			add(pair);
 		}
+		setIsSaved(!isSaved);
 	}
 
 	return (
