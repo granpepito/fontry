@@ -34,13 +34,13 @@ export function usePairStore() {
 		}
 	}, [stringifiedPairs]);
 
-	/**
-	 * Finds the index of the given pair if it is found inside the pairStore.
-	 * @param {import('../utils/Pair').Pair} pair
-	 * @param {boolean} returnIndex Flag to indicate if the index is wanted. Is set to false by default.
-	 * @returns {boolean|number} If the returnIndex is false: returns true if the pair is included, else it returns false. If the returnIndex flag is true: returns the index of the pair. If not found, returns -1.
-	 */
 	const includes = useCallback(
+		/**
+		 * Finds the index of the given pair if it is found inside the pairStore.
+		 * @param {import('../utils/Pair').Pair} pair
+		 * @param {boolean} returnIndex Flag to indicate if the index is wanted. Is set to false by default.
+		 * @returns {boolean|number} If the returnIndex is false: returns true if the pair is included, else it returns false. If the returnIndex flag is true: returns the index of the pair. If not found, returns -1.
+		 */
 		function includes(pair, returnIndex = false) {
 			const index = pairs.findIndex((pairFromStore) => {
 				const font1Equals =
@@ -60,11 +60,11 @@ export function usePairStore() {
 		[pairs]
 	);
 
-	/**
-	 * Adds a pair of fonts to the PairStore
-	 * @param {import('../utils/Pair').Pair} pair
-	 */
 	const add = useCallback(
+		/**
+		 * Adds a pair of fonts to the PairStore
+		 * @param {import('../utils/Pair').Pair} pair
+		 */
 		function add(pair) {
 			if (!includes(pair)) {
 				try {
@@ -83,23 +83,23 @@ export function usePairStore() {
 		[includes, pairs]
 	);
 
-	/**
-	 * Get a pair from the Pair Store.
-	 * @param {number} index - Index of the pair to get.
-	 * @returns {import('../utils/Pair').Pair|undefined} Returns the pair if it exists or else it returns undefined.
-	 */
 	const getPair = useCallback(
+		/**
+		 * Get a pair from the Pair Store.
+		 * @param {number} index - Index of the pair to get.
+		 * @returns {import('../utils/Pair').Pair|undefined} Returns the pair if it exists or else it returns undefined.
+		 */
 		function get(index) {
 			return pairs[index];
 		},
 		[pairs]
 	);
 
-	/**
-	 * Removes a pair by using its index.
-	 * @param {number} index - Index of the pair.
-	 */
 	const removeByIndex = useCallback(
+		/**
+		 * Removes a pair by using its index.
+		 * @param {number} index - Index of the pair.
+		 */
 		function removeByIndex(indexOfPairToRemove) {
 			if (pairs[indexOfPairToRemove]) {
 				try {
@@ -118,11 +118,11 @@ export function usePairStore() {
 		[pairs]
 	);
 
-	/**
-	 * Removes a pair of fonts from the PairStore.
-	 * @param {import('../utils/Pair').Pair} pair
-	 */
 	const remove = useCallback(
+		/**
+		 * Removes a pair of fonts from the PairStore.
+		 * @param {import('../utils/Pair').Pair} pair
+		 */
 		function remove(pair) {
 			const index = includes(pair, true);
 
@@ -157,11 +157,10 @@ export function usePairStore() {
 	);
 
 	const getLastPair = useCallback(
-	/**
-	 * Gets the most recently saved pair of fonts of the PairStore.
-	 * @returns {import('../utils/Pair').Pair}
-	 */
-	const getLastPair = useCallback(
+		/**
+		 * Gets the most recently saved pair of fonts of the PairStore.
+		 * @returns {import('../utils/Pair').Pair}
+		 */
 		function getLastPair() {
 			if (pairs.length > 0) {
 				return pairs[pairs.length - 1];
