@@ -132,31 +132,28 @@ function SavePairButton() {
 	const { add, remove, includes } = usePairStore();
 	const isPairInPairStore = includes(pair);
 	const [isSaved, setIsSaved] = useState(isPairInPairStore);
+	const isSavedClassName = isSaved ? styles.saved : null;
 
 	useEffect(() => {
 		setIsSaved(includes(pair));
 	}, [includes, pair]);
 
-	function handleClick(e) {
-		try {
-			const pair = JSON.parse(e.target.dataset.pair);
-
-			if (isSaved) {
-				remove(pair);
-				setIsSaved(includes(pair));
-			} else {
-				add(pair);
-				setIsSaved(includes(pair));
-			}
-		} catch (error) {
-			console.error(error);
+	function handleClick() {
+		if (isPairInPairStore) {
+			remove(pair);
+		} else {
+			add(pair);
 		}
+		setIsSaved(!isSaved);
 	}
 
 	return (
 		<button
-			className={[inputStyles.buttonIcon, styles.savePairButton].join(' ')}
-			data-pair={JSON.stringify(pair || '')}
+			className={[
+				inputStyles.buttonIcon,
+				styles.savePairButton,
+				isSavedClassName,
+			].join(' ')}
 			onClick={handleClick}
 		>
 			{isSaved ? (

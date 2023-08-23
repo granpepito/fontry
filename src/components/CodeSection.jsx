@@ -4,8 +4,8 @@ import { useVariantsState } from '../hooks/useVariants';
 import { formatVariant } from '../functions/format';
 import { variants as allVariants } from '../utils/variants';
 
-import { ClipboardIcon } from '@heroicons/react/24/outline';
 import { MinusIcon, PlusIcon } from '@heroicons/react/20/solid';
+import { ReactComponent as ClipboardCheckIcon } from '/src/assets/img/clipboard-check-icon.svg';
 
 import styles from '/src/assets/styles/comparison-panel.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
@@ -166,17 +166,17 @@ function VariantCheckbox({ family, variant, checked, onChange }) {
 	const checkboxId = `${checkboxName}-${variant}`;
 
 	return (
-		<div className={inputStyles.variant}>
+		<div className={styles.variant}>
 			<input
 				id={checkboxId}
-				className={[inputStyles.checkbox].join(' ')}
+				className={[styles.checkbox].join(' ')}
 				type='checkbox'
 				name={family}
 				value={variant}
 				checked={checked}
 				onChange={onChange}
 			></input>
-			<label className={inputStyles.checkboxLabel} htmlFor={checkboxId}>
+			<label className={styles.checkboxLabel} htmlFor={checkboxId}>
 				{/* Add a "plus" icon when not checked, and a "minus" icon when checked. */}
 				{checked ? (
 					<MinusIcon className={iconStyles.xSmallIcon} />
@@ -246,15 +246,15 @@ function VariantSelector({
 				Police 1 -{' '}
 				<span className={styles.fontFamily}>{firstFont?.family}</span>
 			</span>
-			<fieldset className={inputStyles.variantSelector} disabled={isDisabled}>
-				<div className={inputStyles.variants}>{firstVariants}</div>
+			<fieldset className={styles.variantSelector} disabled={isDisabled}>
+				<div className={styles.variants}>{firstVariants}</div>
 			</fieldset>
 			<span>
 				Police 2 -{' '}
 				<span className={styles.fontFamily}>{secondFont?.family}</span>
 			</span>
-			<fieldset className={inputStyles.variantSelector} disabled={isDisabled}>
-				<div className={inputStyles.variants}>{secondVariants}</div>
+			<fieldset className={styles.variantSelector} disabled={isDisabled}>
+				<div className={styles.variants}>{secondVariants}</div>
 			</fieldset>
 		</div>
 	);
@@ -267,10 +267,11 @@ function VariantSelector({
  * @param {boolean} props.isDisabled - Disables the button inside the component.
  */
 function Code({ children, isDisabled }) {
-	const ref = useRef(null);
+	const codeContentRef = useRef(null);
+	const svgRef = useRef(null);
 
 	function handleClick() {
-		navigator.clipboard.writeText(ref.current?.innerText);
+		navigator.clipboard.writeText(codeContentRef.current?.innerText);
 	}
 
 	return (
@@ -281,11 +282,11 @@ function Code({ children, isDisabled }) {
 					onClick={handleClick}
 					disabled={isDisabled}
 				>
-					<ClipboardIcon className={iconStyles.smallIcon} />
+					<ClipboardCheckIcon ref={svgRef} />
 				</button>
 			</div>
 			<div className={styles.pre}>
-				<div ref={ref} className={styles.code}>
+				<div ref={codeContentRef} className={styles.code}>
 					{children}
 				</div>
 			</div>

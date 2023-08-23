@@ -61,7 +61,7 @@ export async function loadMultipleFonts(fonts, isLimited = false) {
 		return new Promise((_, reject) => reject('There are no fonts.'));
 	}
 
-	return new Promise((resolve, reject) => {
+	return new Promise((_resolve, _reject) => {
 		WebFont.load({
 			google: {
 				families,
