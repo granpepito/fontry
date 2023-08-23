@@ -15,9 +15,15 @@ function onStorage(callback) {
 
 export function usePairStore() {
 	const subscribe = useCallback(onStorage, []);
-	const stringifiedPairs = useSyncExternalStore(subscribe, () =>
-		localStorage.getItem('pairStore')
-	);
+	const stringifiedPairs = useSyncExternalStore(subscribe, () => {
+		const pairStore = localStorage.getItem('pairStore');
+		if (pairStore) {
+			return pairStore;
+		} else {
+			localStorage.setItem('pairStore', '[]');
+			return '[]';
+		}
+	});
 
 	let pairs = useMemo(() => {
 		try {
