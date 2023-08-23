@@ -29,7 +29,11 @@ export function SideBar({ handleClick, isOpen }) {
 	const [checkboxesEnabled, setCheckboxesEnabled] = useState(false);
 	const [pairsToDelete, setPairsToDelete] = useState([]);
 	const { changePair } = usePairDispatch();
-	const { pairs, removeByIndex } = usePairStore();
+	const { pairs, removePairsByIndex } = usePairStore();
+	const hideEnableCheckboxesButtonClassName = checkboxesEnabled
+		? styles.hide
+		: '';
+	const hideOtherActionButtonsClassName = !checkboxesEnabled ? styles.hide : '';
 
 	function handleCheckboxesEnabled() {
 		setCheckboxesEnabled(!checkboxesEnabled);
@@ -59,9 +63,9 @@ export function SideBar({ handleClick, isOpen }) {
 	function handleDeleteSavedPairs() {
 		if (pairsToDelete.length > 0) {
 			const toDelete = pairsToDelete.sort();
-			toDelete.forEach((index) => {
-				removeByIndex(index);
-			});
+
+			removePairsByIndex(toDelete);
+
 			setPairsToDelete([]);
 			setCheckboxesEnabled(false);
 		}
@@ -102,47 +106,44 @@ export function SideBar({ handleClick, isOpen }) {
 				</div>
 				<nav className={styles.sideBarBottomContainer}>
 					<h2>Combinaisons Enregistrées</h2>
+					{/* TODO: Add animations */}
 					<div className={styles.savedPairsActions}>
-						{checkboxesEnabled ? (
-							<>
-								<button
-									className={[
-										inputStyles.button,
-										styles.disableCheckboxesBtn,
-									].join(' ')}
-									onClick={handleCheckboxesEnabled}
-									disabled={!isOpen}
-								>
-									Annuler
-								</button>
-								<button
-									className={[
-										inputStyles.buttonIcon,
-										inputStyles.button,
-										styles.deletePairsBtn,
-									].join(' ')}
-									onClick={handleDeleteSavedPairs}
-									disabled={!isOpen}
-								>
-									Supprimer{' '}
-									<TrashIcon
-										className={iconStyles.xxSmallIcon}
-										color='#FF000'
-									/>
-								</button>{' '}
-							</>
-						) : (
+						<div className={hideOtherActionButtonsClassName}>
+							<button
+								className={[
+									inputStyles.button,
+									styles.disableCheckboxesBtn,
+								].join(' ')}
+								onClick={handleCheckboxesEnabled}
+								disabled={!isOpen || pairs.length === 0 || !checkboxesEnabled}
+							>
+								Annuler
+							</button>
+							<button
+								className={[
+									inputStyles.buttonIcon,
+									inputStyles.button,
+									styles.deletePairsBtn,
+								].join(' ')}
+								onClick={handleDeleteSavedPairs}
+								disabled={!isOpen || pairs.length === 0 || !checkboxesEnabled}
+							>
+								Supprimer{' '}
+								<TrashIcon className={iconStyles.xxSmallIcon} color='#FF000' />
+							</button>{' '}
+						</div>
+						<div className={hideEnableCheckboxesButtonClassName}>
 							<button
 								className={[
 									inputStyles.button,
 									styles.enableCheckboxesBtn,
 								].join(' ')}
 								onClick={handleCheckboxesEnabled}
-								disabled={!isOpen}
+								disabled={!isOpen || pairs.length === 0 || checkboxesEnabled}
 							>
 								Sélectionner
 							</button>
-						)}
+						</div>
 					</div>
 					<ul className={styles.savedPairsList}>
 						{pairs.length > 0 ? savedPairs : <InvitationToSavePairs />}

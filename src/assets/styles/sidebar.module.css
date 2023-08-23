@@ -28,6 +28,9 @@
 	align-items: center;
 	justify-content: space-between;
 }
+.sideBarBottomContainer {
+	width: 100%;
+}
 
 .sideBarBottomContainer h2 {
 	font-size: 1.25rem;
@@ -36,16 +39,31 @@
 
 .savedPairsActions {
 	display: flex;
+	width: 100%;
+}
+
+.savedPairsActions > div {
+	display: flex;
 	/* justify-content: end; */
+	width: 100%;
 	gap: 0.5rem;
 	/* padding: 0 0.5rem; */
+	/* transition: var(--transition-speed) var(--transition-timing-function); */
+}
+
+.savedPairsActions > div.hide {
+	width: 0;
+	opacity: 0;
+}
+
+.savedPairsActions > div.hide > button {
+	display: none;
 }
 
 .savedPairsActions .enableCheckboxesBtn,
 .savedPairsActions .disableCheckboxesBtn,
 .savedPairsActions .deletePairsBtn {
 	font-size: 0.8rem;
-	/* padding: 0; */
 	border: none;
 }
 
@@ -58,15 +76,19 @@
 .savedPairsActions .disableCheckboxesBtn:focus {
 	color: #343a40;
 	background-color: transparent;
-	outline: rgba(52, 58, 64, 0.5);
+	outline: 1px dashed rgba(52, 58, 64, 0.5);
 }
 
 .savedPairsActions .enableCheckboxesBtn:hover,
 .savedPairsActions .enableCheckboxesBtn:active,
 .savedPairsActions .disableCheckboxesBtn:hover,
 .savedPairsActions .disableCheckboxesBtn:active {
-	color: #fff;
-	background-color: #343a40;
+	/* color: #fff; */
+	color: #343a40;
+	background-color: transparent;
+	text-decoration: underline #343a40;
+	border: none;
+	outline: none;
 }
 
 .savedPairsActions .deletePairsBtn {
@@ -79,13 +101,23 @@
 .savedPairsActions .deletePairsBtn:focus {
 	color: #dc3545;
 	background-color: transparent;
-	outline: 2px solid rgba(220, 53, 69, 0.5);
+	outline: 1px dashed rgba(220, 53, 69, 0.5);
 }
 
 .savedPairsActions .deletePairsBtn:hover,
 .savedPairsActions .deletePairsBtn:active {
-	color: #fff;
-	background-color: #dc3545;
+	/* color: #fff; */
+	color: #dc3545;
+	background-color: transparent;
+	text-decoration: underline #dc3545;
+	border: none;
+	outline: none;
+}
+
+.savedPairsActions .enableCheckboxesBtn:disabled,
+.savedPairsActions .disableCheckboxesBtn:disabled,
+.savedPairsActions .deletePairsBtn:disabled {
+	opacity: 0.5;
 }
 
 ul.savedPairsList {
