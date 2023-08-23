@@ -131,6 +131,32 @@ export function usePairStore() {
 		[includes, removeByIndex]
 	);
 
+	const removePairsByIndex = useCallback(
+		/**
+		 * Removes multiple pairs of fonts from the PairStore by using index.
+		 * @param {number[]} arrayOfIndexes
+		 */
+		function removePairsByIndex(arrayOfIndexes) {
+			if (arrayOfIndexes.length > 0) {
+				try {
+					const parsedIndexes = arrayOfIndexes.map((index) =>
+						parseInt(index, 10)
+					);
+					localStorage.setItem(
+						'pairStore',
+						JSON.stringify(
+							pairs.filter((_pair, index) => !parsedIndexes.includes(index))
+						)
+					);
+				} catch (error) {
+					console.error(error);
+				}
+			}
+		},
+		[pairs]
+	);
+
+	const getLastPair = useCallback(
 	/**
 	 * Gets the most recently saved pair of fonts of the PairStore.
 	 * @returns {import('../utils/Pair').Pair}
@@ -153,6 +179,7 @@ export function usePairStore() {
 		getPair,
 		remove,
 		removeByIndex,
+		removePairsByIndex,
 		includes,
 		getLastPair,
 	};
