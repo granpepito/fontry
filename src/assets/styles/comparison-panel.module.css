@@ -209,7 +209,7 @@
 	align-items: center;
 }
 
-.comparisonPanelContent .textualElementsContainer .textualElement .example h1,
+.comparisonPanelContent .textualElementsContainer .textualElement .example h2,
 .comparisonPanelContent .textualElementsContainer .textualElement .example h3 {
 	margin: 0;
 }

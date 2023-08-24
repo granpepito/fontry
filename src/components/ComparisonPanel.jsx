@@ -154,6 +154,7 @@ function SavePairButton() {
 				styles.savePairButton,
 				isSavedClassName,
 			].join(' ')}
+			aria-label={isSaved ? 'Delete Pair' : 'Save Pair'}
 			onClick={handleClick}
 		>
 			{isSaved ? (

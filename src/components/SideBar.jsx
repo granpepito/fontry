@@ -97,6 +97,8 @@ export function SideBar({ handleClick, isOpen }) {
 					<button
 						id='closeSideBarBtn'
 						className={inputStyles.buttonIcon}
+						name='close-sidebar'
+						aria-label='Close Sidebar'
 						onClick={handleClick}
 						disabled={!isOpen}
 					>
@@ -114,6 +116,7 @@ export function SideBar({ handleClick, isOpen }) {
 									inputStyles.button,
 									styles.disableCheckboxesBtn,
 								].join(' ')}
+								aria-label='Select Saved Pair'
 								onClick={handleCheckboxesEnabled}
 								disabled={!isOpen || pairs.length === 0 || !checkboxesEnabled}
 							>
@@ -125,6 +128,7 @@ export function SideBar({ handleClick, isOpen }) {
 									inputStyles.button,
 									styles.deletePairsBtn,
 								].join(' ')}
+								aria-label='Cancel'
 								onClick={handleDeleteSavedPairs}
 								disabled={!isOpen || pairs.length === 0 || !checkboxesEnabled}
 							>
@@ -138,6 +142,7 @@ export function SideBar({ handleClick, isOpen }) {
 									inputStyles.button,
 									styles.enableCheckboxesBtn,
 								].join(' ')}
+								aria-label='Delete'
 								onClick={handleCheckboxesEnabled}
 								disabled={!isOpen || pairs.length === 0 || checkboxesEnabled}
 							>

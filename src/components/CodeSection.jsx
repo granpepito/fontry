@@ -279,6 +279,7 @@ function Code({ children, isDisabled }) {
 			<div className={styles.codeCopy}>
 				<button
 					className={[inputStyles.buttonIcon, styles.copyButton].join(' ')}
+					aria-label='Copy Text'
 					onClick={handleClick}
 					disabled={isDisabled}
 				>
