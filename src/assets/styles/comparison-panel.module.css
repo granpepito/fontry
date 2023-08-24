@@ -182,6 +182,7 @@
 	/* justify-content: end; */
 	align-self: baseline;
 	gap: 1.875rem;
+	margin-top: 0.5rem;
 }
 
 .comparisonPanelContent .textualElementsContainer .textualElement {
@@ -266,15 +267,11 @@
 	margin-right: 0.875rem;
 }
 
-/* .comparisonPanel .textualElement.actionsElement .example span {
-	display: inline-block;
-} */
-
-/* .comparisonPanel .textualElement.actionsElement .example::before {
-	height: 24px;
-	width: 24px;
-	content: url('/src/assets/img/arrow-long-right.svg');
-} */
+@media screen and (min-width: 980px) {
+	.comparisonPanelContent .textualElementsContainer {
+		margin-top: 1rem;
+	}
+}
 
 /*--------------------------------------------------------------*/
 /* CodeSection */
