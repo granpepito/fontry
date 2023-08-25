@@ -72,19 +72,23 @@ export function SideBar({ handleClick, isOpen }) {
 	}
 
 	const savedPairs = pairs.map((pair, index) => {
-		return (
-			<SavedPair
-				key={pair?.id}
-				index={index}
-				firstFontFamily={pair?.font1?.family}
-				secondFontFamily={pair?.font2?.family}
-				checked={pairsToDelete.includes(index)}
-				deletable={checkboxesEnabled}
-				isSidebarOpen={isOpen}
-				onClick={handleSavedPairClick}
-				onChange={handleDeletableChange}
-			/>
-		);
+		if (pair.id && pair.font1 && pair.font2) {
+			return (
+				<SavedPair
+					key={pair.id}
+					index={index}
+					firstFontFamily={pair.font1?.family}
+					secondFontFamily={pair.font2?.family}
+					checked={pairsToDelete.includes(index)}
+					deletable={checkboxesEnabled}
+					isSidebarOpen={isOpen}
+					onClick={handleSavedPairClick}
+					onChange={handleDeletableChange}
+				/>
+			);
+		} else {
+			return null;
+		}
 	});
 
 	return (
