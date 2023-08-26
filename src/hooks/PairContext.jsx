@@ -36,7 +36,7 @@ export function PairProvider({ children }) {
 	// Initiate the Pair for the PairProvider hook. If the Pair Store is not empty it will use the last saved pair, else it will create one.
 	let latestPair = getLastPair();
 
-	if (latestPair) {
+	if (latestPair && latestPair.font1 && latestPair.font2) {
 		const { font1, font2 } = latestPair;
 		loadMultipleFonts([font1, font2]);
 	} else {

@@ -27,9 +27,18 @@ export function usePairStore() {
 
 	let pairs = useMemo(() => {
 		try {
-			return JSON.parse(stringifiedPairs);
+			const pairStore = JSON.parse(stringifiedPairs);
+
+			if (!Array.isArray(pairStore)) {
+				throw new Error('The PairStore is not an array.');
+			}
+
+			return pairStore;
 		} catch (error) {
-			console.error('Could not parse pairStore item in the localStorage.');
+			console.error(
+				'Could not parse pairStore item in the localStorage.',
+				error
+			);
 			return [];
 		}
 	}, [stringifiedPairs]);
