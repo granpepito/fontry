@@ -5,6 +5,7 @@ import { SideBar } from './SideBar';
 import styles from '/src/assets/styles/header.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
+import { useIsLargeScreen } from '../hooks/useIsLargeScreen';
 
 /**
  * Header of the Website Page.
@@ -12,6 +13,7 @@ import iconStyles from '/src/assets/styles/icon.module.css';
  */
 export function Header() {
 	const [isSideBarOpen, setSideBarState] = useState(false);
+	const isLargeScreen = useIsLargeScreen();
 
 	if (isSideBarOpen) {
 		document.body.style.overflow = 'hidden';
@@ -22,7 +24,7 @@ export function Header() {
 	/**
 	 * Opens the side bar.
 	 */
-	function openSideBar() {
+	function handleSideBarState() {
 		// Add focus on the element that will be visible and then remove it.
 		if (isSideBarOpen) {
 			const openSideBarBtn = document.getElementById('openSideBarBtn');
@@ -36,22 +38,35 @@ export function Header() {
 		setSideBarState(!isSideBarOpen);
 	}
 
+	function closeSideBar() {
+		if (!isLargeScreen) {
+			const openSideBarBtn = document.getElementById('openSideBarBtn');
+			openSideBarBtn.focus();
+			openSideBarBtn.blur();
+			setSideBarState(false);
+		}
+	}
+
 	return (
 		<div className={styles.headerAndSidebarContainer}>
-			<SideBar handleClick={openSideBar} isOpen={isSideBarOpen} />
+			<SideBar
+				onClick={handleSideBarState}
+				onSavePairClick={closeSideBar}
+				isOpen={isSideBarOpen}
+			/>
 			<header className={styles.header}>
 				<button
 					id='openSideBarBtn'
 					name='open-sidebar'
 					aria-label='Open Sidebar'
 					className={inputStyles.buttonIcon}
-					onClick={openSideBar}
+					onClick={handleSideBarState}
 				>
 					<Bars3Icon className={iconStyles.icon} />
 				</button>
 
 				<h1 className={styles.websiteName}>
-					<a href='#'>Fonts</a>
+					<a href='#'>Fontsy</a>
 				</h1>
 				<div></div>
 			</header>
