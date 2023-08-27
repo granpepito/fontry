@@ -37,18 +37,11 @@
 	letter-spacing: 2px;
 }
 
-.savedPairsActions {
-	display: flex;
-	width: 100%;
-}
-
 .savedPairsActions > div {
 	display: flex;
-	/* justify-content: end; */
 	width: 100%;
 	gap: 0.5rem;
-	/* padding: 0 0.5rem; */
-	/* transition: var(--transition-speed) var(--transition-timing-function); */
+	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
 .savedPairsActions > div.hide {

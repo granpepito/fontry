@@ -113,7 +113,6 @@ export function SideBar({ onClick, onSavePairClick, isOpen }) {
 				</div>
 				<nav className={styles.sideBarBottomContainer}>
 					<h2>Combinaisons Enregistrées</h2>
-					{/* TODO: Add animations */}
 					<div className={styles.savedPairsActions}>
 						<div className={hideOtherActionButtonsClassName}>
 							<button
