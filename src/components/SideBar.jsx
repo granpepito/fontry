@@ -22,9 +22,9 @@ import iconStyles from '/src/assets/styles/icon.module.css';
 
 /**
  * Renders the SideBar of the App.
- * @param {{ handleClick: Function, isOpen: boolean}} props
+ * @param {{ onClick: Function, isOpen: boolean}} props
  */
-export function SideBar({ handleClick, isOpen }) {
+export function SideBar({ onClick, onSavePairClick, isOpen }) {
 	const sideBarContainerOpen = isOpen ? styles.open : '';
 	const [checkboxesEnabled, setCheckboxesEnabled] = useState(false);
 	const [pairsToDelete, setPairsToDelete] = useState([]);
@@ -43,8 +43,9 @@ export function SideBar({ handleClick, isOpen }) {
 		function handleSavedPairClick(e) {
 			const { index } = e.target.dataset;
 			changePair(index);
+			onSavePairClick();
 		},
-		[changePair]
+		[changePair, onSavePairClick]
 	);
 
 	const handleDeletableChange = useCallback(
@@ -103,7 +104,7 @@ export function SideBar({ handleClick, isOpen }) {
 						className={inputStyles.buttonIcon}
 						name='close-sidebar'
 						aria-label='Close Sidebar'
-						onClick={handleClick}
+						onClick={onClick}
 						disabled={!isOpen}
 					>
 						<XMarkIcon className={iconStyles.icon} />
@@ -112,7 +113,6 @@ export function SideBar({ handleClick, isOpen }) {
 				</div>
 				<nav className={styles.sideBarBottomContainer}>
 					<h2>Combinaisons Enregistrées</h2>
-					{/* TODO: Add animations */}
 					<div className={styles.savedPairsActions}>
 						<div className={hideOtherActionButtonsClassName}>
 							<button
@@ -161,7 +161,7 @@ export function SideBar({ handleClick, isOpen }) {
 			</div>
 			<div
 				className={styles.sideBarBackground}
-				onClick={handleClick}
+				onClick={onClick}
 				hidden={!isOpen}
 			></div>
 		</>

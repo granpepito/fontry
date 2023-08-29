@@ -54,7 +54,7 @@ function TextualElement({ fontFamily, type, isDisabled = false }) {
 				<div className={[styles.textualElement, styles.titleElement].join(' ')}>
 					<TypesettingFontNumber fontNumber={'Police 1'} />
 					<div className={styles.example} style={{ fontFamily }}>
-						<h2>{/*<span>TITRE</span>  */}Fonts - Combinaisons de Polices</h2>
+						<h2>{/*<span>TITRE</span>  */}Fontsy - Combinaisons de Polices</h2>
 					</div>
 				</div>
 			);
