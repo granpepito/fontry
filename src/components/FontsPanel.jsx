@@ -300,6 +300,7 @@ function FontCategorySection({
 					styles.buttonOpenSection,
 					openSectionClassName,
 				].join(' ')}
+				type='button'
 				value={fontCategoryName}
 				onClick={onClick}
 			>
