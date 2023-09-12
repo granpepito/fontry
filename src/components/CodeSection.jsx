@@ -222,8 +222,7 @@ function VariantSelector({
 				/>
 			);
 		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [firstFont, firstVariantsCheckboxes]);
+	}, [firstFont, firstVariantsCheckboxes, onFirstFontVariantChange]);
 
 	const secondVariants = useMemo(() => {
 		const { family, variants } = secondFont;
@@ -237,8 +236,7 @@ function VariantSelector({
 				/>
 			);
 		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [secondFont, secondVariantsCheckboxes]);
+	}, [secondFont, secondVariantsCheckboxes, onSecondFontVariantChange]);
 
 	return (
 		<div className={styles.variantSelectorContainer}>
