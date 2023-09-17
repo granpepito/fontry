@@ -81,11 +81,13 @@
 
 .categorySection .buttonOpenSection:hover,
 .categorySection .buttonOpenSection:active {
-	background-color: #ececec;
+	color: var(--text);
+	background-color: var(--secondary);
 }
 
 .categorySection .buttonOpenSection > * {
-	transition: var(--transition-speed) var(--transition-timing-function);
+	transition: background-color (--transition-speed)
+		var(--transition-timing-function);
 }
 
 .categorySection.empty .buttonOpenSection > * {

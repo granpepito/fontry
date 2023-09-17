@@ -63,6 +63,12 @@
 }
 
 :root {
+	--text: #0c0f1d;
+	--background: #dde3ff;
+	--primary: #2b3669;
+	--secondary: #cad0e8;
+	--accent: #4355a3;
+
 	--global-font-color: #000;
 	--background-color: #fff;
 	--website-font-size: 26px;
@@ -118,7 +124,7 @@
 
 	/* color-scheme: light dark; */
 	background-color: var(--background-color);
-	color: var(--global-font-color);
+	color: var(--text);
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
@@ -131,6 +137,30 @@ body {
 	margin: 0;
 	min-width: 320px;
 	line-height: 1.34;
+}
+
+body::before,
+body::after {
+	position: absolute;
+	left: 0;
+	top: 0;
+	content: '';
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+
+	opacity: 40%;
+}
+
+body::before {
+	background: #a0afff;
+	filter: url(#noiseFilter);
+}
+
+body > svg {
+	height: 0;
+	width: 0;
+	position: absolute;
 }
 
 a {

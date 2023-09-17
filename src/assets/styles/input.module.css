@@ -11,7 +11,7 @@
 }
 
 .buttonIcon:focus {
-	background-color: #e6e6e6;
+	background-color: var(--accent);
 	border-radius: 8px;
 }
 
@@ -57,9 +57,9 @@
 .button:hover,
 .button:focus,
 .button.active {
-	color: black;
-	background-color: #e6e6e6;
-	outline: 1px solid #e6e6e6;
+	color: var(--background);
+	background-color: var(--accent);
+	outline: 1px solid var(--accent);
 }
 
 .button:focus {
@@ -67,14 +67,14 @@
 }
 
 .button.active {
-	border-color: #e6e6e6;
+	border-color: var(--accent);
 }
 
 .button:active {
 	color: black;
-	background-color: #e6e6e6;
+	background-color: var(--accent);
 	outline: 1px solid hsl(0, 0%, 75%);
-	border-color: #e6e6e6;
+	border-color: var(--accent);
 }
 
 .searchBarLabel {

@@ -15,7 +15,7 @@
 	align-items: center;
 	padding: var(--header-padding-top-bottom) var(--header-padding-left-right);
 	border-bottom: 2px solid black;
-	background-color: #fff;
+	/* background-color: #fff; */
 	z-index: 90;
 }
 
