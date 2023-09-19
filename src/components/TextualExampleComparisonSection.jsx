@@ -115,6 +115,7 @@ function TextualElement({ fontFamily, type, isDisabled = false }) {
 						<button
 							className={[inputStyles.button, styles.button].join(' ')}
 							style={{ fontFamily }}
+							type='button'
 							disabled={isDisabled}
 						>
 							Un Bouton Inutile
