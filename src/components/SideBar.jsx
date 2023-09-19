@@ -102,7 +102,6 @@ export function SideBar({ onClick, onSavePairClick, isOpen }) {
 					<button
 						id='closeSideBarBtn'
 						className={inputStyles.buttonIcon}
-						type='button'
 						name='close-sidebar'
 						aria-label='Close Sidebar'
 						onClick={onClick}
@@ -121,7 +120,6 @@ export function SideBar({ onClick, onSavePairClick, isOpen }) {
 									inputStyles.button,
 									styles.disableCheckboxesBtn,
 								].join(' ')}
-								type='button'
 								aria-label='Select Saved Pair'
 								onClick={handleCheckboxesEnabled}
 								disabled={!isOpen || pairs.length === 0 || !checkboxesEnabled}
@@ -134,7 +132,6 @@ export function SideBar({ onClick, onSavePairClick, isOpen }) {
 									inputStyles.button,
 									styles.deletePairsBtn,
 								].join(' ')}
-								type='button'
 								aria-label='Cancel'
 								onClick={handleDeleteSavedPairs}
 								disabled={!isOpen || pairs.length === 0 || !checkboxesEnabled}
@@ -149,7 +146,6 @@ export function SideBar({ onClick, onSavePairClick, isOpen }) {
 									inputStyles.button,
 									styles.enableCheckboxesBtn,
 								].join(' ')}
-								type='button'
 								aria-label='Delete'
 								onClick={handleCheckboxesEnabled}
 								disabled={!isOpen || pairs.length === 0 || checkboxesEnabled}
@@ -221,12 +217,7 @@ function SavedPair({
 				onChange={handleCheck}
 				disabled={!isSidebarOpen || !deletable}
 			/>
-			<div
-				className={styles.savedPair}
-				data-index={index}
-				onClick={onClick}
-				tabIndex={0}
-			>
+			<div className={styles.savedPair} data-index={index} onClick={onClick}>
 				<p>
 					1. <span>{firstFontFamily}</span>
 				</p>

@@ -57,7 +57,6 @@ export function Header() {
 			<header className={styles.header}>
 				<button
 					id='openSideBarBtn'
-					type='button'
 					name='open-sidebar'
 					aria-label='Open Sidebar'
 					className={inputStyles.buttonIcon}
