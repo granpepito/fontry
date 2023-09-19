@@ -171,6 +171,12 @@ ul.savedPairsList .savedPair {
 	border-radius: 8px;
 	width: 100%;
 	cursor: pointer;
+	transition: outline var(--transition-speed) var(--transition-timing-function);
+}
+
+ul.savedPairsList .savedPair:focus,
+ul.savedPairsList .savedPair.active {
+	outline-style: dashed;
 }
 
 .savedPair > p {
