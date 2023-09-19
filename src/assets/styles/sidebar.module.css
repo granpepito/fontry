@@ -30,7 +30,7 @@
 }
 
 .sideBarContainer::before {
-	background: #a0afff;
+	background-color: var(--noisy-background-color);
 	filter: url(#noiseFilter);
 }
 
@@ -167,7 +167,7 @@ ul.savedPairsList .savedPair {
 	position: relative;
 	margin: 0;
 	padding: 0 0.85rem 0.1rem;
-	outline: 2px solid black;
+	outline: 2px solid var(--text);
 	border-radius: 8px;
 	width: 100%;
 	cursor: pointer;
@@ -176,23 +176,6 @@ ul.savedPairsList .savedPair {
 .savedPair > p {
 	text-overflow: ellipsis;
 	pointer-events: none;
-}
-
-.savedPair .popOverButton {
-	position: absolute;
-	top: 1rem;
-	right: 0.5rem;
-	cursor: pointer;
-}
-
-.savedPair .popOverButton:focus,
-.savedPair .popOverButton:active {
-	background-color: white;
-}
-
-.savedPair .popOverButton > .ellipsisVertIcon {
-	width: 24px;
-	height: 24px;
 }
 
 .sideBarBackground {

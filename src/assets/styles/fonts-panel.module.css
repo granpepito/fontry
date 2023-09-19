@@ -15,25 +15,25 @@
 	padding-left: var(--font-selector-radio-container-padding-horizontal);
 	padding-right: var(--font-selector-radio-container-padding-horizontal);
 	width: 100%;
-	border-bottom: 2px solid black;
+	border-bottom: 2px solid var(--text);
 	text-align: center;
 	background-color: transparent;
-	box-shadow: inset 4px 4px 4px 0px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 4px 4px 4px 0px rgba(11, 9, 11, 0.075);
 	transition: var(--transition-speed) step-start;
 }
 
 .radioContainer:first-of-type {
-	border-right: 2px solid black;
+	border-right: 2px solid var(--text);
 	border-radius: 8px 0 0 0;
 }
 
 .radioContainer:hover {
-	background-color: #e6e6e6;
+	background-color: #c9c1c9;
 	font-style: italic;
 }
 
 .radioContainer:focus-within {
-	background-color: #e6e6e6;
+	background-color: #c9c1c9;
 	font-style: italic;
 }
 
@@ -114,7 +114,7 @@
 .categorySection .buttonOpenSection .circleIndicator.hasCurrentFont {
 	height: 8px;
 	width: 8px;
-	background-color: rgb(0, 0, 0);
+	background-color: var(--text);
 }
 
 .fontsContainer .fieldset {
@@ -146,10 +146,4 @@
 	align-items: start;
 	align-content: start;
 	gap: 8px 10px;
-}
-
-@media screen and (min-width: 980px) {
-}
-
-@media screen and (min-width: 1440px) {
 }

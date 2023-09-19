@@ -63,15 +63,14 @@
 }
 
 :root {
-	--text: #0c0f1d;
-	--background: #dde3ff;
-	--primary: #2b3669;
-	--secondary: #cad0e8;
-	--accent: #4355a3;
-
-	--global-font-color: #000;
+	--text: #0b090b;
+	--background: #f8f7f8;
+	--primary: #3a303b;
+	--secondary: #d0c7d1;
+	--accent: #6e5c70;
+	--noisy-background-color: #cebcce;
 	--background-color: #fff;
-	--website-font-size: 26px;
+	--website-name-font-size: 26px;
 
 	--header-padding-top-bottom: 1.15rem;
 	--header-padding-left-right: 1.275rem;
@@ -123,7 +122,7 @@
 	font-weight: 400;
 
 	/* color-scheme: light dark; */
-	background-color: var(--background-color);
+	background-color: var(--background);
 	color: var(--text);
 
 	font-synthesis: none;
@@ -153,7 +152,7 @@ body::after {
 }
 
 body::before {
-	background: #a0afff;
+	background-color: var(--noisy-background-color);
 	filter: url(#noiseFilter);
 }
 
@@ -165,7 +164,7 @@ body > svg {
 
 a {
 	position: relative;
-	color: #000000;
+	color: var(--text);
 	cursor: pointer;
 	text-decoration: none;
 	transition: var(--transition-speed) var(--transition-timing-function);
@@ -183,7 +182,7 @@ a::before {
 	height: 2px;
 	bottom: -1px;
 	left: 0;
-	background-color: rgba(0, 0, 0, 0.315);
+	background-color: rgba(11, 9, 11, 0.315);
 	content: '';
 }
 
@@ -194,7 +193,7 @@ a::after {
 	height: 2px;
 	bottom: -1px;
 	left: 0;
-	background-color: rgb(0, 0, 0);
+	background-color: var(--text);
 	content: '';
 	transition: width var(--transition-speed) var(--transition-timing-function);
 }
@@ -210,7 +209,7 @@ a:focus::after {
 } */
 @media screen and (min-width: 980px) {
 	:root {
-		--website-font-size: 32px;
+		--website-name-font-size: 32px;
 
 		--header-padding-top-bottom: 1.35rem;
 		--header-padding-left-right: 1.475rem;
@@ -218,7 +217,7 @@ a:focus::after {
 		--panels-container-height: max(
 			calc(
 				100vh -
-					(2 * var(--header-padding-top-bottom) + var(--website-font-size)) -
+					(2 * var(--header-padding-top-bottom) + var(--website-name-font-size)) -
 					(1.75rem + 0.875rem)
 			),
 			780px
@@ -233,7 +232,7 @@ a:focus::after {
 
 @media screen and (min-width: 1440px) {
 	:root {
-		--website-font-size: 36px;
+		--website-name-font-size: 36px;
 
 		--header-padding-top-bottom: 1.75rem;
 		--header-padding-left-right: 1.875rem;

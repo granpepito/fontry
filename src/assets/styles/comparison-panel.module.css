@@ -6,7 +6,7 @@
 	padding: var(--comparison-panel-padding-vertical)
 		var(--comparison-panel-padding-horizontal);
 	overflow-y: hidden;
-	border-top: 2px solid black;
+	border-top: 2px solid rgba(11, 9, 11, 0.315);
 	background-color: inherit;
 	/* border-radius: 0 8px 8px 0; */
 	/* z-index: 10; */
@@ -74,7 +74,7 @@
 		grid-column: 6/-1;
 		grid-row: auto;
 		border-top: none;
-		border-left: 2px solid black;
+		border-left: 2px solid rgba(11, 9, 11, 0.315);
 	}
 
 	.comparisonPanel .comparisonPanelContent {
@@ -346,7 +346,7 @@
 } */
 
 .codeContainer {
-	border: 1px solid black;
+	border: 1px solid rgba(0, 0, 0, 0.842);
 	background-color: rgba(245, 245, 245, 0.555);
 	border-radius: 0.5rem;
 }
@@ -354,7 +354,7 @@
 .codeContainer .codeCopy {
 	display: flex;
 	justify-content: end;
-	background-color: rgba(100, 100, 100, 0.555);
+	background-color: var(--secondary);
 	border-radius: 0.5rem 0.5rem 0 0;
 }
 
@@ -382,7 +382,6 @@
 	word-wrap: break-word;
 	font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo,
 		monospace;
-	/* color: gray; */
 }
 
 .codeContainer .code .fontQuery {
@@ -400,8 +399,7 @@
 	margin: 2rem 0;
 	top: var(--fonts-panel-height);
 	right: 12px;
-	background-color: #ffffff;
-	border-radius: 0.5rem;
+	background-color: var(--background);
 	transition: var(--transition-speed) var(--transition-timing-function);
 	z-index: 5;
 }
@@ -413,22 +411,21 @@
 	text-align: center;
 	height: 2.25rem;
 	width: 2.25rem;
-	background-color: #fff;
-	outline: 2px solid black;
+	background-color: var(--background);
+	outline: 2px solid var(--text);
 	transition: var(--transition-speed) step-start;
-	filter: drop-shadow(0px 0px 5px rgb(204, 204, 204));
+	/* filter: drop-shadow(0px 0px 5px #e2dae2); */
 }
 
 .comparisonSectionSelector label:hover,
 .comparisonSectionSelector label:focus-within {
-	background-color: rgb(236, 236, 236);
-	box-shadow: inset 4px 4px 4px 0px rgb(218, 218, 218);
+	background-color: #e2dae2;
+	/* box-shadow: inset 4px 4px 4px 0px rgb(218, 218, 218); */
 }
 
 .comparisonSectionSelector label.active {
-	background-color: rgb(236, 236, 236);
-	background-color: #e6e6e6;
-	box-shadow: inset 4px 4px 4px 0px rgb(236, 236, 236);
+	background-color: var(--secondary);
+	/* box-shadow: inset 4px 4px 4px 0px #c9c1c9; */
 }
 
 .comparisonSectionSelector label:first-of-type {
@@ -484,11 +481,11 @@
 	margin: 2rem 0;
 	height: 2.25rem;
 	width: 2.25rem;
-	outline: 2px solid black;
+	outline: 2px solid var(--primary);
 	border-radius: 0.5rem;
-	background-color: #fff;
+	background-color: var(--background) !important;
 	transition: var(--transition-speed) var(--transition-timing-function);
-	filter: drop-shadow(0px 0px 5px rgb(204, 204, 204));
+	filter: drop-shadow(0px 0px 5px #e2dae2);
 	z-index: 5;
 }
 
@@ -498,23 +495,15 @@
 } */
 
 .savePairButton:active {
-	background-color: #fff;
+	background-color: var(--background);
+	scale: 1.05;
+	outline: 2px solid var(--primary);
 	animation: vertical-shaking 200ms var(--transition-timing-function);
 }
 
 .savePairButton.saved:active {
 	animation: horizontal-shaking 200ms var(--transition-timing-function);
 }
-
-.savePairButton:focus {
-	/* border: 2px solid black; */
-	outline: 2px solid black;
-	outline-offset: 1px;
-}
-
-/* main#mainContent .savePairButton:focus svg {
-	background-color: #fff;
-} */
 
 @keyframes horizontal-shaking {
 	0% {
@@ -614,7 +603,7 @@
 	padding: 6px 10px;
 	width: fit-content;
 	height: auto;
-	border: 1px solid #000;
+	border: 1px solid var(--text);
 	border-radius: 1rem;
 	background-color: white;
 	font-size: 1rem;
@@ -630,12 +619,12 @@
 
 .variantSelector input.checkbox[type='checkbox']:checked + label.checkboxLabel {
 	color: #646464;
-	border: 1px solid #7a7a7a;
-	outline: 1px solid #7a7a7a;
+	border: 1px solid var(--primary);
+	outline: 1px solid var(--primary);
 }
 
 .variantSelector label.checkboxLabel:hover,
 .variantSelector input.checkbox[type='checkbox']:focus + label.checkboxLabel {
-	border: 1px solid #000000;
-	outline: 1px solid #000000;
+	border: 1px solid var(--text);
+	outline: 1px solid var(--text);
 }
