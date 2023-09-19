@@ -106,7 +106,7 @@ function CodeSectionStateHolder({ firstFont, secondFont, isDisabled }) {
 		() => formatHtmlUrlQuery(firstFont, firstVariantsCheckboxes),
 		[firstFont, firstVariantsCheckboxes]
 	);
-
+	// TODO: In case the two fonts are the same, do not produce de fontQuery and do not display the CSS Code twice.
 	const secondFontQuery = useMemo(
 		() => formatHtmlUrlQuery(secondFont, secondVariantsCheckboxes),
 		[secondFont, secondVariantsCheckboxes]

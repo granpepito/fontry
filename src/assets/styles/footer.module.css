@@ -4,16 +4,16 @@
 	align-items: start;
 	gap: 1rem;
 	padding: var(--header-padding-top-bottom) var(--header-padding-left-right);
-	border-top: 2px solid black;
+	border-top: 2px solid var(--text);
 }
 
 .footer > *::after {
-	border: 0px solid black;
+	border: 0px solid var(--text);
 	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
 .footer > *::after:hover {
-	border: 2px solid black;
+	border: 2px solid var(--text);
 }
 
 .footer .bracket {

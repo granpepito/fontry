@@ -8,15 +8,11 @@
 	cursor: pointer;
 	font-family: 'Lotion';
 	font-size: 1rem;
-}
-
-.buttonIcon:focus {
-	background-color: #e6e6e6;
 	border-radius: 8px;
 }
 
 .buttonIcon > svg:hover {
-	color: #555555;
+	color: #bbb4bb;
 }
 
 .buttonIcon:active > svg {
@@ -46,7 +42,7 @@
 	padding: 8px 10px;
 	height: 40px;
 	width: fit-content;
-	border: 1px solid #000;
+	border: 1px solid var(--text);
 	border-radius: 8px;
 	background: transparent;
 	font-size: 1rem;
@@ -56,25 +52,29 @@
 
 .button:hover,
 .button:focus,
+.button:active,
 .button.active {
-	color: black;
-	background-color: #e6e6e6;
-	outline: 1px solid #e6e6e6;
+	color: var(--background);
+	background-color: var(--accent);
+}
+
+.button:hover,
+.button:focus,
+.button.active {
+	outline: 1px solid var(--primary);
 }
 
 .button:focus {
-	outline: 1px solid #000000;
+	outline: 1px solid var(--text);
 }
 
-.button.active {
-	border-color: #e6e6e6;
+.button.active,
+.button:active {
+	border-color: var(--accent);
 }
 
 .button:active {
-	color: black;
-	background-color: #e6e6e6;
-	outline: 1px solid hsl(0, 0%, 75%);
-	border-color: #e6e6e6;
+	outline: 1px solid var(--secondary);
 }
 
 .searchBarLabel {
@@ -91,7 +91,7 @@
 }
 
 .searchBar:focus-within {
-	outline: 1px solid black;
+	outline: 1px solid var(--text);
 }
 
 .searchBarLabel .searchBar {
@@ -99,7 +99,7 @@
 	font-family: 'Lotion';
 	padding: 0.4375rem 2rem 0.4375rem 1rem;
 	width: 100%;
-	border: 1px solid black;
+	border: 1px solid var(--text);
 	border-radius: 20px;
 }
 

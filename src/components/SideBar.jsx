@@ -221,7 +221,12 @@ function SavedPair({
 				onChange={handleCheck}
 				disabled={!isSidebarOpen || !deletable}
 			/>
-			<div className={styles.savedPair} data-index={index} onClick={onClick}>
+			<div
+				className={styles.savedPair}
+				data-index={index}
+				onClick={onClick}
+				tabIndex={0}
+			>
 				<p>
 					1. <span>{firstFontFamily}</span>
 				</p>
