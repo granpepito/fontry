@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { forwardRef, useMemo, useRef } from 'react';
 import { usePair } from '../hooks/PairContext';
 import { useVariantsState } from '../hooks/useVariants';
 import { formatVariant } from '../functions/format';
@@ -16,7 +16,10 @@ import inputStyles from '/src/assets/styles/input.module.css';
  * @param {object} props
  * @param {boolean} props.isCurrentSection - Boolean value to tell if the CodeSection is the current section displayed.
  */
-export function CodeSection({ isCurrentSection }) {
+export const CodeSection = forwardRef(function CodeSection(
+	{ isCurrentSection },
+	ref
+) {
 	const pair = usePair();
 	const firstFont = pair.font1;
 	const secondFont = pair.font2;
@@ -30,6 +33,8 @@ export function CodeSection({ isCurrentSection }) {
 				styles.codeSection,
 				active,
 			].join(' ')}
+			id='code'
+			ref={ref}
 		>
 			<div className={styles.comparisonPanelTitle}>
 				<h2>Exportation pour HTML et CSS</h2>
@@ -45,7 +50,7 @@ export function CodeSection({ isCurrentSection }) {
 			</div>
 		</section>
 	);
-}
+});
 
 function CodeSectionStateHolder({ firstFont, secondFont, isDisabled }) {
 	const [firstVariantsCheckboxes, setFirstVariantsCheckboxes] =

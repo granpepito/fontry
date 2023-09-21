@@ -4,45 +4,50 @@ import styles from '/src/assets/styles/comparison-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
 import { ArrowLongRightIcon } from '@heroicons/react/20/solid';
+import { forwardRef } from 'react';
 
-export function TextualExampleComparisonSection({ isCurrentSection }) {
-	const pair = usePair();
-	const firstFont = pair.font1;
-	const secondFont = pair.font2;
-	const active = isCurrentSection ? styles.active : '';
+export const TextualExampleComparisonSection = forwardRef(
+	function TextualExampleComparisonSection({ isCurrentSection }, ref) {
+		const pair = usePair();
+		const firstFont = pair.font1;
+		const secondFont = pair.font2;
+		const active = isCurrentSection ? styles.active : '';
 
-	return (
-		<section
-			className={[
-				styles.comparisonPanelContent,
-				styles.textualSection,
-				active,
-			].join(' ')}
-		>
-			<div className={styles.comparisonPanelTitle}>
-				<h2>Visualisation Textuelle</h2>
-				<div className={styles.fontFamilies}>
-					<p>
-						Police 1 - <span>{firstFont.family ?? 'Lotion'}</span>
-					</p>
-					<p>
-						Police 2 - <span>{secondFont.family ?? 'Lotion'}</span>
-					</p>
+		return (
+			<section
+				className={[
+					styles.comparisonPanelContent,
+					styles.textualSection,
+					active,
+				].join(' ')}
+				id='textual-example'
+				ref={ref}
+			>
+				<div className={styles.comparisonPanelTitle}>
+					<h2>Visualisation Textuelle</h2>
+					<div className={styles.fontFamilies}>
+						<p>
+							Police 1 - <span>{firstFont.family ?? 'Lotion'}</span>
+						</p>
+						<p>
+							Police 2 - <span>{secondFont.family ?? 'Lotion'}</span>
+						</p>
+					</div>
 				</div>
-			</div>
-			<div className={styles.textualElementsContainer}>
-				<TextualElement type='title' fontFamily={firstFont.family} />
-				<TextualElement type='lead' fontFamily={firstFont.family} />
-				<TextualElement type='paragraph' fontFamily={secondFont.family} />
-				<TextualElement
-					type='actions'
-					fontFamily={secondFont.family}
-					isDisabled={!isCurrentSection}
-				/>
-			</div>
-		</section>
-	);
-}
+				<div className={styles.textualElementsContainer}>
+					<TextualElement type='title' fontFamily={firstFont.family} />
+					<TextualElement type='lead' fontFamily={firstFont.family} />
+					<TextualElement type='paragraph' fontFamily={secondFont.family} />
+					<TextualElement
+						type='actions'
+						fontFamily={secondFont.family}
+						isDisabled={!isCurrentSection}
+					/>
+				</div>
+			</section>
+		);
+	}
+);
 
 function TextualElement({ fontFamily, type, isDisabled = false }) {
 	const isLargeScreen = useIsLargeScreen(980);

@@ -1,55 +1,58 @@
 import { forwardRef, useCallback, useMemo } from 'react';
 import { usePair } from '../hooks/PairContext';
 import { useVariantsRef } from '../hooks/useVariants';
-// import { VariantSelector } from './VariantSelector';
 import { formatVariant } from '../functions/format';
-// import { variants, variantsState } from '../utils/variants';
 
 import styles from '/src/assets/styles/comparison-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
 
-export function AlphaNumComparisonSection({ isCurrentSection }) {
-	const pair = usePair();
-	const firstFont = pair.font1;
-	const secondFont = pair.font2;
-	const active = isCurrentSection ? styles.active : '';
-	return (
-		<section
-			className={[
-				styles.comparisonPanelContent,
-				styles.alphaNumSection,
-				active,
-			].join(' ')}
-		>
-			<div className={styles.comparisonPanelTitle}>
-				<h2>Comparaison Alphanumérique</h2>
-			</div>
-			<div className={styles.alphaNumContainer}>
-				<p className={styles.fontFamilies}>
-					Police 1 - <span>{firstFont.family ?? 'Lotion'}</span>
-				</p>
-				<AlphaNumGroup
-					key={firstFont.family}
-					family={firstFont.family}
-					variants={firstFont.variants}
-					isDisabled={!isCurrentSection}
-				/>
-			</div>
-			<div className={styles.alphaNumContainer}>
-				<p className={styles.fontFamilies}>
-					Police 2 - <span>{secondFont.family ?? 'Lotion'}</span>
-				</p>
+export const AlphaNumComparisonSection = forwardRef(
+	function AlphaNumComparisonSection({ isCurrentSection }, ref) {
+		const pair = usePair();
+		const firstFont = pair.font1;
+		const secondFont = pair.font2;
+		const active = isCurrentSection ? styles.active : '';
 
-				<AlphaNumGroup
-					key={secondFont.family}
-					family={secondFont.family}
-					variants={secondFont.variants}
-					isDisabled={!isCurrentSection}
-				/>
-			</div>
-		</section>
-	);
-}
+		return (
+			<section
+				className={[
+					styles.comparisonPanelContent,
+					styles.alphaNumSection,
+					active,
+				].join(' ')}
+				id='alpha-num'
+				ref={ref}
+			>
+				<div className={styles.comparisonPanelTitle}>
+					<h2>Comparaison Alphanumérique</h2>
+				</div>
+				<div className={styles.alphaNumContainer}>
+					<p className={styles.fontFamilies}>
+						Police 1 - <span>{firstFont.family ?? 'Lotion'}</span>
+					</p>
+					<AlphaNumGroup
+						key={firstFont.family}
+						family={firstFont.family}
+						variants={firstFont.variants}
+						isDisabled={!isCurrentSection}
+					/>
+				</div>
+				<div className={styles.alphaNumContainer}>
+					<p className={styles.fontFamilies}>
+						Police 2 - <span>{secondFont.family ?? 'Lotion'}</span>
+					</p>
+
+					<AlphaNumGroup
+						key={secondFont.family}
+						family={secondFont.family}
+						variants={secondFont.variants}
+						isDisabled={!isCurrentSection}
+					/>
+				</div>
+			</section>
+		);
+	}
+);
 
 /**
  * Renders an example of characters using the given font and variant.
