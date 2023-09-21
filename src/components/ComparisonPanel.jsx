@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePair } from '../hooks/PairContext';
 import { usePairStore } from '../hooks/usePairStore';
 import { AlphaNumComparisonSection } from './AlphaNumComparisonSection';
@@ -18,15 +18,6 @@ import iconStyles from '/src/assets/styles/icon.module.css';
 
 export function ComparisonPanel() {
 	const [currentSection, setCurrentSection] = useState('textual-example');
-
-	const handleComparisonSectionChange = useCallback(
-		function handleComparisonSectionChange(e) {
-			const section = e.target.value;
-
-			setCurrentSection(section);
-		},
-		[]
-	);
 
 	function handleInViewChange(inView, entry) {
 		if (inView) {
@@ -54,10 +45,7 @@ export function ComparisonPanel() {
 				</InView>
 			</div>
 			<>
-				<ComparisonSectionSelector
-					currentSection={currentSection}
-					onChange={handleComparisonSectionChange}
-				/>
+				<ComparisonSectionSelector currentSection={currentSection} />
 				<SavePairButton />
 			</>
 		</>
