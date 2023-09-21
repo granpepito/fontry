@@ -40,25 +40,17 @@ export function ComparisonPanel() {
 		<>
 			<div className={styles.comparisonPanel}>
 				<InView threshold={0.5} onChange={handleInViewChange}>
-					{({ inView, ref: textualSectionRef }) => (
-						<TextualExampleComparisonSection
-							isCurrentSection={inView}
-							ref={textualSectionRef}
-						/>
+					{({ ref: textualSectionRef }) => (
+						<TextualExampleComparisonSection ref={textualSectionRef} />
 					)}
 				</InView>
 				<InView threshold={0.5} onChange={handleInViewChange}>
-					{({ inView, ref: alphaNumSectionRef }) => (
-						<AlphaNumComparisonSection
-							isCurrentSection={inView}
-							ref={alphaNumSectionRef}
-						/>
+					{({ ref: alphaNumSectionRef }) => (
+						<AlphaNumComparisonSection ref={alphaNumSectionRef} />
 					)}
 				</InView>
 				<InView threshold={0.5} onChange={handleInViewChange}>
-					{({ inView, ref: codeSectionRef }) => (
-						<CodeSection isCurrentSection={inView} ref={codeSectionRef} />
-					)}
+					{({ ref: codeSectionRef }) => <CodeSection ref={codeSectionRef} />}
 				</InView>
 			</div>
 			<>
@@ -78,7 +70,6 @@ function ComparisonSectionSelector({ currentSection }) {
 
 	function handleClick(e) {
 		e.preventDefault();
-		console.log(e);
 		const { sectionId } = e.target.parentElement.dataset;
 
 		if (history && sectionId) {

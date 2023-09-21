@@ -18,35 +18,9 @@
 	flex-direction: column;
 	flex-wrap: nowrap;
 	gap: 20px;
-	/* height: calc(
-		var(--comparison-panel-height) - 2 *
-			var(--comparison-panel-padding-vertical)
-	); */
-	/* overflow-y: auto; */
 	transition: var(--transition-speed) var(--transition-timing-function);
 	margin: 0;
 }
-
-/* .comparisonPanel .comparisonPanelContent.textualSection {
-	translate: 0% calc(-100% - var(--comparison-panel-padding-vertical));
-}
-.comparisonPanel .comparisonPanelContent.alphaNumSection {
-	translate: 0% calc(-200% - var(--comparison-panel-padding-vertical));
-	padding-bottom: 0.5rem;
-	gap: 0;
-}
-.comparisonPanel .comparisonPanelContent.codeSection {
-	translate: 0% calc(-300% - var(--comparison-panel-padding-vertical));
-}
-.comparisonPanel .comparisonPanelContent.textualSection.active {
-	translate: 0% 0%;
-}
-.comparisonPanel .comparisonPanelContent.alphaNumSection.active {
-	translate: 0% -100%;
-}
-.comparisonPanel .comparisonPanelContent.codeSection.active {
-	translate: 0% -200%;
-} */
 
 .comparisonPanelContent .comparisonPanelTitle {
 	text-align: center;

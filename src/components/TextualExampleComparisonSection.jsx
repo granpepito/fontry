@@ -7,19 +7,16 @@ import { ArrowLongRightIcon } from '@heroicons/react/20/solid';
 import { forwardRef } from 'react';
 
 export const TextualExampleComparisonSection = forwardRef(
-	function TextualExampleComparisonSection({ isCurrentSection }, ref) {
+	function TextualExampleComparisonSection(_, ref) {
 		const pair = usePair();
 		const firstFont = pair.font1;
 		const secondFont = pair.font2;
-		const active = isCurrentSection ? styles.active : '';
 
 		return (
 			<section
-				className={[
-					styles.comparisonPanelContent,
-					styles.textualSection,
-					active,
-				].join(' ')}
+				className={[styles.comparisonPanelContent, styles.textualSection].join(
+					' '
+				)}
 				id='textual-example'
 				ref={ref}
 			>
@@ -38,18 +35,14 @@ export const TextualExampleComparisonSection = forwardRef(
 					<TextualElement type='title' fontFamily={firstFont.family} />
 					<TextualElement type='lead' fontFamily={firstFont.family} />
 					<TextualElement type='paragraph' fontFamily={secondFont.family} />
-					<TextualElement
-						type='actions'
-						fontFamily={secondFont.family}
-						isDisabled={!isCurrentSection}
-					/>
+					<TextualElement type='actions' fontFamily={secondFont.family} />
 				</div>
 			</section>
 		);
 	}
 );
 
-function TextualElement({ fontFamily, type, isDisabled = false }) {
+function TextualElement({ fontFamily, type }) {
 	const isLargeScreen = useIsLargeScreen(980);
 	let fontsPanelPosition = isLargeScreen ? 'À gauche' : 'En haut';
 
@@ -121,7 +114,6 @@ function TextualElement({ fontFamily, type, isDisabled = false }) {
 							className={[inputStyles.button, styles.button].join(' ')}
 							style={{ fontFamily }}
 							type='button'
-							disabled={isDisabled}
 						>
 							Un Bouton Inutile
 						</button>

@@ -7,19 +7,16 @@ import styles from '/src/assets/styles/comparison-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
 
 export const AlphaNumComparisonSection = forwardRef(
-	function AlphaNumComparisonSection({ isCurrentSection }, ref) {
+	function AlphaNumComparisonSection(_, ref) {
 		const pair = usePair();
 		const firstFont = pair.font1;
 		const secondFont = pair.font2;
-		const active = isCurrentSection ? styles.active : '';
 
 		return (
 			<section
-				className={[
-					styles.comparisonPanelContent,
-					styles.alphaNumSection,
-					active,
-				].join(' ')}
+				className={[styles.comparisonPanelContent, styles.alphaNumSection].join(
+					' '
+				)}
 				id='alpha-num'
 				ref={ref}
 			>
@@ -34,7 +31,6 @@ export const AlphaNumComparisonSection = forwardRef(
 						key={firstFont.family}
 						family={firstFont.family}
 						variants={firstFont.variants}
-						isDisabled={!isCurrentSection}
 					/>
 				</div>
 				<div className={styles.alphaNumContainer}>
@@ -46,7 +42,6 @@ export const AlphaNumComparisonSection = forwardRef(
 						key={secondFont.family}
 						family={secondFont.family}
 						variants={secondFont.variants}
-						isDisabled={!isCurrentSection}
 					/>
 				</div>
 			</section>
@@ -124,10 +119,9 @@ function VariantButton({ variant, onClick }) {
  * @param {Object} props
  * @param {string} props.family - Font Family name.
  * @param {string[]} props.variants - Array of variants of the same font.
- * @param {boolean} props.isDisabled - State of the fieldset of the component.
  * @returns
  */
-function AlphaNumGroup({ family, variants, isDisabled }) {
+function AlphaNumGroup({ family, variants }) {
 	const refs = useVariantsRef();
 
 	/**
@@ -173,10 +167,7 @@ function AlphaNumGroup({ family, variants, isDisabled }) {
 	return (
 		<div className={styles.alphaNumGroup}>
 			<div className={styles.alphaNumElementContainer}>{alphaNumElements}</div>
-			<fieldset
-				className={styles.variantButtonsContainer}
-				disabled={isDisabled}
-			>
+			<fieldset className={styles.variantButtonsContainer}>
 				{variantButtons}
 			</fieldset>
 		</div>
