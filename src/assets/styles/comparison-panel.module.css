@@ -6,7 +6,7 @@
 	padding: var(--comparison-panel-padding-vertical)
 		var(--comparison-panel-padding-horizontal);
 	overflow-y: scroll;
-	border-top: 2px solid rgba(11, 9, 11, 0.315);
+	border-top: 2px solid var(--text);
 	background-color: inherit;
 	/* border-radius: 0 8px 8px 0; */
 	/* z-index: 10; */
@@ -47,7 +47,7 @@
 		grid-column: 6/-1;
 		grid-row: auto;
 		border-top: none;
-		border-left: 2px solid rgba(11, 9, 11, 0.315);
+		border-left: 2px solid var(--text);
 	}
 
 	.comparisonPanel .comparisonPanelContent {
