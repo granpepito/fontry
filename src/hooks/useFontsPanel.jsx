@@ -7,6 +7,7 @@ import { getFonts, makePages } from '../functions/getFonts';
  * @param {FontsPanelState} initialState Initial State of the FontsPanel component.
  * @returns {[FontsPanelState, { setFonts: Function, setFontTab: Function, setCategory: Function, setMatch: Function, searchFonts: Function }]} Returns an array containing the current state of the FontsPanel component and a dispatch function.
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export function useFontsPanel(initialState) {
 	const [fontsPanelState, dispatch] = useReducer(
 		fontsPanelReducer,
@@ -60,7 +61,8 @@ export function useFontsPanel(initialState) {
 				setFonts(data);
 			})();
 		}
-	}, [fontsPanelState.fonts, setFonts]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [fontsPanelState.fonts]);
 
 	return [fontsPanelState, { setFontTab, setCategory, setMatch, searchFonts }];
 }
@@ -186,6 +188,7 @@ function escapeRegExp(string) {
  * @property {FontTabState} 2 - State for the tab of the second font.
  * @property {'1'|'2'|undefined} currentFontTab - Number of the current tab.
  */
+export const FontPanelState = {};
 
 /**
  * @typedef FontTabState

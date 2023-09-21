@@ -171,14 +171,13 @@ function SavePairButton() {
 				styles.savePairButton,
 				isSavedClassName,
 			].join(' ')}
-			type='button'
 			aria-label={isSaved ? 'Delete Pair' : 'Save Pair'}
 			onClick={handleClick}
 		>
 			{isSaved ? (
-				<SolidBookmarkIcon className={iconStyles.smallIcon} color='#3a303b' />
+				<SolidBookmarkIcon className={iconStyles.smallIcon} />
 			) : (
-				<OutlineBookmarkIcon className={iconStyles.smallIcon} color='#3a303b' />
+				<OutlineBookmarkIcon className={iconStyles.smallIcon} />
 			)}
 		</button>
 	);

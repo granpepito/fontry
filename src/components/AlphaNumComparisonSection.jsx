@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useMemo } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { usePair } from '../hooks/PairContext';
 import { useVariantsRef } from '../hooks/useVariants';
 import { formatVariant } from '../functions/format';
@@ -128,20 +128,17 @@ function AlphaNumGroup({ family, variants }) {
 	 * @callback handleVariantButtonClick Function to handle the click of a VariantButton component. Trigger a scroll animation to the corresponding AlphaNumElement component.
 	 * @param {Event} e - Event object.
 	 */
-	const handleClick = useCallback(
-		function handleClick(e) {
-			const { value } = e.target;
+	function handleClick(e) {
+		const { value } = e.target;
 
-			const ref = refs[value];
+		const ref = refs[value];
 
-			ref.current.scrollIntoView({
-				behavior: 'smooth',
-				block: 'nearest',
-				inline: 'center',
-			});
-		},
-		[refs]
-	);
+		ref.current.scrollIntoView({
+			behavior: 'smooth',
+			block: 'nearest',
+			inline: 'center',
+		});
+	}
 
 	const alphaNumElements = useMemo(
 		() =>
@@ -153,7 +150,8 @@ function AlphaNumGroup({ family, variants }) {
 					variant={formatVariant(variant)}
 				/>
 			)),
-		[family, refs, variants]
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[family, variants]
 	);
 
 	const variantButtons = useMemo(
@@ -161,7 +159,8 @@ function AlphaNumGroup({ family, variants }) {
 			variants.map((variant, index) => (
 				<VariantButton key={index} variant={variant} onClick={handleClick} />
 			)),
-		[handleClick, variants]
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[variants]
 	);
 
 	return (

@@ -15,25 +15,25 @@
 	padding-left: var(--font-selector-radio-container-padding-horizontal);
 	padding-right: var(--font-selector-radio-container-padding-horizontal);
 	width: 100%;
-	border-bottom: 2px solid var(--text);
+	border-bottom: 2px solid black;
 	text-align: center;
 	background-color: transparent;
-	box-shadow: inset 4px 4px 4px 0px rgba(11, 9, 11, 0.075);
+	box-shadow: inset 4px 4px 4px 0px rgba(0, 0, 0, 0.075);
 	transition: var(--transition-speed) step-start;
 }
 
 .radioContainer:first-of-type {
-	border-right: 2px solid var(--text);
+	border-right: 2px solid black;
 	border-radius: 8px 0 0 0;
 }
 
 .radioContainer:hover {
-	background-color: #c9c1c9;
+	background-color: #e6e6e6;
 	font-style: italic;
 }
 
 .radioContainer:focus-within {
-	background-color: #c9c1c9;
+	background-color: #e6e6e6;
 	font-style: italic;
 }
 
@@ -81,13 +81,11 @@
 
 .categorySection .buttonOpenSection:hover,
 .categorySection .buttonOpenSection:active {
-	color: var(--text);
-	background-color: var(--secondary);
+	background-color: #ececec;
 }
 
 .categorySection .buttonOpenSection > * {
-	transition: background-color (--transition-speed)
-		var(--transition-timing-function);
+	transition: var(--transition-speed) var(--transition-timing-function);
 }
 
 .categorySection.empty .buttonOpenSection > * {
@@ -114,7 +112,7 @@
 .categorySection .buttonOpenSection .circleIndicator.hasCurrentFont {
 	height: 8px;
 	width: 8px;
-	background-color: var(--text);
+	background-color: rgb(0, 0, 0);
 }
 
 .fontsContainer .fieldset {
@@ -146,4 +144,10 @@
 	align-items: start;
 	align-content: start;
 	gap: 8px 10px;
+}
+
+@media screen and (min-width: 980px) {
+}
+
+@media screen and (min-width: 1440px) {
 }
