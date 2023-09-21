@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useCallback } from 'react';
 import debounce from 'lodash.debounce';
 import { useInView } from 'react-intersection-observer';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
@@ -14,19 +14,20 @@ import iconStyles from '/src/assets/styles/icon.module.css';
  * Component where the user can find fonts and choose them.
  */
 export function FontsPanel() {
-	const [fontsPanelState, dispatch] = useFontsPanel({
-		1: {
-			category: '',
-			match: '',
-			fonts: {},
-		},
-		2: {
-			category: '',
-			match: '',
-			fonts: {},
-		},
-		currentFontTab: '1',
-	});
+	const [fontsPanelState, { searchFonts, setFontTab, setMatch, setCategory }] =
+		useFontsPanel({
+			1: {
+				category: '',
+				match: '',
+				fonts: {},
+			},
+			2: {
+				category: '',
+				match: '',
+				fonts: {},
+			},
+			currentFontTab: '1',
+		});
 
 	const { currentFontTab } = fontsPanelState;
 	const { category, match } = fontsPanelState[currentFontTab];
@@ -42,23 +43,26 @@ export function FontsPanel() {
 	 * @param {Event} e - Event
 	 */
 	function handleFontTabSelectorChange(e) {
-		dispatch.setFontTab(e.target.value);
+		setFontTab(e.target.value);
 	}
 
-	/**
-	 * @callback handleSearch - Sets the fonts that are going to be displayed based on "match" variable. Changes the state of the FontsPanel component.
-	 * @param {Event} e - Event
-	 */
-	function handleSearch(e) {
-		dispatch.searchFonts(e.target.value);
-	}
+	const handleSearch = useCallback(
+		/**
+		 * @callback handleSearch - Sets the fonts that are going to be displayed based on "match" variable. Changes the state of the FontsPanel component.
+		 * @param {Event} e - Event
+		 */
+		function handleSearch(e) {
+			searchFonts(e.target.value);
+		},
+		[searchFonts]
+	);
 
 	/**
-	 * @callback setMatch - Sets the match property of the current font panel tab. Changes the state of the FontsPanel component.
+	 * @callback updateMatch - Sets the match property of the current font panel tab. Changes the state of the FontsPanel component.
 	 * @param {Event} e - Event
 	 */
-	function setMatch(e) {
-		dispatch.setMatch(e.target.value);
+	function updateMatch(e) {
+		setMatch(e.target.value);
 	}
 
 	/**
@@ -68,7 +72,7 @@ export function FontsPanel() {
 	function handleFontCategoryButtonClick(e) {
 		const category = e.target.value;
 
-		dispatch.setCategory(category);
+		setCategory(category);
 	}
 
 	/**
@@ -83,8 +87,7 @@ export function FontsPanel() {
 
 	const debouncedOnChangeHandler = useMemo(
 		() => debounce(handleSearch, 400),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[]
+		[handleSearch]
 	);
 
 	// Stop the invocation of the debounced function after unmounting
@@ -103,7 +106,7 @@ export function FontsPanel() {
 			<div className={styles.fontCategorySectionsContainer}>
 				<SearchBar
 					onSearch={debouncedOnChangeHandler}
-					onChange={setMatch}
+					onChange={updateMatch}
 					value={match}
 				/>
 				<FontCategorySection
@@ -300,6 +303,7 @@ function FontCategorySection({
 					styles.buttonOpenSection,
 					openSectionClassName,
 				].join(' ')}
+				type='button'
 				value={fontCategoryName}
 				onClick={onClick}
 			>
@@ -348,8 +352,7 @@ function FontButtonPage({
 		if (inView) {
 			loadMultipleFonts(fonts, true);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [inView]);
+	}, [fonts, inView]);
 
 	const fontButtons = fonts.map((font, index) => {
 		return (
@@ -399,7 +402,7 @@ function FontButton({ fontData, onClick, currentFontTab }) {
 			data-font={JSON.stringify(fontData)}
 			onClick={onClick}
 			style={{
-				fontFamily: `${family}, ${
+				fontFamily: `"${family}", ${
 					(category === 'display') | (category === 'handwriting')
 						? 'cursive'
 						: category

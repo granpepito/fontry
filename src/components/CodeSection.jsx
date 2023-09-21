@@ -101,7 +101,7 @@ function CodeSectionStateHolder({ firstFont, secondFont }) {
 		() => formatHtmlUrlQuery(firstFont, firstVariantsCheckboxes),
 		[firstFont, firstVariantsCheckboxes]
 	);
-
+	// TODO: In case the two fonts are the same, do not produce de fontQuery and do not display the CSS Code twice.
 	const secondFontQuery = useMemo(
 		() => formatHtmlUrlQuery(secondFont, secondVariantsCheckboxes),
 		[secondFont, secondVariantsCheckboxes]
@@ -214,8 +214,7 @@ function VariantSelector({
 				/>
 			);
 		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [firstFont, firstVariantsCheckboxes]);
+	}, [firstFont, firstVariantsCheckboxes, onFirstFontVariantChange]);
 
 	const secondVariants = useMemo(() => {
 		const { family, variants } = secondFont;
@@ -229,8 +228,7 @@ function VariantSelector({
 				/>
 			);
 		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [secondFont, secondVariantsCheckboxes]);
+	}, [secondFont, secondVariantsCheckboxes, onSecondFontVariantChange]);
 
 	return (
 		<div className={styles.variantSelectorContainer}>
@@ -270,6 +268,7 @@ function Code({ children }) {
 			<div className={styles.codeCopy}>
 				<button
 					className={[inputStyles.buttonIcon, styles.copyButton].join(' ')}
+					type='button'
 					aria-label='Copy Text'
 					onClick={handleClick}
 				>
