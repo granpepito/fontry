@@ -121,7 +121,7 @@ function TextualElement({ fontFamily, type, isDisabled = false }) {
 							Un Bouton Inutile
 						</button>
 						<span>
-							<a href='javascript:void(0)'>
+							<a href='#' onClick={(e) => e.preventDefault()}>
 								<ArrowLongRightIcon
 									className={[iconStyles.smallIcon, styles.icon].join(' ')}
 								/>
@@ -129,7 +129,7 @@ function TextualElement({ fontFamily, type, isDisabled = false }) {
 							</a>
 						</span>
 						<span>
-							<a href='javascript:void(0)'>
+							<a href='#' onClick={(e) => e.preventDefault()}>
 								<ArrowLongRightIcon
 									className={[iconStyles.smallIcon, styles.icon].join(' ')}
 								/>
