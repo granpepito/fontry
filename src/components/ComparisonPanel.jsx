@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePair } from '../hooks/PairContext';
 import { usePairStore } from '../hooks/usePairStore';
 import { AlphaNumComparisonSection } from './AlphaNumComparisonSection';
 import { TextualExampleComparisonSection } from './TextualExampleComparisonSection';
 import { CodeSection } from './CodeSection';
+import { InView } from 'react-intersection-observer';
 import { BookmarkIcon as OutlineBookmarkIcon } from '@heroicons/react/24/outline';
 import { BookmarkIcon as SolidBookmarkIcon } from '@heroicons/react/24/solid';
 
@@ -16,111 +17,127 @@ import inputStyles from '/src/assets/styles/input.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
 
 export function ComparisonPanel() {
-	const [currentSection, setCurrentSection] = useState('textual');
+	const [currentSection, setCurrentSection] = useState('textual-example');
 
-	const handleComparisonSectionChange = useCallback(
-		function handleComparisonSectionChange(e) {
-			const section = e.target.value;
+	function handleInViewChange(inView, entry) {
+		if (inView) {
+			const sectionId = entry.target.id;
 
-			setCurrentSection(section);
-		},
-		[]
-	);
+			setCurrentSection(sectionId);
+		}
+	}
 
 	return (
 		<>
 			<div className={styles.comparisonPanel}>
-				<TextualExampleComparisonSection
-					isCurrentSection={currentSection === 'textual'}
-				/>
-				<AlphaNumComparisonSection
-					isCurrentSection={currentSection === 'alphanum'}
-				/>
-				<CodeSection isCurrentSection={currentSection === 'code'} />
+				<InView threshold={0.2} onChange={handleInViewChange}>
+					{({ ref: textualSectionRef }) => (
+						<TextualExampleComparisonSection ref={textualSectionRef} />
+					)}
+				</InView>
+				<InView threshold={0.2} onChange={handleInViewChange}>
+					{({ ref: alphaNumSectionRef }) => (
+						<AlphaNumComparisonSection ref={alphaNumSectionRef} />
+					)}
+				</InView>
+				<InView threshold={0.2} onChange={handleInViewChange}>
+					{({ ref: codeSectionRef }) => <CodeSection ref={codeSectionRef} />}
+				</InView>
 			</div>
 			<>
-				<ComparisonSectionSelector
-					currentSection={currentSection}
-					onChange={handleComparisonSectionChange}
-				/>
+				<ComparisonSectionSelector currentSection={currentSection} />
 				<SavePairButton />
 			</>
 		</>
 	);
 }
 
-function ComparisonSectionSelector({ currentSection, onChange }) {
-	const alphaNum = 'alphanum',
-		textual = 'textual',
-		code = 'code';
-
+function ComparisonSectionSelector({ currentSection }) {
 	const active = (sectionName) =>
 		sectionName === currentSection ? styles.active : '';
 
+	function handleClick(e) {
+		e.preventDefault();
+		const { sectionId } = e.target.parentElement.dataset;
+
+		if (history && sectionId) {
+			history.pushState(sectionId, '', `#${sectionId}`);
+		}
+
+		const section = document.getElementById(sectionId);
+		section.scrollIntoView({
+			behavior: 'smooth',
+			block: 'start',
+			inline: 'nearest',
+		});
+	}
+
 	return (
-		<fieldset
+		<nav
 			className={[
 				inputStyles.radioGroupContainer,
 				styles.comparisonSectionSelector,
 			].join(' ')}
 		>
-			<label className={[styles.textualRadioLabel, active(textual)].join(' ')}>
-				<img
-					style={{
-						height: '24px',
-						width: '25px',
-					}}
-					alt='Textual Section Icon'
-					src={textualSectionIcon}
-				/>
-				<input
-					id={`${textual}-select`}
-					name='comparison-selector'
-					type='radio'
-					value={textual}
-					checked={currentSection === textual}
-					onChange={onChange}
-				/>
-			</label>
-			<label
-				className={[styles.alphaNumRadioLabel, active(alphaNum)].join(' ')}
-			>
-				<img
-					style={{
-						height: '24px',
-						width: '24px',
-					}}
-					alt='Alpha Numerical Section Icon'
-					src={alphaNumericalSectionIcon}
-				/>
-				<input
-					id={`${alphaNum}-select`}
-					name='comparison-selector'
-					type='radio'
-					value={alphaNum}
-					checked={currentSection === alphaNum}
-					onChange={onChange}
-				/>
-			</label>
-			<label className={[styles.codeRadioLabel, active(code)].join(' ')}>
-				<img
-					style={{
-						height: '24px',
-						width: '24px',
-					}}
-					alt='Export Section Icon'
-					src={htmlCssSectionIcon}
-				/>
-				<input
-					id={`${code}-select`}
-					name='comparison-selector'
-					type='radio'
-					value={code}
-					checked={currentSection === code}
-					onChange={onChange}
-				/>
-			</label>
-		</fieldset>
+			<ul>
+				<li>
+					<a
+						id='textual-example-selector'
+						className={[styles.textualSelector, active('textual-example')].join(
+							' '
+						)}
+						href='#textual-example'
+						onClick={handleClick}
+						data-section-id={'textual-example'}
+					>
+						<img
+							style={{
+								height: '24px',
+								width: '25px',
+							}}
+							alt='Textual Section Icon'
+							src={textualSectionIcon}
+						/>
+					</a>
+				</li>
+				<li>
+					<a
+						id='alpha-num-selector'
+						className={[styles.alphaNumSelector, active('alpha-num')].join(' ')}
+						href='#alpha-num'
+						onClick={handleClick}
+						data-section-id={'alpha-num'}
+					>
+						<img
+							style={{
+								height: '24px',
+								width: '24px',
+							}}
+							alt='Alpha Numerical Section Icon'
+							src={alphaNumericalSectionIcon}
+						/>
+					</a>
+				</li>
+				<li>
+					<a
+						id='code-selector'
+						className={[styles.codeSelector, active('code')].join(' ')}
+						href='#code'
+						onClick={handleClick}
+						data-section-id={'code'}
+					>
+						<img
+							style={{
+								height: '24px',
+								width: '24px',
+							}}
+							alt='Export Section Icon'
+							src={htmlCssSectionIcon}
+						/>
+					</a>
+				</li>
+			</ul>
+		</nav>
 	);
 }
 

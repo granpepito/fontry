@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { forwardRef, useMemo, useRef } from 'react';
 import { usePair } from '../hooks/PairContext';
 import { useVariantsState } from '../hooks/useVariants';
 import { formatVariant } from '../functions/format';
@@ -16,20 +16,16 @@ import inputStyles from '/src/assets/styles/input.module.css';
  * @param {object} props
  * @param {boolean} props.isCurrentSection - Boolean value to tell if the CodeSection is the current section displayed.
  */
-export function CodeSection({ isCurrentSection }) {
+export const CodeSection = forwardRef(function CodeSection(_, ref) {
 	const pair = usePair();
 	const firstFont = pair.font1;
 	const secondFont = pair.font2;
 
-	const active = isCurrentSection ? styles.active : '';
-
 	return (
 		<section
-			className={[
-				styles.comparisonPanelContent,
-				styles.codeSection,
-				active,
-			].join(' ')}
+			className={[styles.comparisonPanelContent, styles.codeSection].join(' ')}
+			id='code'
+			ref={ref}
 		>
 			<div className={styles.comparisonPanelTitle}>
 				<h2>Exportation pour HTML et CSS</h2>
@@ -40,14 +36,13 @@ export function CodeSection({ isCurrentSection }) {
 					key={`${firstFont.family}-${secondFont.family}`}
 					firstFont={firstFont}
 					secondFont={secondFont}
-					isDisabled={!isCurrentSection}
 				/>
 			</div>
 		</section>
 	);
-}
+});
 
-function CodeSectionStateHolder({ firstFont, secondFont, isDisabled }) {
+function CodeSectionStateHolder({ firstFont, secondFont }) {
 	const [firstVariantsCheckboxes, setFirstVariantsCheckboxes] =
 		useVariantsState(firstFont.variants);
 	const [secondVariantsCheckboxes, setSecondVariantsCheckboxes] =
@@ -123,14 +118,13 @@ function CodeSectionStateHolder({ firstFont, secondFont, isDisabled }) {
 					secondVariantsCheckboxes={secondVariantsCheckboxes}
 					onFirstFontVariantChange={onFirstFontVariantChange}
 					onSecondFontVariantChange={onSecondFontVariantChange}
-					isDisabled={isDisabled}
 				/>
 			</div>
 			<div className={styles.htmlCode}>
 				<h3>
 					HTML <span style={{ fontStyle: 'italic' }}>{'<link>'}</span>
 				</h3>
-				<Code isDisabled={isDisabled}>
+				<Code>
 					{`<link rel="preconnect" href="https://fonts.googleapis.com">`}
 					<br />
 					{`<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>`}
@@ -143,7 +137,7 @@ function CodeSectionStateHolder({ firstFont, secondFont, isDisabled }) {
 			</div>
 			<div className={styles.cssCode}>
 				<h3>CSS</h3>
-				<Code isDisabled={isDisabled}>
+				<Code>
 					<CssCode font={firstFont} />
 					<CssCode font={secondFont} />
 				</Code>
@@ -199,7 +193,6 @@ function VariantCheckbox({ family, variant, checked, onChange }) {
  * @param {} props.secondVariantsCheckboxes - State of the cehckboxes of the second font.
  * @param {Function} props.onFirstFontVariantChange -
  * @param {Function} props.onSecondFontVariantChange - Update the state of the 'secondCheckedVariants'
- * @param {boolean} props.isDisabled - Disables the fieldsets.
  */
 function VariantSelector({
 	firstFont,
@@ -208,7 +201,6 @@ function VariantSelector({
 	secondVariantsCheckboxes,
 	onFirstFontVariantChange,
 	onSecondFontVariantChange,
-	isDisabled,
 }) {
 	const firstVariants = useMemo(() => {
 		const { family, variants } = firstFont;
@@ -246,14 +238,14 @@ function VariantSelector({
 				Police 1 -{' '}
 				<span className={styles.fontFamily}>{firstFont?.family}</span>
 			</span>
-			<fieldset className={styles.variantSelector} disabled={isDisabled}>
+			<fieldset className={styles.variantSelector}>
 				<div className={styles.variants}>{firstVariants}</div>
 			</fieldset>
 			<span>
 				Police 2 -{' '}
 				<span className={styles.fontFamily}>{secondFont?.family}</span>
 			</span>
-			<fieldset className={styles.variantSelector} disabled={isDisabled}>
+			<fieldset className={styles.variantSelector}>
 				<div className={styles.variants}>{secondVariants}</div>
 			</fieldset>
 		</div>
@@ -264,9 +256,8 @@ function VariantSelector({
  * Renders a box where its content is written is a monospace font to represent code and with a button to copy its content.
  * @param {Object} props - Props of the component.
  * @param {React.ReactNode} props.children - Content of the component.
- * @param {boolean} props.isDisabled - Disables the button inside the component.
  */
-function Code({ children, isDisabled }) {
+function Code({ children }) {
 	const codeContentRef = useRef(null);
 	const svgRef = useRef(null);
 
@@ -281,7 +272,6 @@ function Code({ children, isDisabled }) {
 					className={[inputStyles.buttonIcon, styles.copyButton].join(' ')}
 					aria-label='Copy Text'
 					onClick={handleClick}
-					disabled={isDisabled}
 				>
 					<ClipboardCheckIcon ref={svgRef} />
 				</button>

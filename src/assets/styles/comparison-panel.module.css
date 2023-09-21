@@ -5,8 +5,8 @@
 	height: var(--comparison-panel-height);
 	padding: var(--comparison-panel-padding-vertical)
 		var(--comparison-panel-padding-horizontal);
-	overflow-y: hidden;
-	border-top: 2px solid black;
+	overflow-y: scroll;
+	border-top: 2px solid var(--text);
 	background-color: inherit;
 	/* border-radius: 0 8px 8px 0; */
 	/* z-index: 10; */
@@ -18,35 +18,8 @@
 	flex-direction: column;
 	flex-wrap: nowrap;
 	gap: 20px;
-	height: calc(
-		var(--comparison-panel-height) - 2 *
-			var(--comparison-panel-padding-vertical)
-	);
-	overflow-y: auto;
 	transition: var(--transition-speed) var(--transition-timing-function);
 	margin: 0;
-}
-
-.comparisonPanel .comparisonPanelContent.textualSection {
-	translate: 0% calc(-100% - var(--comparison-panel-padding-vertical));
-	/* gap: 30px; */
-}
-.comparisonPanel .comparisonPanelContent.alphaNumSection {
-	translate: 0% calc(-200% - var(--comparison-panel-padding-vertical));
-	padding-bottom: 0.5rem;
-	gap: 0;
-}
-.comparisonPanel .comparisonPanelContent.codeSection {
-	translate: 0% calc(-300% - var(--comparison-panel-padding-vertical));
-}
-.comparisonPanel .comparisonPanelContent.textualSection.active {
-	translate: 0% 0%;
-}
-.comparisonPanel .comparisonPanelContent.alphaNumSection.active {
-	translate: 0% -100%;
-}
-.comparisonPanel .comparisonPanelContent.codeSection.active {
-	translate: 0% -200%;
 }
 
 .comparisonPanelContent .comparisonPanelTitle {
@@ -56,7 +29,7 @@
 .comparisonPanelContent .comparisonPanelTitle h2 {
 	letter-spacing: 2px;
 	text-decoration: underline;
-	/* margin-left: auto; */
+	margin-top: 2rem;
 	margin-right: 3rem;
 }
 
@@ -74,7 +47,7 @@
 		grid-column: 6/-1;
 		grid-row: auto;
 		border-top: none;
-		border-left: 2px solid black;
+		border-left: 2px solid var(--text);
 	}
 
 	.comparisonPanel .comparisonPanelContent {
@@ -96,26 +69,12 @@
 /*--------------------------------------------------------------*/
 /* AlphaNumComparisonSection */
 /*--------------------------------------------------------------*/
-/* .comparisonPanelContent .alphaNumFontContainer > div {
-	display: flex;
-	flex-grow: 1;
-	flex-wrap: wrap;
-	align-items: flex-end;
-	justify-content: space-evenly;
-	text-align: center;
-} */
-
-/* .comparisonPanelContent
-	.alphaNumFontContainer
-	.alphaNumElementContainer:first-child {
-	margin-right: 0.5rem;
+.comparisonPanelContent .alphaNumSection {
+	height: calc(
+		var(--comparison-panel-height) - 2 *
+			var(--comparison-panel-padding-vertical)
+	);
 }
-
-.comparisonPanelContent
-	.alphaNumFontContainer
-	.alphaNumElementContainer:nth-child(2) {
-	margin-left: 0.5rem;
-} */
 
 .comparisonPanelContent .alphaNumContainer {
 	width: 100%;
@@ -176,6 +135,13 @@
 /*--------------------------------------------------------------*/
 /* TextualExampleComparisonSection */
 /*--------------------------------------------------------------*/
+.comparisonPanelContent .textualSection {
+	min-height: calc(
+		var(--comparison-panel-height) - 2 *
+			var(--comparison-panel-padding-vertical)
+	);
+}
+
 .comparisonPanelContent .textualElementsContainer {
 	display: flex;
 	flex-direction: column;
@@ -276,10 +242,12 @@
 /*--------------------------------------------------------------*/
 /* CodeSection */
 /*--------------------------------------------------------------*/
-/* .codeSection h2 {
-	text-align: center;
-	text-decoration: underline;
-} */
+.codeSection {
+	height: calc(
+		var(--comparison-panel-height) - 2 *
+			var(--comparison-panel-padding-vertical)
+	);
+}
 
 .codeSection .codeSectionContainers {
 	width: 100%;
@@ -394,66 +362,80 @@
 /*--------------------------------------------------------------*/
 .comparisonSectionSelector {
 	position: absolute;
-	display: flex;
-	flex-direction: column;
-	gap: 2px;
 	margin: 2rem 0;
 	top: var(--fonts-panel-height);
 	right: 12px;
-	background-color: #ffffff;
-	border-radius: 0.5rem;
-	transition: var(--transition-speed) var(--transition-timing-function);
+	background-color: var(--background);
 	z-index: 5;
 }
 
-.comparisonSectionSelector label {
+.comparisonSectionSelector > ul {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	margin: 0;
+	padding: 0;
+	transition: var(--transition-speed) var(--transition-timing-function);
+}
+
+.comparisonSectionSelector > ul > li {
+	list-style: none;
+}
+
+.comparisonSectionSelector > ul > li a {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	text-align: center;
 	height: 2.25rem;
 	width: 2.25rem;
-	background-color: #fff;
-	outline: 2px solid black;
+	background-color: var(--background);
+	outline: 2px solid var(--primary);
 	transition: var(--transition-speed) step-start;
 	filter: drop-shadow(0px 0px 5px rgb(204, 204, 204));
 }
 
-.comparisonSectionSelector label:hover,
-.comparisonSectionSelector label:focus-within {
-	background-color: rgb(236, 236, 236);
-	box-shadow: inset 4px 4px 4px 0px rgb(218, 218, 218);
+.comparisonSectionSelector > ul > li a::before {
+	width: 0;
+	height: 0;
+	background-color: none;
+	content: '';
 }
 
-.comparisonSectionSelector label.active {
-	background-color: rgb(236, 236, 236);
-	background-color: #e6e6e6;
-	box-shadow: inset 4px 4px 4px 0px rgb(236, 236, 236);
+.comparisonSectionSelector > ul > li a::after {
+	width: 0;
+	height: 0;
+	background-color: none;
+	content: '';
 }
 
-.comparisonSectionSelector label:first-of-type {
+.comparisonSectionSelector > ul > li a:hover,
+.comparisonSectionSelector > ul > li a:focus-within {
+	background-color: #e2dae2;
+	/* box-shadow: inset 4px 4px 4px 0px rgb(218, 218, 218); */
+}
+
+.comparisonSectionSelector > ul > li a.active {
+	background-color: var(--secondary);
+	/* box-shadow: inset 4px 4px 4px 0px #c9c1c9; */
+}
+
+.comparisonSectionSelector > ul > li:first-of-type a {
 	border-radius: 0.5rem 0.5rem 0 0;
 }
 
-.comparisonSectionSelector label.textualRadioLabel {
+.comparisonSectionSelector > ul > li a.textualSelector {
 	font-size: 1.125rem;
 	font-style: italic;
 }
 
-.comparisonSectionSelector label.textualRadioLabel .bodyTextIcon {
+.comparisonSectionSelector > ul > li a.textualSelector .bodyTextIcon {
 	height: 1rem;
 	width: 1rem;
 }
 
-.comparisonSectionSelector label:last-of-type {
+.comparisonSectionSelector > ul > li:last-of-type a {
 	border-radius: 0 0 0.5rem 0.5rem;
-}
-
-.comparisonSectionSelector label > input[type='radio'] {
-	width: 0;
-	height: 0;
-	margin: 0;
-	opacity: 0;
 }
 
 @media screen and (min-width: 980px) {

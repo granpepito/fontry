@@ -1,55 +1,53 @@
 import { forwardRef, useMemo } from 'react';
 import { usePair } from '../hooks/PairContext';
 import { useVariantsRef } from '../hooks/useVariants';
-// import { VariantSelector } from './VariantSelector';
 import { formatVariant } from '../functions/format';
-// import { variants, variantsState } from '../utils/variants';
 
 import styles from '/src/assets/styles/comparison-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
 
-export function AlphaNumComparisonSection({ isCurrentSection }) {
-	const pair = usePair();
-	const firstFont = pair.font1;
-	const secondFont = pair.font2;
-	const active = isCurrentSection ? styles.active : '';
-	return (
-		<section
-			className={[
-				styles.comparisonPanelContent,
-				styles.alphaNumSection,
-				active,
-			].join(' ')}
-		>
-			<div className={styles.comparisonPanelTitle}>
-				<h2>Comparaison Alphanumérique</h2>
-			</div>
-			<div className={styles.alphaNumContainer}>
-				<p className={styles.fontFamilies}>
-					Police 1 - <span>{firstFont.family ?? 'Lotion'}</span>
-				</p>
-				<AlphaNumGroup
-					key={firstFont.family}
-					family={firstFont.family}
-					variants={firstFont.variants}
-					isDisabled={!isCurrentSection}
-				/>
-			</div>
-			<div className={styles.alphaNumContainer}>
-				<p className={styles.fontFamilies}>
-					Police 2 - <span>{secondFont.family ?? 'Lotion'}</span>
-				</p>
+export const AlphaNumComparisonSection = forwardRef(
+	function AlphaNumComparisonSection(_, ref) {
+		const pair = usePair();
+		const firstFont = pair.font1;
+		const secondFont = pair.font2;
 
-				<AlphaNumGroup
-					key={secondFont.family}
-					family={secondFont.family}
-					variants={secondFont.variants}
-					isDisabled={!isCurrentSection}
-				/>
-			</div>
-		</section>
-	);
-}
+		return (
+			<section
+				className={[styles.comparisonPanelContent, styles.alphaNumSection].join(
+					' '
+				)}
+				id='alpha-num'
+				ref={ref}
+			>
+				<div className={styles.comparisonPanelTitle}>
+					<h2>Comparaison Alphanumérique</h2>
+				</div>
+				<div className={styles.alphaNumContainer}>
+					<p className={styles.fontFamilies}>
+						Police 1 - <span>{firstFont.family ?? 'Lotion'}</span>
+					</p>
+					<AlphaNumGroup
+						key={firstFont.family}
+						family={firstFont.family}
+						variants={firstFont.variants}
+					/>
+				</div>
+				<div className={styles.alphaNumContainer}>
+					<p className={styles.fontFamilies}>
+						Police 2 - <span>{secondFont.family ?? 'Lotion'}</span>
+					</p>
+
+					<AlphaNumGroup
+						key={secondFont.family}
+						family={secondFont.family}
+						variants={secondFont.variants}
+					/>
+				</div>
+			</section>
+		);
+	}
+);
 
 /**
  * Renders an example of characters using the given font and variant.
@@ -121,10 +119,9 @@ function VariantButton({ variant, onClick }) {
  * @param {Object} props
  * @param {string} props.family - Font Family name.
  * @param {string[]} props.variants - Array of variants of the same font.
- * @param {boolean} props.isDisabled - State of the fieldset of the component.
  * @returns
  */
-function AlphaNumGroup({ family, variants, isDisabled }) {
+function AlphaNumGroup({ family, variants }) {
 	const refs = useVariantsRef();
 
 	/**
@@ -169,10 +166,7 @@ function AlphaNumGroup({ family, variants, isDisabled }) {
 	return (
 		<div className={styles.alphaNumGroup}>
 			<div className={styles.alphaNumElementContainer}>{alphaNumElements}</div>
-			<fieldset
-				className={styles.variantButtonsContainer}
-				disabled={isDisabled}
-			>
+			<fieldset className={styles.variantButtonsContainer}>
 				{variantButtons}
 			</fieldset>
 		</div>

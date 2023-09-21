@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { usePair } from '../hooks/PairContext';
 import { usePairStore } from '../hooks/usePairStore';
 import { usePairDispatch } from '../hooks/PairContext';
 import {
@@ -25,11 +26,13 @@ import iconStyles from '/src/assets/styles/icon.module.css';
  * @param {{ onClick: Function, isOpen: boolean}} props
  */
 export function SideBar({ onClick, onSavePairClick, isOpen }) {
-	const sideBarContainerOpen = isOpen ? styles.open : '';
 	const [checkboxesEnabled, setCheckboxesEnabled] = useState(false);
 	const [pairsToDelete, setPairsToDelete] = useState([]);
+	const currentPair = usePair();
 	const { changePair } = usePairDispatch();
 	const { pairs, removePairsByIndex } = usePairStore();
+
+	const sideBarContainerOpen = isOpen ? styles.open : '';
 	const hideEnableCheckboxesButtonClassName = checkboxesEnabled
 		? styles.hide
 		: '';
@@ -74,12 +77,17 @@ export function SideBar({ onClick, onSavePairClick, isOpen }) {
 
 	const savedPairs = pairs.map((pair, index) => {
 		if (pair.id && pair.font1 && pair.font2) {
+			const firstFontFamily = pair.font1?.family;
+			const secondFontFamily = pair.font2?.family;
+			const isCurrentPair =
+				currentPair.font1.family === firstFontFamily &&
+				currentPair.font2.family === secondFontFamily;
+
 			return (
 				<SavedPair
 					key={pair.id}
 					index={index}
-					firstFontFamily={pair.font1?.family}
-					secondFontFamily={pair.font2?.family}
+					{...{ firstFontFamily, secondFontFamily, isCurrentPair }}
 					checked={pairsToDelete.includes(index)}
 					deletable={checkboxesEnabled}
 					isSidebarOpen={isOpen}
@@ -186,9 +194,10 @@ export function SideBar({ onClick, onSavePairClick, isOpen }) {
  * @param {{index: string, firstFontFamily: string, secondFontFamily: string, onClick: Function}} props
  */
 function SavedPair({
-	index: index,
+	index,
 	firstFontFamily,
 	secondFontFamily,
+	isCurrentPair,
 	checked,
 	deletable,
 	isSidebarOpen,
@@ -199,6 +208,7 @@ function SavedPair({
 	const deleteCheckboxClassNames = deletable
 		? styles.deletable
 		: styles.notDeletable;
+	const currentPairStyle = isCurrentPair ? styles.active : '';
 
 	function handleCheck(e) {
 		const { checked } = e.target;
@@ -217,7 +227,12 @@ function SavedPair({
 				onChange={handleCheck}
 				disabled={!isSidebarOpen || !deletable}
 			/>
-			<div className={styles.savedPair} data-index={index} onClick={onClick}>
+			<div
+				className={[styles.savedPair, currentPairStyle].join(' ')}
+				data-index={index}
+				onClick={onClick}
+				tabIndex={0}
+			>
 				<p>
 					1. <span>{firstFontFamily}</span>
 				</p>
