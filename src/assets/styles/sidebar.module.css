@@ -164,10 +164,11 @@ ul.savedPairsList > li > input[type='checkbox'].notDeletable {
 }
 
 ul.savedPairsList .savedPair {
+	--active-saved-pair: #8d708d;
 	position: relative;
 	margin: 0;
 	padding: 0 0.85rem 0.1rem;
-	outline: 2px solid var(--text);
+	border: 2px solid var(--text);
 	border-radius: 8px;
 	width: 100%;
 	cursor: pointer;
@@ -176,7 +177,8 @@ ul.savedPairsList .savedPair {
 
 ul.savedPairsList .savedPair:focus,
 ul.savedPairsList .savedPair.active {
-	outline-style: dashed;
+	border-color: var(--active-saved-pair);
+	color: var(--active-saved-pair);
 }
 
 .savedPair > p {
