@@ -30,17 +30,17 @@ export function ComparisonPanel() {
 	return (
 		<>
 			<div className={styles.comparisonPanel}>
-				<InView threshold={0.2} onChange={handleInViewChange}>
+				<InView threshold={0.5} onChange={handleInViewChange}>
 					{({ ref: textualSectionRef }) => (
 						<TextualExampleComparisonSection ref={textualSectionRef} />
 					)}
 				</InView>
-				<InView threshold={0.2} onChange={handleInViewChange}>
+				<InView threshold={0.5} onChange={handleInViewChange}>
 					{({ ref: alphaNumSectionRef }) => (
 						<AlphaNumComparisonSection ref={alphaNumSectionRef} />
 					)}
 				</InView>
-				<InView threshold={0.2} onChange={handleInViewChange}>
+				<InView threshold={0.5} onChange={handleInViewChange}>
 					{({ ref: codeSectionRef }) => <CodeSection ref={codeSectionRef} />}
 				</InView>
 			</div>
