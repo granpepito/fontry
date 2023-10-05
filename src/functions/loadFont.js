@@ -24,6 +24,7 @@ export async function loadFont(
 				},
 				active: () => resolve(`Loading result of the ${fontFamily} font: 200`),
 				inactive: () => reject(`Loading result of the ${fontFamily} font: 404`),
+				fontinactive: () => reject(),
 			});
 		} else {
 			reject('Font is not defined.');
@@ -61,7 +62,9 @@ export async function loadMultipleFonts(fonts, isLimited = false) {
 		return new Promise((_, reject) => reject('There are no fonts.'));
 	}
 
-	return new Promise((_resolve, _reject) => {
+	return new Promise((resolve, _reject) => {
+		const notLoadedFonts = new Set();
+
 		WebFont.load({
 			google: {
 				families,
@@ -69,8 +72,14 @@ export async function loadMultipleFonts(fonts, isLimited = false) {
 					? 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 					: '',
 			},
-			events: false,
-			classes: false,
+			// fontactive: (_fontFamily, _fvd) => {
+			// 	// console.log(`Loaded the ${fontFamily} font.`);
+			// },
+			fontinactive: (fontFamily, _fvd) => {
+				// console.error(`Error while loading the ${fontFamily} font.`);
+				notLoadedFonts.add(fontFamily);
+			},
+			active: resolve({ notLoadedFonts }),
 		});
 	});
 }
