@@ -98,6 +98,18 @@ function TextualElement({ fontFamily, type }) {
 							sur le bouton en bas à droite, et vous retrouverez ces
 							combinaisons dans la barre de navigation.
 						</p>
+						<p>
+							Ce site est une version améliorée de{' '}
+							<a
+								href='https://fonfont.alexgm.dev'
+								target='_blank'
+								rel='noreferrer'
+							>
+								FonFont
+							</a>
+							. Sur Fontsy, l&apos;interface et les fonctionnalités ont été
+							revues.
+						</p>
 					</div>
 				</div>
 			);
