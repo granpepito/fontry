@@ -79,64 +79,56 @@ function ComparisonSectionSelector({ currentSection }) {
 				styles.comparisonSectionSelector,
 			].join(' ')}
 		>
-			<ul>
-				<li>
-					<a
-						id='textual-example-selector'
-						className={[styles.textualSelector, active('textual-example')].join(
-							' '
-						)}
-						href='#textual-example'
-						onClick={handleClick}
-						data-section-id={'textual-example'}
-					>
-						<img
-							style={{
-								height: '24px',
-								width: '25px',
-							}}
-							alt='Textual Section Icon'
-							src={textualSectionIcon}
-						/>
-					</a>
-				</li>
-				<li>
-					<a
-						id='alpha-num-selector'
-						className={[styles.alphaNumSelector, active('alpha-num')].join(' ')}
-						href='#alpha-num'
-						onClick={handleClick}
-						data-section-id={'alpha-num'}
-					>
-						<img
-							style={{
-								height: '24px',
-								width: '24px',
-							}}
-							alt='Alpha Numerical Section Icon'
-							src={alphaNumericalSectionIcon}
-						/>
-					</a>
-				</li>
-				<li>
-					<a
-						id='code-selector'
-						className={[styles.codeSelector, active('code')].join(' ')}
-						href='#code'
-						onClick={handleClick}
-						data-section-id={'code'}
-					>
-						<img
-							style={{
-								height: '24px',
-								width: '24px',
-							}}
-							alt='Export Section Icon'
-							src={htmlCssSectionIcon}
-						/>
-					</a>
-				</li>
-			</ul>
+			<a
+				id='textual-example-selector'
+				className={[styles.textualSelector, active('textual-example')].join(
+					' '
+				)}
+				href='#textual-example'
+				onClick={handleClick}
+				data-section-id={'textual-example'}
+			>
+				<img
+					style={{
+						height: '24px',
+						width: '25px',
+					}}
+					alt='Textual Section Icon'
+					src={textualSectionIcon}
+				/>
+			</a>
+			<a
+				id='alpha-num-selector'
+				className={[styles.alphaNumSelector, active('alpha-num')].join(' ')}
+				href='#alpha-num'
+				onClick={handleClick}
+				data-section-id={'alpha-num'}
+			>
+				<img
+					style={{
+						height: '24px',
+						width: '24px',
+					}}
+					alt='Alpha Numerical Section Icon'
+					src={alphaNumericalSectionIcon}
+				/>
+			</a>
+			<a
+				id='code-selector'
+				className={[styles.codeSelector, active('code')].join(' ')}
+				href='#code'
+				onClick={handleClick}
+				data-section-id={'code'}
+			>
+				<img
+					style={{
+						height: '24px',
+						width: '24px',
+					}}
+					alt='Export Section Icon'
+					src={htmlCssSectionIcon}
+				/>
+			</a>
 		</nav>
 	);
 }
