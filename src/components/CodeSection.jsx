@@ -101,11 +101,13 @@ function CodeSectionStateHolder({ firstFont, secondFont }) {
 		() => formatHtmlUrlQuery(firstFont, firstVariantsCheckboxes),
 		[firstFont, firstVariantsCheckboxes]
 	);
-	// TODO: In case the two fonts are the same, do not produce de fontQuery and do not display the CSS Code twice.
-	const secondFontQuery = useMemo(
-		() => formatHtmlUrlQuery(secondFont, secondVariantsCheckboxes),
-		[secondFont, secondVariantsCheckboxes]
-	);
+
+	const secondFontQuery = useMemo(() => {
+		if (firstFont.family === secondFont.family) {
+			return '';
+		}
+		return formatHtmlUrlQuery(secondFont, secondVariantsCheckboxes);
+	}, [firstFont, secondFont, secondVariantsCheckboxes]);
 
 	return (
 		<>
@@ -130,8 +132,10 @@ function CodeSectionStateHolder({ firstFont, secondFont }) {
 					{`<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>`}
 					<br />
 					{`<link href="https://fonts.googleapis.com/css2?`}
-					<span className={styles.fontQuery}>{firstFontQuery}</span>&
-					<span className={styles.fontQuery}>{secondFontQuery}</span>
+					<span className={styles.fontQuery}>{firstFontQuery}</span>
+					{secondFontQuery.length === 0
+						? null
+						: '&' + <span className={styles.fontQuery}>{secondFontQuery}</span>}
 					{`&display=swap" rel="stylesheet">`}
 				</Code>
 			</div>
