@@ -5,9 +5,8 @@ import { AlphaNumComparisonSection } from './AlphaNumComparisonSection';
 import { TextualExampleComparisonSection } from './TextualExampleComparisonSection';
 import { CodeSection } from './CodeSection';
 import { InView } from 'react-intersection-observer';
-import { BookmarkIcon as OutlineBookmarkIcon } from '@heroicons/react/24/outline';
-import { BookmarkIcon as SolidBookmarkIcon } from '@heroicons/react/24/solid';
 
+import { BookmarkIcon } from '@heroicons/react/24/outline';
 import alphaNumericalSectionIcon from '../assets/img/alpha-numerical-section-icon.svg';
 import textualSectionIcon from '../assets/img/textual-section-icon.svg';
 import htmlCssSectionIcon from '../assets/img/html-css-icon.svg';
@@ -172,11 +171,11 @@ function SavePairButton({ pair }) {
 			aria-label={isSaved ? 'Delete Pair' : 'Save Pair'}
 			onClick={handleClick}
 		>
-			{isSaved ? (
-				<SolidBookmarkIcon className={iconStyles.smallIcon} color='#3a303b' />
-			) : (
-				<OutlineBookmarkIcon className={iconStyles.smallIcon} color='#3a303b' />
-			)}
+			<BookmarkIcon
+				className={iconStyles.smallIcon}
+				stroke='#3a303b'
+				fill={isSaved ? '#3a303b' : '#f8f7f8'}
+			/>
 		</button>
 	);
 }
