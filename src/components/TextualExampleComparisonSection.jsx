@@ -1,4 +1,3 @@
-import { usePair } from '../hooks/PairContext';
 import { useIsLargeScreen } from '../hooks/useIsLargeScreen';
 import styles from '/src/assets/styles/comparison-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
@@ -7,8 +6,7 @@ import { ArrowLongRightIcon } from '@heroicons/react/20/solid';
 import { forwardRef } from 'react';
 
 export const TextualExampleComparisonSection = forwardRef(
-	function TextualExampleComparisonSection(_, ref) {
-		const pair = usePair();
+	function TextualExampleComparisonSection({ pair }, ref) {
 		const firstFont = pair.font1;
 		const secondFont = pair.font2;
 

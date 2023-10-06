@@ -1,5 +1,4 @@
 import { forwardRef, useCallback, useMemo } from 'react';
-import { usePair } from '../hooks/PairContext';
 import { useVariantsRef } from '../hooks/useVariants';
 import { formatVariant } from '../functions/format';
 
@@ -7,8 +6,7 @@ import styles from '/src/assets/styles/comparison-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
 
 export const AlphaNumComparisonSection = forwardRef(
-	function AlphaNumComparisonSection(_, ref) {
-		const pair = usePair();
+	function AlphaNumComparisonSection({ pair }, ref) {
 		const firstFont = pair.font1;
 		const secondFont = pair.font2;
 

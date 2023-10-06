@@ -1,5 +1,4 @@
 import { forwardRef, useMemo, useRef } from 'react';
-import { usePair } from '../hooks/PairContext';
 import { useVariantsState } from '../hooks/useVariants';
 import { formatVariant } from '../functions/format';
 import { variants as allVariants } from '../utils/variants';
@@ -16,8 +15,7 @@ import inputStyles from '/src/assets/styles/input.module.css';
  * @param {object} props
  * @param {boolean} props.isCurrentSection - Boolean value to tell if the CodeSection is the current section displayed.
  */
-export const CodeSection = forwardRef(function CodeSection(_, ref) {
-	const pair = usePair();
+export const CodeSection = forwardRef(function CodeSection({ pair }, ref) {
 	const firstFont = pair.font1;
 	const secondFont = pair.font2;
 

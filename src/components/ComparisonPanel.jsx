@@ -17,6 +17,7 @@ import inputStyles from '/src/assets/styles/input.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
 
 export function ComparisonPanel() {
+	const pair = usePair();
 	const [currentSection, setCurrentSection] = useState('textual-example');
 
 	function handleInViewChange(inView, entry) {
@@ -32,21 +33,26 @@ export function ComparisonPanel() {
 			<div className={styles.comparisonPanel}>
 				<InView threshold={0.5} onChange={handleInViewChange}>
 					{({ ref: textualSectionRef }) => (
-						<TextualExampleComparisonSection ref={textualSectionRef} />
+						<TextualExampleComparisonSection
+							ref={textualSectionRef}
+							pair={pair}
+						/>
 					)}
 				</InView>
 				<InView threshold={0.5} onChange={handleInViewChange}>
 					{({ ref: alphaNumSectionRef }) => (
-						<AlphaNumComparisonSection ref={alphaNumSectionRef} />
+						<AlphaNumComparisonSection ref={alphaNumSectionRef} pair={pair} />
 					)}
 				</InView>
 				<InView threshold={0.5} onChange={handleInViewChange}>
-					{({ ref: codeSectionRef }) => <CodeSection ref={codeSectionRef} />}
+					{({ ref: codeSectionRef }) => (
+						<CodeSection ref={codeSectionRef} pair={pair} />
+					)}
 				</InView>
 			</div>
 			<>
 				<ComparisonSectionSelector currentSection={currentSection} />
-				<SavePairButton />
+				<SavePairButton pair={pair} />
 			</>
 		</>
 	);
@@ -136,8 +142,7 @@ function ComparisonSectionSelector({ currentSection }) {
 /**
  * Renders a Save button to save the current Pair of fonts.
  */
-function SavePairButton() {
-	const pair = usePair();
+function SavePairButton({ pair }) {
 	const { add, remove, includes } = usePairStore();
 	const isPairInPairStore = includes(pair);
 	const [isSaved, setIsSaved] = useState(isPairInPairStore);
