@@ -145,7 +145,6 @@ function SavePairButton({ pair }) {
 	const { add, remove, includes } = usePairStore();
 	const isPairInPairStore = includes(pair);
 	const [isSaved, setIsSaved] = useState(isPairInPairStore);
-	const isSavedClassName = isSaved ? styles.saved : null;
 
 	useEffect(() => {
 		setIsSaved(includes(pair));
@@ -162,11 +161,7 @@ function SavePairButton({ pair }) {
 
 	return (
 		<button
-			className={[
-				inputStyles.buttonIcon,
-				styles.savePairButton,
-				isSavedClassName,
-			].join(' ')}
+			className={[inputStyles.buttonIcon, styles.savePairButton].join(' ')}
 			type='button'
 			aria-label={isSaved ? 'Delete Pair' : 'Save Pair'}
 			onClick={handleClick}
