@@ -103,6 +103,30 @@
 	min-width: 100%; */
 }
 
+@supports not (scrollbar-color: auto) {
+	.comparisonPanelContent
+		.alphaNumContainer
+		.alphaNumElementContainer::-webkit-scrollbar-track {
+		box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.15);
+		background-color: unset;
+	}
+
+	.comparisonPanelContent
+		.alphaNumContainer
+		.alphaNumElementContainer::-webkit-scrollbar {
+		height: 0;
+		background-color: unset;
+	}
+
+	.comparisonPanelContent
+		.alphaNumContainer
+		.alphaNumElementContainer::-webkit-scrollbar-thumb {
+		height: 0;
+		border-radius: 0;
+		background-color: unset;
+	}
+}
+
 .comparisonPanelContent
 	.alphaNumContainer
 	.alphaNumElementContainer
@@ -314,7 +338,7 @@
 } */
 
 .codeContainer {
-	border: 1px solid black;
+	border: 1px solid rgba(0, 0, 0, 0.842);
 	background-color: rgba(245, 245, 245, 0.555);
 	border-radius: 0.5rem;
 }
@@ -322,7 +346,7 @@
 .codeContainer .codeCopy {
 	display: flex;
 	justify-content: end;
-	background-color: rgba(100, 100, 100, 0.555);
+	background-color: var(--secondary);
 	border-radius: 0.5rem 0.5rem 0 0;
 }
 
@@ -350,7 +374,6 @@
 	word-wrap: break-word;
 	font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo,
 		monospace;
-	/* color: gray; */
 }
 
 .codeContainer .code .fontQuery {
@@ -362,27 +385,19 @@
 /*--------------------------------------------------------------*/
 .comparisonSectionSelector {
 	position: absolute;
-	margin: 2rem 0;
 	top: var(--fonts-panel-height);
 	right: 12px;
-	background-color: var(--background);
-	z-index: 5;
-}
-
-.comparisonSectionSelector > ul {
 	display: flex;
 	flex-direction: column;
 	gap: 2px;
-	margin: 0;
 	padding: 0;
+	margin: 2rem 0;
+	background-color: var(--background);
 	transition: var(--transition-speed) var(--transition-timing-function);
+	z-index: 5;
 }
 
-.comparisonSectionSelector > ul > li {
-	list-style: none;
-}
-
-.comparisonSectionSelector > ul > li a {
+.comparisonSectionSelector a {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -392,49 +407,48 @@
 	background-color: var(--background);
 	outline: 2px solid var(--primary);
 	transition: var(--transition-speed) step-start;
-	filter: drop-shadow(0px 0px 5px rgb(204, 204, 204));
 }
 
-.comparisonSectionSelector > ul > li a::before {
+.comparisonSectionSelector a::before {
 	width: 0;
 	height: 0;
 	background-color: none;
 	content: '';
 }
 
-.comparisonSectionSelector > ul > li a::after {
+.comparisonSectionSelector a::after {
 	width: 0;
 	height: 0;
 	background-color: none;
 	content: '';
 }
 
-.comparisonSectionSelector > ul > li a:hover,
-.comparisonSectionSelector > ul > li a:focus-within {
+.comparisonSectionSelector a:hover,
+.comparisonSectionSelector a:focus-within {
 	background-color: #e2dae2;
 	/* box-shadow: inset 4px 4px 4px 0px rgb(218, 218, 218); */
 }
 
-.comparisonSectionSelector > ul > li a.active {
+.comparisonSectionSelector a.active {
 	background-color: var(--secondary);
 	/* box-shadow: inset 4px 4px 4px 0px #c9c1c9; */
 }
 
-.comparisonSectionSelector > ul > li:first-of-type a {
+.comparisonSectionSelector a:first-of-type {
 	border-radius: 0.5rem 0.5rem 0 0;
 }
 
-.comparisonSectionSelector > ul > li a.textualSelector {
+.comparisonSectionSelector a.textualSelector {
 	font-size: 1.125rem;
 	font-style: italic;
 }
 
-.comparisonSectionSelector > ul > li a.textualSelector .bodyTextIcon {
+.comparisonSectionSelector a.textualSelector .bodyTextIcon {
 	height: 1rem;
 	width: 1rem;
 }
 
-.comparisonSectionSelector > ul > li:last-of-type a {
+.comparisonSectionSelector a:last-of-type {
 	border-radius: 0 0 0.5rem 0.5rem;
 }
 
@@ -466,72 +480,22 @@
 	margin: 2rem 0;
 	height: 2.25rem;
 	width: 2.25rem;
-	outline: 2px solid black;
+	outline: 2px solid var(--primary);
 	border-radius: 0.5rem;
-	background-color: #fff;
-	transition: var(--transition-speed) var(--transition-timing-function);
-	filter: drop-shadow(0px 0px 5px rgb(204, 204, 204));
+	background-color: var(--background) !important;
+	transition: var(--transition-speed) step-start;
+	filter: drop-shadow(0px 0px 5px #e2dae2);
 	z-index: 5;
 }
 
-/* main#mainContent .savePairButton:hover {
-	justify-content: center;
-	right: -38px;
-} */
-
 .savePairButton:active {
-	background-color: #fff;
-	animation: vertical-shaking 200ms var(--transition-timing-function);
+	background-color: var(--background);
+	scale: 0.9;
+	outline: 2px solid var(--primary);
 }
 
-.savePairButton.saved:active {
-	animation: horizontal-shaking 200ms var(--transition-timing-function);
-}
-
-.savePairButton:focus {
-	/* border: 2px solid black; */
-	outline: 2px solid black;
-	outline-offset: 1px;
-}
-
-/* main#mainContent .savePairButton:focus svg {
-	background-color: #fff;
-} */
-
-@keyframes horizontal-shaking {
-	0% {
-		transform: translateX(0);
-	}
-	25% {
-		transform: translateX(5px);
-	}
-	50% {
-		transform: translateX(-5px);
-	}
-	75% {
-		transform: translateX(5px);
-	}
-	100% {
-		transform: translateX(0);
-	}
-}
-
-@keyframes vertical-shaking {
-	0% {
-		transform: translateY(0);
-	}
-	25% {
-		transform: translateY(5px);
-	}
-	50% {
-		transform: translateY(-5px);
-	}
-	75% {
-		transform: translateY(5px);
-	}
-	100% {
-		transform: translateY(0);
-	}
+.savePairButton:active > svg {
+	scale: 0.9;
 }
 
 @media screen and (min-width: 980px) {
@@ -596,7 +560,7 @@
 	padding: 6px 10px;
 	width: fit-content;
 	height: auto;
-	border: 1px solid #000;
+	border: 1px solid var(--text);
 	border-radius: 1rem;
 	background-color: white;
 	font-size: 1rem;
@@ -612,12 +576,12 @@
 
 .variantSelector input.checkbox[type='checkbox']:checked + label.checkboxLabel {
 	color: #646464;
-	border: 1px solid #7a7a7a;
-	outline: 1px solid #7a7a7a;
+	border: 1px solid var(--primary);
+	outline: 1px solid var(--primary);
 }
 
 .variantSelector label.checkboxLabel:hover,
 .variantSelector input.checkbox[type='checkbox']:focus + label.checkboxLabel {
-	border: 1px solid #000000;
-	outline: 1px solid #000000;
+	border: 1px solid var(--text);
+	outline: 1px solid var(--text);
 }

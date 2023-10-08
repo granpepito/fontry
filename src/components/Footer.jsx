@@ -12,7 +12,7 @@ export function Footer() {
 				/>
 			</p>
 			<p className={styles.dotDev}>
-				<a href='https://alexgm.dev' target='_blank' rel='noreferrer'>
+				<a href='https://www.alexgm.dev' target='_blank' rel='noreferrer'>
 					alexgm.dev
 				</a>
 			</p>

@@ -1,5 +1,4 @@
 import { forwardRef, useMemo, useRef } from 'react';
-import { usePair } from '../hooks/PairContext';
 import { useVariantsState } from '../hooks/useVariants';
 import { formatVariant } from '../functions/format';
 import { variants as allVariants } from '../utils/variants';
@@ -16,8 +15,7 @@ import inputStyles from '/src/assets/styles/input.module.css';
  * @param {object} props
  * @param {boolean} props.isCurrentSection - Boolean value to tell if the CodeSection is the current section displayed.
  */
-export const CodeSection = forwardRef(function CodeSection(_, ref) {
-	const pair = usePair();
+export const CodeSection = forwardRef(function CodeSection({ pair }, ref) {
 	const firstFont = pair.font1;
 	const secondFont = pair.font2;
 
@@ -102,10 +100,12 @@ function CodeSectionStateHolder({ firstFont, secondFont }) {
 		[firstFont, firstVariantsCheckboxes]
 	);
 
-	const secondFontQuery = useMemo(
-		() => formatHtmlUrlQuery(secondFont, secondVariantsCheckboxes),
-		[secondFont, secondVariantsCheckboxes]
-	);
+	const secondFontQuery = useMemo(() => {
+		if (firstFont.family === secondFont.family) {
+			return '';
+		}
+		return formatHtmlUrlQuery(secondFont, secondVariantsCheckboxes);
+	}, [firstFont, secondFont, secondVariantsCheckboxes]);
 
 	return (
 		<>
@@ -130,8 +130,10 @@ function CodeSectionStateHolder({ firstFont, secondFont }) {
 					{`<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>`}
 					<br />
 					{`<link href="https://fonts.googleapis.com/css2?`}
-					<span className={styles.fontQuery}>{firstFontQuery}</span>&
-					<span className={styles.fontQuery}>{secondFontQuery}</span>
+					<span className={styles.fontQuery}>{firstFontQuery}</span>
+					{secondFontQuery.length === 0
+						? null
+						: '&' + <span className={styles.fontQuery}>{secondFontQuery}</span>}
 					{`&display=swap" rel="stylesheet">`}
 				</Code>
 			</div>
@@ -214,8 +216,7 @@ function VariantSelector({
 				/>
 			);
 		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [firstFont, firstVariantsCheckboxes]);
+	}, [firstFont, firstVariantsCheckboxes, onFirstFontVariantChange]);
 
 	const secondVariants = useMemo(() => {
 		const { family, variants } = secondFont;
@@ -229,8 +230,7 @@ function VariantSelector({
 				/>
 			);
 		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [secondFont, secondVariantsCheckboxes]);
+	}, [secondFont, secondVariantsCheckboxes, onSecondFontVariantChange]);
 
 	return (
 		<div className={styles.variantSelectorContainer}>
@@ -270,6 +270,7 @@ function Code({ children }) {
 			<div className={styles.codeCopy}>
 				<button
 					className={[inputStyles.buttonIcon, styles.copyButton].join(' ')}
+					type='button'
 					aria-label='Copy Text'
 					onClick={handleClick}
 				>

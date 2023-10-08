@@ -1,5 +1,4 @@
-import { forwardRef, useMemo } from 'react';
-import { usePair } from '../hooks/PairContext';
+import { forwardRef, useCallback, useMemo } from 'react';
 import { useVariantsRef } from '../hooks/useVariants';
 import { formatVariant } from '../functions/format';
 
@@ -7,8 +6,7 @@ import styles from '/src/assets/styles/comparison-panel.module.css';
 import inputStyles from '/src/assets/styles/input.module.css';
 
 export const AlphaNumComparisonSection = forwardRef(
-	function AlphaNumComparisonSection(_, ref) {
-		const pair = usePair();
+	function AlphaNumComparisonSection({ pair }, ref) {
 		const firstFont = pair.font1;
 		const secondFont = pair.font2;
 
@@ -128,17 +126,20 @@ function AlphaNumGroup({ family, variants }) {
 	 * @callback handleVariantButtonClick Function to handle the click of a VariantButton component. Trigger a scroll animation to the corresponding AlphaNumElement component.
 	 * @param {Event} e - Event object.
 	 */
-	function handleClick(e) {
-		const { value } = e.target;
+	const handleClick = useCallback(
+		function handleClick(e) {
+			const { value } = e.target;
 
-		const ref = refs[value];
+			const ref = refs[value];
 
-		ref.current.scrollIntoView({
-			behavior: 'smooth',
-			block: 'nearest',
-			inline: 'center',
-		});
-	}
+			ref.current.scrollIntoView({
+				behavior: 'smooth',
+				block: 'nearest',
+				inline: 'center',
+			});
+		},
+		[refs]
+	);
 
 	const alphaNumElements = useMemo(
 		() =>
@@ -150,8 +151,7 @@ function AlphaNumGroup({ family, variants }) {
 					variant={formatVariant(variant)}
 				/>
 			)),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[family, variants]
+		[family, refs, variants]
 	);
 
 	const variantButtons = useMemo(
@@ -159,8 +159,7 @@ function AlphaNumGroup({ family, variants }) {
 			variants.map((variant, index) => (
 				<VariantButton key={index} variant={variant} onClick={handleClick} />
 			)),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[variants]
+		[handleClick, variants]
 	);
 
 	return (
