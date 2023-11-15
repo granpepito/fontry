@@ -79,10 +79,14 @@ export function usePairStore() {
 				try {
 					const id = uuidv4();
 					pair.id = id;
+					const updatedPairs = JSON.stringify(pairs.concat([pair]));
 
-					localStorage.setItem(
-						'pairStore',
-						JSON.stringify(pairs.concat([pair]))
+					localStorage.setItem('pairStore', updatedPairs);
+					window.dispatchEvent(
+						new StorageEvent('storage', {
+							key: 'pairStore',
+							newValue: updatedPairs,
+						})
 					);
 				} catch (error) {
 					console.error(error);
@@ -113,11 +117,15 @@ export function usePairStore() {
 			if (pairs[indexOfPairToRemove]) {
 				try {
 					const parsedIndex = parseInt(indexOfPairToRemove, 10);
-					localStorage.setItem(
-						'pairStore',
-						JSON.stringify(
-							pairs.filter((_pair, index) => index !== parsedIndex)
-						)
+					const remainingPairs = JSON.stringify(
+						pairs.filter((_pair, index) => index !== parsedIndex)
+					);
+					localStorage.setItem('pairStore', remainingPairs);
+					window.dispatchEvent(
+						new StorageEvent('storage', {
+							key: 'pairStore',
+							newValue: remainingPairs,
+						})
 					);
 				} catch (error) {
 					console.error(error);
@@ -151,11 +159,16 @@ export function usePairStore() {
 					const parsedIndexes = arrayOfIndexes.map((index) =>
 						parseInt(index, 10)
 					);
-					localStorage.setItem(
-						'pairStore',
-						JSON.stringify(
-							pairs.filter((_pair, index) => !parsedIndexes.includes(index))
-						)
+
+					const remainingPairs = JSON.stringify(
+						pairs.filter((_pair, index) => !parsedIndexes.includes(index))
+					);
+					localStorage.setItem('pairStore', remainingPairs);
+					window.dispatchEvent(
+						new StorageEvent('storage', {
+							key: 'pairStore',
+							newValue: remainingPairs,
+						})
 					);
 				} catch (error) {
 					console.error(error);
