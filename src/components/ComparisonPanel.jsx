@@ -63,7 +63,7 @@ function ComparisonSectionSelector({ currentSection }) {
 
 	function handleClick(e) {
 		e.preventDefault();
-		const { sectionId } = e.target.parentElement.dataset;
+		const { sectionId } = e.target.dataset;
 
 		if (history && sectionId) {
 			history.pushState(sectionId, '', `#${sectionId}`);
