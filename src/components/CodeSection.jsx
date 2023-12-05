@@ -1,7 +1,6 @@
 import { forwardRef, useMemo, useRef } from 'react';
 import { useVariantsState } from '../hooks/useVariants';
-import { formatVariant } from '../functions/format';
-import { variants as allVariants } from '../utils/variants';
+import { formatVariant, formatHtmlUrlQuery } from '../functions/format';
 
 import { MinusIcon, PlusIcon } from '@heroicons/react/20/solid';
 import { ReactComponent as ClipboardCheckIcon } from '/src/assets/img/clipboard-check-icon.svg';
@@ -304,60 +303,4 @@ function CssCode({ font }) {
 			<br />
 		</>
 	);
-}
-
-/**
- * Builds a string following the format of the  {@link https://developers.google.com/fonts/docs/css2 Google Fonts CSS2 API}.
- * @param {import("../utils/Font").FontFamily} font - FontFamily object containing the family and the variants.
- * @param {} variantsState - State of the VariantCheckbox components of the corresponding font.
- *
- * @returns {string} Returns a string following the Google Fonts CSS2 API
- */
-function formatHtmlUrlQuery(font, variantsState) {
-	const { family, variants } = font;
-
-	let hasItalic = false;
-	const weightsToInclude = Object.entries(variantsState)
-		.filter(([variant, checked]) => {
-			if (variant.includes('italic') && checked) {
-				hasItalic = true;
-			}
-
-			return checked;
-		})
-		.reduce((checkedVariants, [variant, _]) => {
-			return [...checkedVariants, variant];
-		}, []);
-
-	let weights = '';
-
-	if (weightsToInclude.length === 0) {
-		return weights;
-	}
-
-	const formattedFamily = `family=${family.split(' ').join('+')}`;
-	if (variants.length === 1) {
-		return formattedFamily;
-	}
-
-	if (!hasItalic) {
-		weights = 'wght@';
-	} else {
-		weights = 'ital,wght@';
-	}
-
-	let numberOfWeightsAdded = 0;
-	for (let i = 0; i < allVariants.length; i++) {
-		if (weightsToInclude.includes(allVariants[i])) {
-			const variant = allVariants[i];
-			const [weight, italic] = formatVariant(variant).split(' ');
-
-			weights += `${hasItalic ? (italic ? '1,' : '0,') : ''}${weight}`;
-			numberOfWeightsAdded++;
-			if (numberOfWeightsAdded < weightsToInclude.length) {
-				weights += ';';
-			}
-		}
-	}
-	return formattedFamily + ':' + weights;
 }
