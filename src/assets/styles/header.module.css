@@ -47,12 +47,13 @@
 .header a {
 	text-decoration: none;
 	color: var(--text);
-	transition: var(--transition-speed) var(--transition-timing-function);
+	opacity: 1;
+	transition: opacity var(--transition-speed) var(--transition-timing-function);
 }
 
 .header a:hover,
 .header a:focus {
-	color: #bbb4bb;
+	opacity: 0.65;
 }
 
 .header a::after,
