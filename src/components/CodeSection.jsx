@@ -130,9 +130,8 @@ function CodeSectionStateHolder({ firstFont, secondFont }) {
 					<br />
 					{`<link href="https://fonts.googleapis.com/css2?`}
 					<span className={styles.fontQuery}>{firstFontQuery}</span>
-					{secondFontQuery.length === 0
-						? null
-						: '&' + <span className={styles.fontQuery}>{secondFontQuery}</span>}
+					{secondFontQuery ? '&' : null}
+					<span className={styles.fontQuery}>{secondFontQuery}</span>
 					{`&display=swap" rel="stylesheet">`}
 				</Code>
 			</div>
