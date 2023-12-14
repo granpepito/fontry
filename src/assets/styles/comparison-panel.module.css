@@ -19,7 +19,7 @@
 	flex-wrap: nowrap;
 	gap: 20px;
 	transition: var(--transition-speed) var(--transition-timing-function);
-	margin: 0;
+	/* margin: 0; */
 }
 
 .comparisonPanelContent .comparisonPanelTitle {
@@ -30,12 +30,16 @@
 	letter-spacing: 2px;
 	text-decoration: underline;
 	margin-top: 2rem;
-	margin-right: 3rem;
 }
 
 .comparisonPanelContent .fontFamilies {
 	text-align: center;
 	font-style: italic;
+}
+
+.comparisonPanelContent .comparisonPanelTitle h2,
+.comparisonPanelContent .fontFamilies {
+	margin-right: 3rem;
 }
 
 .comparisonPanelContent .fontFamilies span {
@@ -51,18 +55,18 @@
 	}
 
 	.comparisonPanel .comparisonPanelContent {
-		margin: 0 4rem 0 2rem;
+		padding: 0 4rem 0 2rem;
 	}
 
-	.comparisonPanelContent .comparisonPanelTitle h2 {
-		/* margin-left: 0; */
+	.comparisonPanelContent .comparisonPanelTitle h2,
+	.comparisonPanelContent .fontFamilies {
 		margin-right: 0;
 	}
 }
 
 @media screen and (min-width: 1440px) {
 	.comparisonPanel .comparisonPanelContent {
-		margin: 0 5rem 0 2rem;
+		padding: 0 5rem 0 2rem;
 	}
 }
 
