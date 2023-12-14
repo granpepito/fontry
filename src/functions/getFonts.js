@@ -5,7 +5,7 @@ const FONTS_PER_PAGES = 75;
  * @param {Object[]} fontsList
  * @returns {Object}
  */
-function groupFontsByCategory(fontsList) {
+export function groupFontsByCategory(fontsList) {
 	const groupedFontsList = fontsList.reduce((groupedFonts, currentFont) => {
 		const { category } = currentFont;
 		groupedFonts[category] = groupedFonts[category] ?? [];
@@ -33,7 +33,7 @@ async function fetchLatinExtendedGoogleFonts() {
 	);
 
 	if (!response.ok) {
-		return { error: true, status: response.status };
+		return { error: true, status: response.status, fonts: {} };
 	}
 	return await response.json();
 }
