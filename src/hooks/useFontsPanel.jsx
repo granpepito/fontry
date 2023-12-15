@@ -1,4 +1,5 @@
-import { useCallback, useReducer, useEffect } from 'react';
+import { useCallback, useEffect, useReducer } from 'react';
+import { useFonts } from './useFonts';
 
 import { makePages } from '../functions/getFonts';
 
@@ -23,14 +24,15 @@ const INITIAL_STATE = {
 
 /**
  * Hook for the state of the FontsPanel component.
- * @param {FontsPanelState} initialState Initial State of the FontsPanel component.
- * @returns {[FontsPanelState, { setFonts: Function, setFontTab: Function, setCategory: Function, setMatch: Function, searchFonts: Function }]} Returns an array containing the current state of the FontsPanel component and a dispatch function.
+ * @param {FontsPanelState?} initialState Initial State of the FontsPanel component.
+ * @returns {[FontsPanelState, { setFontTab: Function, setCategory: Function, setMatch: Function, searchFonts: Function }]} Returns an array containing the current state of the FontsPanel component and a dispatch function.
  */
 export function useFontsPanel(initialState = INITIAL_STATE) {
 	const [fontsPanelState, dispatch] = useReducer(
 		fontsPanelReducer,
 		initialState
 	);
+	const { fonts, isLoading, error } = useFonts();
 
 	const setFonts = useCallback(function setFonts(fonts) {
 		dispatch({
@@ -68,18 +70,11 @@ export function useFontsPanel(initialState = INITIAL_STATE) {
 	}, []);
 
 	useEffect(() => {
-		if (!fontsPanelState.fonts) {
-			(async () => {
-				let data = await getFonts();
-
-				if (data.error) {
-					data = await getFonts();
-				}
-
-				setFonts(data);
-			})();
+		if (!isLoading) {
+			console.log(fonts);
+			setFonts(fonts);
 		}
-	}, [fontsPanelState.fonts, setFonts]);
+	}, [error, fonts, isLoading, setFonts]);
 
 	return [fontsPanelState, { setFontTab, setCategory, setMatch, searchFonts }];
 }
