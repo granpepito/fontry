@@ -14,20 +14,7 @@ import iconStyles from '/src/assets/styles/icon.module.css';
  * Component where the user can find fonts and choose them.
  */
 export function FontsPanel() {
-	const [fontsPanelState, { searchFonts, setFontTab, setMatch, setCategory }] =
-		useFontsPanel({
-			1: {
-				category: '',
-				match: '',
-				fonts: {},
-			},
-			2: {
-				category: '',
-				match: '',
-				fonts: {},
-			},
-			currentFontTab: '1',
-		});
+	const [fontsPanelState, actions] = useFontsPanel();
 
 	const { currentFontTab } = fontsPanelState;
 	const { category, match } = fontsPanelState[currentFontTab];
@@ -43,7 +30,7 @@ export function FontsPanel() {
 	 * @param {Event} e - Event
 	 */
 	function handleFontTabSelectorChange(e) {
-		setFontTab(e.target.value);
+		actions.setFontTab(e.target.value);
 	}
 
 	const handleSearch = useCallback(
@@ -52,9 +39,9 @@ export function FontsPanel() {
 		 * @param {Event} e - Event
 		 */
 		function handleSearch(e) {
-			searchFonts(e.target.value);
+			actions.searchFonts(e.target.value);
 		},
-		[searchFonts]
+		[actions]
 	);
 
 	/**
@@ -62,7 +49,7 @@ export function FontsPanel() {
 	 * @param {Event} e - Event
 	 */
 	function updateMatch(e) {
-		setMatch(e.target.value);
+		actions.setMatch(e.target.value);
 	}
 
 	/**
@@ -72,7 +59,7 @@ export function FontsPanel() {
 	function handleFontCategoryButtonClick(e) {
 		const category = e.target.value;
 
-		setCategory(category);
+		actions.setCategory(category);
 	}
 
 	/**
@@ -117,7 +104,7 @@ export function FontsPanel() {
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
-					{fonts ? fonts.serif : []}
+					{fonts?.serif ?? []}
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='sans-serif'
@@ -127,7 +114,7 @@ export function FontsPanel() {
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
-					{fonts ? fonts['sans-serif'] : []}
+					{fonts?.['sans-serif'] ?? []}
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='display'
@@ -137,7 +124,7 @@ export function FontsPanel() {
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
-					{fonts ? fonts.display : []}
+					{fonts?.display ?? []}
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='handwriting'
@@ -147,7 +134,7 @@ export function FontsPanel() {
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
-					{fonts ? fonts.handwriting : []}
+					{fonts?.handwriting ?? []}
 				</FontCategorySection>
 				<FontCategorySection
 					fontCategoryName='monospace'
@@ -157,7 +144,7 @@ export function FontsPanel() {
 					onClick={handleFontCategoryButtonClick}
 					onFontButtonClick={handleFontButtonClick}
 				>
-					{fonts ? fonts.monospace : []}
+					{fonts?.monospace ?? []}
 				</FontCategorySection>
 			</div>
 		</aside>

@@ -1,13 +1,32 @@
 import { useCallback, useReducer, useEffect } from 'react';
 
-import { getFonts, makePages } from '../functions/getFonts';
+import { makePages } from '../functions/getFonts';
+
+/**
+ * @constant
+ * @type {FontsPanelState}
+ * @default
+ */
+const INITIAL_STATE = {
+	1: {
+		category: '',
+		match: '',
+		fonts: {},
+	},
+	2: {
+		category: '',
+		match: '',
+		fonts: {},
+	},
+	currentFontTab: '1',
+};
 
 /**
  * Hook for the state of the FontsPanel component.
  * @param {FontsPanelState} initialState Initial State of the FontsPanel component.
  * @returns {[FontsPanelState, { setFonts: Function, setFontTab: Function, setCategory: Function, setMatch: Function, searchFonts: Function }]} Returns an array containing the current state of the FontsPanel component and a dispatch function.
  */
-export function useFontsPanel(initialState) {
+export function useFontsPanel(initialState = INITIAL_STATE) {
 	const [fontsPanelState, dispatch] = useReducer(
 		fontsPanelReducer,
 		initialState
