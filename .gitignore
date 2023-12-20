@@ -31,3 +31,5 @@ dist-ssr
 .env.production.local
 .env.local
 
+# panda css output folder
+styled-system

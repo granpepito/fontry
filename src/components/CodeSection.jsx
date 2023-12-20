@@ -3,7 +3,7 @@ import { useVariantsState } from '../hooks/useVariants';
 import { formatVariant, formatHtmlUrlQuery } from '../functions/format';
 
 import { MinusIcon, PlusIcon } from '@heroicons/react/20/solid';
-import { ReactComponent as ClipboardCheckIcon } from '/src/assets/img/clipboard-check-icon.svg';
+import ClipboardCheckIcon from '@/assets/img/clipboard-check-icon.svg?react';
 
 import styles from '/src/assets/styles/comparison-panel.module.css';
 import iconStyles from '/src/assets/styles/icon.module.css';
