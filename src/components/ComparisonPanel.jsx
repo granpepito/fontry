@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { usePair } from '../hooks/PairContext';
 import { usePairStore } from '../hooks/usePairStore';
 import { AlphaNumComparisonSection } from './AlphaNumComparisonSection';
@@ -144,11 +144,11 @@ function ComparisonSectionSelector({ currentSection }) {
 function SavePairButton({ pair }) {
 	const { add, remove, includes } = usePairStore();
 	const isPairInPairStore = includes(pair);
-	const [isSaved, setIsSaved] = useState(isPairInPairStore);
+	// const [isSaved, setIsSaved] = useState(isPairInPairStore);
 
-	useEffect(() => {
-		setIsSaved(includes(pair));
-	}, [includes, pair]);
+	// useEffect(() => {
+	// 	setIsSaved(includes(pair));
+	// }, [includes, pair]);
 
 	function handleClick() {
 		if (isPairInPairStore) {
@@ -156,20 +156,20 @@ function SavePairButton({ pair }) {
 		} else {
 			add(pair);
 		}
-		setIsSaved(!isSaved);
+		// setIsSaved(!isSaved);
 	}
 
 	return (
 		<button
 			className={[inputStyles.buttonIcon, styles.savePairButton].join(' ')}
 			type='button'
-			aria-label={isSaved ? 'Delete Pair' : 'Save Pair'}
+			aria-label={isPairInPairStore ? 'Delete Pair' : 'Save Pair'}
 			onClick={handleClick}
 		>
 			<BookmarkIcon
 				className={iconStyles.smallIcon}
 				stroke='#3a303b'
-				fill={isSaved ? '#3a303b' : '#f8f7f8'}
+				fill={isPairInPairStore ? '#3a303b' : '#f8f7f8'}
 			/>
 		</button>
 	);
